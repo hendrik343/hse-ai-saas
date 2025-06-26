@@ -1,0 +1,172 @@
+{
+  "GLOBAL": {
+    "APP_NAME": "HSE AI",
+    "LOADING": "Loading...",
+    "ERROR": "An error occurred",
+    "LOGOUT": "Logout",
+    "UPGRADE": "Upgrade",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "CLOSE": "Close",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "CREATE": "Create",
+    "UPDATE": "Update",
+    "BACK": "Back",
+    "NEXT": "Next",
+    "PREVIOUS": "Previous",
+    "YES": "Yes",
+    "NO": "No",
+    "OK": "OK"
+  },
+  "LANGUAGES": {
+    "PT": "Portuguese",
+    "EN": "English",
+    "FR": "French"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "AI_ANALYSIS": "AI Analysis",
+    "AI_DESCRIPTION": "Instantly create a detailed safety analysis based on your data.",
+    "AI_BASE_PROMPT": "Generate a detailed HSE (Health, Safety, Environment) report based on the following request. The report must be comprehensive, professional, and in English. Include relevant safety recommendations and compliance guidelines.",
+    "GENERATE_REPORT": "Create Analysis",
+    "GENERATE_BUTTON": "Generate Report",
+    "GENERATING": "Generating Report",
+    "PROMPT_PLACEHOLDER": "Describe the situation, incident, or safety concern you want to analyze...",
+    "NO_REPORTS_FOUND": "No reports found. Generate your first report to get started.",
+    "USER_LIMIT": "Plan Usage",
+    "USAGE_STATS": "Usage Statistics",
+    "USAGE_COUNTER": "{{current}} of {{max}} reports used",
+    "USAGE_COUNTER_UNLIMITED": "{{current}} reports used this month",
+    "UPGRADE_PLAN": "Upgrade Plan",
+    "DATA_ACCESS": "Recent Reports",
+    "REPORTS_SECTION": "Recent Reports",
+    "NO_DATE": "No date",
+    "REPORTS_THIS_MONTH": "reports used this month",
+    "HEADER": {
+      "TITLE": "Control Panel",
+      "WELCOME": "Hello, {{name}}"
+    },
+    "STATS": {
+      "REPORTS_USAGE": "AI Reports Usage",
+      "CURRENT_PLAN": "Current Plan",
+      "ORGANIZATION": "Organization"
+    },
+    "REPORT_GENERATOR": {
+      "TITLE": "AI Report Generator",
+      "PROMPT_LABEL": "Describe the situation to analyze",
+      "PROMPT_PLACEHOLDER": "Ex: Describe in detail the incident that occurred on assembly line B, including date, time, equipment involved and immediate actions taken...",
+      "REPORT_TYPE_LABEL": "Report Type",
+      "BUTTON_IDLE": "🤖 Generate Report",
+      "BUTTON_GENERATING": "Analyzing with AI...",
+      "BUTTON_DISABLED_LIMIT": "Limit Reached"
+    },
+    "RECENT_REPORTS": {
+      "TITLE": "Recent Reports",
+      "EMPTY_STATE_TITLE": "Your first report will appear here",
+      "EMPTY_STATE_SUBTITLE": "Use the AI generator to start your safety analysis."
+    },
+    "GENERATE_AI_REPORT": "Generate AI Report",
+    "LATEST_REPORTS": "Latest Reports",
+    "LOADING": "Loading",
+    "NO_REPORTS": "No reports available yet.",
+    "REPORT": "Report",
+    "NOTIFICATIONS": {
+      "SUCCESS_REPORT_GENERATED": "Report generated successfully!",
+      "ERROR_LOADING_DATA": "Could not load data. Please refresh the page.",
+      "ERROR_GENERATING_REPORT": "An error occurred while generating the report. Try again.",
+      "ERROR_LIMIT_REACHED": "You have reached your plan's report limit. Upgrade for unlimited access."
+    },
+    "UPGRADE_BANNER": {
+      "TEXT": "You have used <strong>{{used}}</strong> of <strong>{{limit}}</strong> free reports.",
+      "CTA": "Upgrade now for unlimited access and advanced features."
+    },
+    "LOGOUT": "Logout",
+    "CURRENT_PLAN": "Current Plan",
+    "POWERED_BY_AI": "Powered by Gemini AI",
+    "REPORT_TITLE": "Report Title",
+    "REPORT_TITLE_PLACEHOLDER": "Ex: Safety Audit - Warehouse 1",
+    "DETAILED_DESCRIPTION": "Detailed Description",
+    "DESCRIPTION_PLACEHOLDER": "Describe the situation in detail, including location, date, people involved, circumstances, etc...",
+    "DESCRIPTION_TIP": "Be specific to get a more accurate and detailed report.",
+    "ORGANIZATION": "Organization",
+    "SELECT_ORGANIZATION": "Select an organization",
+    "REPORTS": "reports",
+    "NO_REPORTS_DESC": "Generate your first report to see it here.",
+    "AI_GENERATED": "AI Generated",
+    "LIMIT_REACHED_DESC": "You have reached the limit of 5 free reports this month. Upgrade to continue generating unlimited reports.",
+    "UPGRADE_MODAL_DESC": "Upgrade to Premium plan and get unlimited access to AI report generation, advanced models and priority support.",
+    "VIEW_PLANS": "View Plans"
+  },
+  "REPORT_TYPES": {
+    "INCIDENT": "Incident Report",
+    "SAFETY": "Safety Assessment",
+    "AUDIT": "HSE Audit",
+    "RISK": "Risk Analysis"
+  },
+  "ONBOARDING": {
+    "TITLE": "Organization Setup",
+    "ORGANIZATION_NAME": "Organization Name",
+    "INDUSTRY": "Industry",
+    "COMPANY_SIZE": "Company Size",
+    "SUBMIT_BUTTON": "Create Organization",
+    "LOADING": "Creating organization..."
+  },
+  "AUTH": {
+    "LOGIN_WITH_GOOGLE": "Login with Google",
+    "WELCOME": "Welcome"
+  },
+  "PLANS": {
+    "FREE": "Free",
+    "PREMIUM": "Premium",
+    "UNLIMITED": "Unlimited"
+  },
+  "PRICING": {
+    "TITLE": "Choose Your Plan",
+    "SUBTITLE": "Select the perfect plan for your HSE needs",
+    "MONTH": "month",
+    "RECOMMENDED": "Recommended",
+    "CURRENT_PLAN": "Current Plan",
+    "UPGRADE_NOW": "Upgrade Now",
+    "BACK_TO_DASHBOARD": "Back to Dashboard",
+    "UPGRADE_COMING_SOON": "Upgrade coming soon! Contact us.",
+    "FREE_DESCRIPTION": "Perfect for getting started",
+    "PREMIUM_DESCRIPTION": "For growing organizations",
+    "FREE_FEATURES": {
+      "REPORTS": "5 AI reports per month",
+      "AI_POWERED": "AI-generated reports",
+      "BASIC_SUPPORT": "Basic support"
+    },
+    "PREMIUM_FEATURES": {
+      "UNLIMITED_REPORTS": "Unlimited AI reports",
+      "ADVANCED_AI": "Advanced AI and custom models",
+      "PRIORITY_SUPPORT": "Priority support",
+      "EXPORT_OPTIONS": "Advanced export options"
+    }
+  },
+  "SETUP": {
+    "TITLE": "Create your organization",
+    "SUBTITLE": "To get started, enter your organization details. You'll be able to invite your team next.",
+    "ORG_NAME_LABEL": "Organization name",
+    "ORG_NAME_PLACEHOLDER": "Ex: ABC Company Ltd",
+    "ORG_TYPE_LABEL": "Organization type",
+    "ORG_TYPES": {
+      "STARTUP": "Startup",
+      "SMB": "Small/Medium Business",
+      "ENTERPRISE": "Enterprise"
+    },
+    "STARTER_PLAN_TITLE": "Your Starter Plan includes:",
+    "FEATURES": {
+      "REPORTS_PER_MONTH": "50 AI reports per month",
+      "UP_TO_USERS": "Up to 10 users",
+      "ANALYTICS_DASHBOARD": "Analytics dashboard",
+      "EMAIL_SUPPORT": "Email support"
+    },
+    "CREATE_CONTINUE_BUTTON": "Create and continue",
+    "CREATING": "Creating",
+    "ERRORS": {
+      "FIELD_REQUIRED": "Required field",
+      "MIN_LENGTH": "Text too short"
+    }
+  }
+}

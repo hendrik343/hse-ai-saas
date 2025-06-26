@@ -1,0 +1,247 @@
+/* src/app/components/setup-page/setup-page.component.scss */
+/* Import Inter font in your main styles.scss or index.html */
+
+:host {
+  --bg-primary: #0A0A0A;
+  --bg-secondary: #141414;
+  --border-color: #2A2A2A;
+  --text-primary: #EAEAEA;
+  --text-secondary: #A0A0A0;
+  --accent-primary: #5E5CE6;
+  --accent-primary-hover: #4D4AE0;
+  --focus-ring: rgba(94, 92, 230, 0.3);
+  --error-color: #FF6B6B;
+  --error-bg: rgba(255, 107, 107, 0.1);
+
+  --font-sans: 'Inter', sans-serif;
+  --border-radius: 8px;
+  
+  display: block;
+  width: 100%;
+  height: 100vh;
+}
+
+.setup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  font-family: var(--font-sans);
+  padding: 2rem;
+}
+
+.setup-content {
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 2rem;
+}
+
+.setup-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.setup-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.setup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Input and Select Styles */
+input[type="text"],
+select {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  
+  &::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+  
+  &.error {
+    border-color: var(--error-color);
+  }
+}
+
+/* Error Message */
+.error-message {
+  font-size: 0.75rem;
+  color: var(--error-color);
+  margin-top: 0.25rem;
+}
+
+/* Plan Card */
+.plan-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.plan-card__title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.feature-icon {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* Alert Styles */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  
+  &--error {
+    background-color: var(--error-bg);
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+  }
+}
+
+.alert-icon {
+  flex-shrink: 0;
+}
+
+.alert p {
+  margin: 0;
+}
+
+/* Button Styles */
+.btn {
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  width: 100%;
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  &--primary {
+    background-color: var(--accent-primary);
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--accent-primary-hover);
+    }
+  }
+}
+
+.btn__loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Loading Spinner Animation */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .setup-container {
+    padding: 1rem;
+  }
+  
+  .setup-title {
+    font-size: 1.75rem;
+  }
+  
+  .setup-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .plan-card {
+    padding: 1rem;
+  }
+}

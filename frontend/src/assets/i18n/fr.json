@@ -1,0 +1,132 @@
+{
+  "GLOBAL": {
+    "APP_NAME": "HSE AI",
+    "LOADING": "Chargement...",
+    "ERROR": "Une erreur s'est produite",
+    "LOGOUT": "Déconnexion",
+    "UPGRADE": "Mettre à niveau",
+    "SAVE": "Enregistrer",
+    "CANCEL": "Annuler",
+    "CLOSE": "Fermer",
+    "DELETE": "Supprimer",
+    "EDIT": "Modifier",
+    "CREATE": "Créer",
+    "UPDATE": "Mettre à jour",
+    "BACK": "Retour",
+    "NEXT": "Suivant",
+    "PREVIOUS": "Précédent",
+    "YES": "Oui",
+    "NO": "Non",
+    "OK": "OK"
+  },
+  "LANGUAGES": {
+    "PT": "Portugais",
+    "EN": "Anglais",
+    "FR": "Français"
+  },
+  "DASHBOARD": {
+    "TITLE": "Tableau de Bord",
+    "AI_ANALYSIS": "Analyse par IA",
+    "AI_DESCRIPTION": "Générez instantanément une analyse de sécurité détaillée basée sur vos données.",
+    "AI_BASE_PROMPT": "Générez un rapport détaillé HSE (Santé, Sécurité, Environnement) basé sur la demande suivante. Le rapport doit être complet, professionnel et en français. Incluez des recommandations de sécurité pertinentes et des directives de conformité.",
+    "GENERATE_REPORT": "Créer l'analyse",
+    "GENERATE_BUTTON": "Générer un rapport",
+    "GENERATING": "Génération du rapport",
+    "PROMPT_PLACEHOLDER": "Décrivez la situation, l'incident ou la préoccupation de sécurité que vous souhaitez analyser...",
+    "NO_REPORTS_FOUND": "Aucun rapport trouvé. Générez votre premier rapport pour commencer.",
+    "USER_LIMIT": "Utilisation du Forfait",
+    "USAGE_STATS": "Statistiques d'utilisation",
+    "USAGE_COUNTER": "{{current}} sur {{max}} rapports utilisés",
+    "USAGE_COUNTER_UNLIMITED": "{{current}} rapports utilisés ce mois-ci",
+    "UPGRADE_PLAN": "Mettre à Niveau",
+    "DATA_ACCESS": "Rapports Récents",
+    "REPORTS_SECTION": "Rapports Récents",
+    "NO_DATE": "Aucune date",
+    "REPORTS_THIS_MONTH": "rapports utilisés ce mois-ci",
+    "HEADER": {
+      "TITLE": "Panneau de contrôle",
+      "WELCOME": "Bonjour, {{name}}"
+    },
+    "STATS": {
+      "REPORTS_USAGE": "Utilisation des rapports IA",
+      "CURRENT_PLAN": "Plan actuel",
+      "ORGANIZATION": "Organisation"
+    },
+    "REPORT_GENERATOR": {
+      "TITLE": "Générateur de rapports IA",
+      "PROMPT_LABEL": "Décrivez la situation à analyser",
+      "PROMPT_PLACEHOLDER": "Ex: Décrivez en détail l'incident survenu sur la chaîne de montage B, incluant la date, l'heure, les équipements impliqués et les actions immédiates prises...",
+      "REPORT_TYPE_LABEL": "Type de rapport",
+      "BUTTON_IDLE": "🤖 Générer un rapport",
+      "BUTTON_GENERATING": "Analyse avec IA...",
+      "BUTTON_DISABLED_LIMIT": "Limite atteinte"
+    },
+    "RECENT_REPORTS": {
+      "TITLE": "Rapports récents",
+      "EMPTY_STATE_TITLE": "Votre premier rapport apparaîtra ici",
+      "EMPTY_STATE_SUBTITLE": "Utilisez le générateur IA pour commencer votre analyse de sécurité."
+    },
+    "GENERATE_AI_REPORT": "Générer un rapport IA",
+    "LATEST_REPORTS": "Derniers rapports",
+    "LOADING": "Chargement",
+    "NO_REPORTS": "Aucun rapport disponible pour le moment.",
+    "REPORT": "Rapport",
+    "NOTIFICATIONS": {
+      "SUCCESS_REPORT_GENERATED": "Rapport généré avec succès !",
+      "ERROR_LOADING_DATA": "Impossible de charger les données. Veuillez actualiser la page.",
+      "ERROR_GENERATING_REPORT": "Une erreur s'est produite lors de la génération du rapport. Réessayez.",
+      "ERROR_LIMIT_REACHED": "Vous avez atteint la limite de rapports de votre plan. Mettez à niveau pour un accès illimité."
+    },
+    "UPGRADE_BANNER": {
+      "TEXT": "Vous avez utilisé <strong>{{used}}</strong> sur <strong>{{limit}}</strong> rapports gratuits.",
+      "CTA": "Mettez à niveau maintenant pour un accès illimité et des fonctionnalités avancées."
+    },
+    "LOGOUT": "Déconnexion",
+    "CURRENT_PLAN": "Plan Actuel",
+    "POWERED_BY_AI": "Propulsé par Gemini AI",
+    "REPORT_TITLE": "Titre du Rapport",
+    "REPORT_TITLE_PLACEHOLDER": "Ex: Audit de Sécurité - Entrepôt 1",
+    "DETAILED_DESCRIPTION": "Description Détaillée",
+    "DESCRIPTION_PLACEHOLDER": "Décrivez la situation en détail, incluant lieu, date, personnes impliquées, circonstances, etc...",
+    "DESCRIPTION_TIP": "Soyez spécifique pour obtenir un rapport plus précis et détaillé.",
+    "ORGANIZATION": "Organisation",
+    "SELECT_ORGANIZATION": "Sélectionnez une organisation",
+    "REPORTS": "rapports",
+    "NO_REPORTS_DESC": "Générez votre premier rapport pour le voir ici.",
+    "AI_GENERATED": "Généré par IA",
+    "LIMIT_REACHED_DESC": "Vous avez atteint la limite de 5 rapports gratuits ce mois. Passez au premium pour continuer à générer des rapports illimités.",
+    "UPGRADE_MODAL_DESC": "Passez au plan Premium et obtenez un accès illimité à la génération de rapports IA, des modèles avancés et un support prioritaire.",
+    "VIEW_PLANS": "Voir les Plans"
+  },
+  "REPORT_TYPES": {
+    "INCIDENT": "Rapport d'incident",
+    "SAFETY": "Évaluation de sécurité",
+    "AUDIT": "Audit HSE",
+    "RISK": "Analyse de risque"
+  },
+  "SETUP": {
+    "TITLE": "Créez votre organisation",
+    "SUBTITLE": "Pour commencer, saisissez les détails de votre organisation. Vous pourrez inviter votre équipe ensuite.",
+    "ORG_NAME_LABEL": "Nom de l'organisation",
+    "ORG_NAME_PLACEHOLDER": "Ex: Entreprise ABC Ltée",
+    "ORG_TYPE_LABEL": "Type d'organisation",
+    "ORG_TYPES": {
+      "STARTUP": "Startup",
+      "SMB": "Petite/Moyenne Entreprise",
+      "ENTERPRISE": "Corporation"
+    },
+    "STARTER_PLAN_TITLE": "Votre Plan Starter inclut:",
+    "FEATURES": {
+      "REPORTS_PER_MONTH": "50 rapports IA par mois",
+      "UP_TO_USERS": "Jusqu'à 10 utilisateurs",
+      "ANALYTICS_DASHBOARD": "Tableau de bord analytique",
+      "EMAIL_SUPPORT": "Support par e-mail"
+    },
+    "CREATE_CONTINUE_BUTTON": "Créer et continuer",
+    "CREATING": "Création",
+    "ERRORS": {
+      "FIELD_REQUIRED": "Champ obligatoire",
+      "MIN_LENGTH": "Texte trop court"
+    }
+  }
+}
