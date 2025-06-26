@@ -1,0 +1,35 @@
+{
+  "angular.experimental-ivy": true,
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.associations": {
+    "*.html": "html"
+  },
+  "emmet.includeLanguages": {
+    "typescript": "html"
+  },
+  "angular.log": "verbose",
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.angular": true,
+    "**/coverage": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.angular": true,
+    "**/coverage": true
+  },
+  "eslint.workingDirectories": [
+    "./frontend"
+  ],
+  "typescript.preferences.noSemicolons": false,
+  "html.format.wrapAttributes": "force-aligned"
+}
