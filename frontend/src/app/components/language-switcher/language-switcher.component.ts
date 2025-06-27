@@ -1,4 +1,4 @@
-import { Component, computed, signal, WritableSignal, Signal } from '@angular/core';
+import { Component, computed, signal, WritableSignal, Signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,7 +15,7 @@ interface Language {
   templateUrl: './language-switcher.component.html',
   styleUrls: ['./language-switcher.component.css']
 })
-export class LanguageSwitcherComponent {
+export class LanguageSwitcherComponent implements OnInit {
   // Languages as a signal
   languages: Signal<Language[]> = signal([
     { code: 'pt', label: '🇵🇹', name: 'Português' },
@@ -41,6 +41,15 @@ export class LanguageSwitcherComponent {
   });
 
   constructor(private translate: TranslateService) {
+    // Add available languages
+    this.translate.addLangs(['pt', 'en', 'fr']);
+    this.translate.setDefaultLang('pt');
+  }
+
+  ngOnInit(): void {
+    // Detect browser language and set it if available
+    this.detectAndSetLanguage();
+    
     // Initialize current language from translate service
     const initialLang = this.translate.currentLang || this.translate.getDefaultLang() || 'pt';
     this.currentLang.set(initialLang);
@@ -49,6 +58,20 @@ export class LanguageSwitcherComponent {
     this.translate.onLangChange.subscribe(event => {
       this.currentLang.set(event.lang);
     });
+  }
+
+  private detectAndSetLanguage(): void {
+    // Get browser language
+    const browserLang = navigator.language || navigator.languages?.[0] || 'pt';
+    const shortLang = browserLang.split('-')[0]; // Get language code without region
+    
+    // Check if browser language is supported
+    const supportedLangs = ['pt', 'en', 'fr'];
+    const detectedLang = supportedLangs.includes(shortLang) ? shortLang : 'pt';
+    
+    // Set the detected language
+    this.translate.use(detectedLang);
+    console.log(`🌍 Browser language detected: ${browserLang}, using: ${detectedLang}`);
   }
 
   switchLanguage(lang: string): void {

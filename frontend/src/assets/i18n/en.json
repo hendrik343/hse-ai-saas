@@ -168,5 +168,17 @@
       "FIELD_REQUIRED": "Required field",
       "MIN_LENGTH": "Text too short"
     }
-  }
+  },
+  "TITLE": "The First AI Platform for Workplace Safety",
+  "UPLOAD_IMAGE": "Upload Image",
+  "TAKE_PHOTO": "Take Photo Now",
+  "ANALYZE": "Analyze",
+  "REPORT": "Report",
+  "RISK_LEVEL": "Risk Level",
+  "LAW_BROKEN": "Law Broken",
+  "DOWNLOAD_PDF": "Download PDF",
+  "CREATE_ACCOUNT": "Create Free Account",
+  "LOGIN": "Login",
+  "LANGUAGE": "Language",
+  "NO_ACCOUNT_NEEDED": "No account, no hassle. Try our AI with 1 image for free."
 }

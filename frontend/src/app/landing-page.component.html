@@ -8,6 +8,11 @@
   </div>
 
   <div class="linear-landing-card">
+    <!-- Language Switcher -->
+    <div class="language-switcher-container">
+      <app-language-switcher></app-language-switcher>
+    </div>
+
     <!-- Hero Section -->
     <div class="hero-section">
       <div class="logo-container">
@@ -15,7 +20,7 @@
       </div>
       
       <h1 class="linear-landing-title">
-        A Primeira Plataforma de AI em Segurança no Trabalho
+        {{ 'TITLE' | translate }}
       </h1>
       
       <p class="linear-landing-subtitle">
@@ -24,11 +29,11 @@
       
       <button class="linear-landing-btn primary-btn" routerLink="/try">
         <span class="btn-icon">📸</span>
-        Tirar Foto Agora
+        {{ 'TAKE_PHOTO' | translate }}
       </button>
       
       <p class="linear-landing-desc">
-        Sem conta, sem complicações. Testa grátis com 1 foto e vê o que o nosso AI detecta.
+        {{ 'NO_ACCOUNT_NEEDED' | translate }}
       </p>
     </div>
 

@@ -11,6 +11,7 @@ import {
 import { Auth, user } from '@angular/fire/auth';
 import { FirestoreService } from '../services/firestore.service';
 import { AIAnalysisReport } from '../types/firestore.types';
+import { TranslateModule } from '@ngx-translate/core';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -35,7 +36,7 @@ interface AnalysisResult {
 @Component({
   selector: 'app-ai-analyze',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './ai-analyze.component.html',
   styleUrls: ['./ai-analyze.component.scss']
 })
