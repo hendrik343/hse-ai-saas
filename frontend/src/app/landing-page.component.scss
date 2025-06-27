@@ -9,6 +9,14 @@
   position: relative;
 }
 
+// Language switcher container
+.language-switcher-container {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 20;
+}
+
 // Floating background elements
 .floating-elements {
   position: absolute;

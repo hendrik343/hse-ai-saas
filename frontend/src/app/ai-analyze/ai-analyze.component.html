@@ -17,7 +17,7 @@
         
         <div *ngIf="!selectedFile" class="upload-placeholder">
           <div class="upload-icon">📸</div>
-          <h3>Carrega ou arrasta uma foto</h3>
+          <h3>{{ 'UPLOAD_IMAGE' | translate }}</h3>
           <p>O nosso AI vai analisar automaticamente a segurança no trabalho</p>
           <input type="file" 
                  #fileInput 
@@ -36,7 +36,7 @@
             <p class="file-size">{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
           </div>
           <button class="analyze-btn" (click)="startAnalysis()" [disabled]="isAnalyzing">
-            <span *ngIf="!isAnalyzing">🔍 Analisar com AI</span>
+            <span *ngIf="!isAnalyzing">{{ 'ANALYZE' | translate }}</span>
             <span *ngIf="isAnalyzing">⏳ A analisar...</span>
           </button>
         </div>
@@ -102,7 +102,7 @@
 
       <!-- Risk Level -->
       <div class="risk-section">
-        <h3>Nível de Risco</h3>
+        <h3>{{ 'RISK_LEVEL' | translate }}</h3>
         <div class="risk-indicator" [class]="'risk-' + analysisResult.risk.level">
           <span class="risk-level">{{ analysisResult.risk.level.toUpperCase() }}</span>
         </div>
@@ -126,7 +126,7 @@
 
       <!-- Legal Violations -->
       <div class="legal-section">
-        <h3>⚖️ Violações Legais</h3>
+        <h3>⚖️ {{ 'LAW_BROKEN' | translate }}</h3>
         <ul class="legal-list">
           <li *ngFor="let violation of analysisResult.legal.violations">{{ violation }}</li>
         </ul>
@@ -135,7 +135,7 @@
       <!-- Action Buttons -->
       <div class="action-buttons">
         <button class="download-btn" (click)="downloadPDF()">
-          📄 Baixar Relatório PDF
+          📄 {{ 'DOWNLOAD_PDF' | translate }}
         </button>
         
         <button *ngIf="!isTrialMode" class="dashboard-btn" (click)="goToDashboard()">
@@ -191,7 +191,7 @@
 
         <div class="cta-buttons">
           <button class="signup-btn primary" (click)="goToSignup()">
-            🎯 Criar Conta Grátis
+            🎯 {{ 'CREATE_ACCOUNT' | translate }}
           </button>
           <button class="pricing-btn secondary" (click)="goToPricing()">
             💰 Ver Preços

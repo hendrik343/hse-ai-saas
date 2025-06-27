@@ -128,5 +128,17 @@
       "FIELD_REQUIRED": "Champ obligatoire",
       "MIN_LENGTH": "Texte trop court"
     }
-  }
+  },
+  "TITLE": "La Première Plateforme d'IA pour la Sécurité au Travail",
+  "UPLOAD_IMAGE": "Télécharger une Image",
+  "TAKE_PHOTO": "Prendre une Photo Maintenant",
+  "ANALYZE": "Analyser",
+  "REPORT": "Rapport",
+  "RISK_LEVEL": "Niveau de Risque",
+  "LAW_BROKEN": "Loi Enfreinte",
+  "DOWNLOAD_PDF": "Télécharger le PDF",
+  "CREATE_ACCOUNT": "Créer un Compte Gratuit",
+  "LOGIN": "Connexion",
+  "LANGUAGE": "Langue",
+  "NO_ACCOUNT_NEEDED": "Pas de compte requis. Essayez notre IA avec 1 image gratuitement."
 }
