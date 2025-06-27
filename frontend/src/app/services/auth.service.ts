@@ -1,6 +1,6 @@
 // src/app/services/auth.service.ts
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { Auth, user, User } from '@angular/fire/auth';
+import { Auth, user, User, signInAnonymously } from '@angular/fire/auth';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap, of } from 'rxjs';
@@ -107,5 +107,19 @@ export class AuthService {
   isPremiumUser(): boolean {
     const profile = this.userProfile$();
     return profile?.subscriptionPlan === 'premium';
+  }
+
+  // Ensure anonymous authentication (similar to the user's code)
+  async ensureAnonymousAuth(): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user) {
+      try {
+        await signInAnonymously(this.auth);
+        console.log('Anonymous authentication successful');
+      } catch (error) {
+        console.error('Anonymous authentication failed:', error);
+        throw error;
+      }
+    }
   }
 }

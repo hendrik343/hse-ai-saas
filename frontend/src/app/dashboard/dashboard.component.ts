@@ -24,6 +24,8 @@ import { Report, ReportFormData, UserStats } from '../models/report.model';
 import { AuthService } from '../services/auth.service';
 import { CloudFunctionsService } from '../services/cloud-functions.service';
 import { ToastService } from '../services/toast.service';
+import { FirestoreService } from '../services/firestore.service';
+import { AIAnalysisReport } from '../types/firestore.types';
 
 // Component imports
 import { CommonModule } from '@angular/common';
@@ -47,6 +49,7 @@ export class DashboardComponent implements OnInit {
   private translate = inject(TranslateService);
   private cloudFunctions = inject(CloudFunctionsService);
   private toastService = inject(ToastService);
+  private firestoreService = inject(FirestoreService);
 
   // --- State Management with Signals ---
   
@@ -63,6 +66,12 @@ export class DashboardComponent implements OnInit {
   // Reports signal - automatically updates when data changes in Firestore
   reports = toSignal<Report[], Report[]>(
     this.getReportsForOrganization(),
+    { initialValue: [] }
+  );
+
+  // AI Analysis Reports signal
+  aiAnalysisReports = toSignal<AIAnalysisReport[], AIAnalysisReport[]>(
+    this.getAIAnalysisReports(),
     { initialValue: [] }
   );
 
@@ -215,6 +224,46 @@ export class DashboardComponent implements OnInit {
       id: profile.organizationId,
       name: profile.organizationName || 'Organization'
     } : null;
+  }
+
+  /**
+   * Gets AI analysis reports for the current user
+   */
+  private getAIAnalysisReports() {
+    return this.authService.userProfile$Observable.pipe(
+      switchMap(async (profile) => {
+        if (!profile) return [];
+
+        try {
+          const reports = await this.firestoreService.getUserAIAnalysisReports();
+          return reports;
+        } catch (error) {
+          console.error('Error fetching AI analysis reports:', error);
+          return [];
+        }
+      }),
+      catchError(error => {
+        console.error('Error in AI analysis reports stream:', error);
+        return of([]);
+      })
+    );
+  }
+
+  /**
+   * Load AI analysis reports manually (for refresh functionality)
+   */
+  async refreshAIAnalysisReports() {
+    try {
+      this.loading.set(true);
+      const reports = await this.firestoreService.getUserAIAnalysisReports();
+      // The signal will automatically update through the stream
+      this.toastService.showSuccess('Reports refreshed successfully');
+    } catch (error) {
+      console.error('Error refreshing AI analysis reports:', error);
+      this.toastService.showError('Failed to refresh reports');
+    } finally {
+      this.loading.set(false);
+    }
   }
 
   /**

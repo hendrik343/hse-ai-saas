@@ -9,6 +9,7 @@ import { AiAnalyzeComponent } from './ai-analyze/ai-analyze.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
+  { path: 'try', component: AiAnalyzeComponent },
   { path: 'onboarding', component: OnboardingComponent, canActivate: [authGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'pricing', component: PricingComponent, canActivate: [authGuard] },
