@@ -1,15 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { 
-  Firestore, 
-  collection, 
-  doc, 
-  addDoc, 
-  updateDoc,
-  serverTimestamp 
-} from '@angular/fire/firestore';
+import { Router, ActivatedRoute } from '@angular/router';
 import { 
   Storage, 
   ref, 
@@ -17,6 +9,8 @@ import {
   getDownloadURL 
 } from '@angular/fire/storage';
 import { Auth, user } from '@angular/fire/auth';
+import { FirestoreService } from '../services/firestore.service';
+import { AIAnalysisReport } from '../types/firestore.types';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -46,10 +40,11 @@ interface AnalysisResult {
   styleUrls: ['./ai-analyze.component.scss']
 })
 export class AiAnalyzeComponent implements OnInit {
-  private firestore = inject(Firestore);
   private storage = inject(Storage);
   private auth = inject(Auth);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private firestoreService = inject(FirestoreService);
 
   user$ = user(this.auth);
   
@@ -60,19 +55,32 @@ export class AiAnalyzeComponent implements OnInit {
   analysisResult: AnalysisResult | null = null;
   uploadProgress = 0;
   currentStep = 1;
+  
+  // New properties for the conversion flow
+  isTrialMode = false;
+  showSignupCTA = false;
+  reportId: string | null = null;
 
   ngOnInit() {
-    this.user$.subscribe((user) => {
-      if (!user) {
-        this.router.navigate(['/']);
-      }
+    // Check if this is trial mode (no auth required)
+    this.route.url.subscribe(segments => {
+      this.isTrialMode = segments.some(segment => segment.path === 'try');
     });
+
+    if (!this.isTrialMode) {
+      // Regular mode - require authentication
+      this.user$.subscribe((user) => {
+        if (!user) {
+          this.router.navigate(['/']);
+        }
+      });
+    }
   }
 
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
     const file = target.files?.[0];
-    if (file && file.type.startsWith('image/')) {
+    if (file && file.type?.startsWith('image/')) {
       this.selectedFile = file;
       this.createImagePreview(file);
     }
@@ -83,7 +91,7 @@ export class AiAnalyzeComponent implements OnInit {
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
       const file = files[0];
-      if (file.type.startsWith('image/')) {
+      if (file && file.type?.startsWith('image/')) {
         this.selectedFile = file;
         this.createImagePreview(file);
       }
@@ -91,9 +99,22 @@ export class AiAnalyzeComponent implements OnInit {
   }
 
   createImagePreview(file: File) {
+    if (!file || !file.type?.startsWith('image/')) {
+      console.error('Invalid file type selected');
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (e) => {
-      this.imagePreview = e.target?.result as string;
+      const result = e.target?.result as string;
+      if (result && result.startsWith('data:image/')) {
+        this.imagePreview = result;
+      } else {
+        console.error('Invalid image data');
+      }
+    ***REMOVED***
+    reader.onerror = () => {
+      console.error('Error reading file');
     ***REMOVED***
     reader.readAsDataURL(file);
   }
@@ -117,24 +138,53 @@ export class AiAnalyzeComponent implements OnInit {
       const pdfURL = await this.generatePDF(analysisResult);
       this.uploadProgress = 90;
 
-      // Step 4: Save to Firestore
-      await this.saveToFirestore(imageURL, analysisResult, pdfURL);
-      this.uploadProgress = 100;
+      // Step 4: Save to Firestore (if authenticated) or show results
+      if (this.isTrialMode) {
+        // In trial mode, just show results without saving
+        this.analysisResult = analysisResult;
+        this.analysisComplete = true;
+        this.currentStep = 3;
+        this.showSignupCTA = true;
+      } else {
+        // Regular mode - save to Firestore
+        await this.saveToFirestore(imageURL, analysisResult, pdfURL);
+        this.analysisResult = analysisResult;
+        this.analysisComplete = true;
+        this.currentStep = 3;
+      }
 
-      this.analysisResult = analysisResult;
-      this.analysisComplete = true;
-      this.currentStep = 3;
+      this.uploadProgress = 100;
 
     } catch (error) {
       console.error('Analysis failed:', error);
-      // Handle error appropriately
+      // Handle error appropriately - you might want to show a toast message
     } finally {
       this.isAnalyzing = false;
     }
   }
 
+  private async ensureUserAuthenticated(): Promise<void> {
+    const user = await this.user$.toPromise();
+    if (!user) {
+      // If no user, you could implement anonymous auth here
+      // For now, we'll throw an error
+      throw new Error('User must be authenticated to perform analysis');
+    }
+  }
+
   private async uploadImage(): Promise<string> {
     if (!this.selectedFile) throw new Error('No file selected');
+
+    if (this.isTrialMode) {
+      // In trial mode, create a temporary URL
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          resolve(e.target?.result as string);
+        ***REMOVED***
+        reader.readAsDataURL(this.selectedFile!);
+      });
+    }
 
     const user = await this.user$.toPromise();
     if (!user) throw new Error('User not authenticated');
@@ -197,6 +247,11 @@ export class AiAnalyzeComponent implements OnInit {
   }
 
   private async generatePDF(analysisResult: AnalysisResult): Promise<string> {
+    if (this.isTrialMode) {
+      // In trial mode, just return a placeholder URL
+      return 'trial-mode-pdf';
+    }
+
     const user = await this.user$.toPromise();
     if (!user) throw new Error('User not authenticated');
 
@@ -392,19 +447,19 @@ export class AiAnalyzeComponent implements OnInit {
   }
 
   private async saveToFirestore(imageURL: string, analysisResult: AnalysisResult, pdfURL: string) {
-    const user = await this.user$.toPromise();
-    if (!user) throw new Error('User not authenticated');
-
-    const uploadData = {
-      imageURL,
-      reportData: analysisResult,
-      pdfURL,
-      createdAt: serverTimestamp(),
-      userId: user.uid
-    ***REMOVED***
-
-    const uploadsRef = collection(this.firestore, `users/${user.uid}/uploads`);
-    await addDoc(uploadsRef, uploadData);
+    try {
+      const reportId = await this.firestoreService.saveAIAnalysisReport({
+        imageUrl: imageURL,
+        analysis: analysisResult,
+        pdfUrl: pdfURL,
+        email: null // You can modify this to include user email if needed
+      });
+      
+      console.log('Report saved successfully with ID:', reportId);
+    } catch (error) {
+      console.error('Error saving report to Firestore:', error);
+      throw error;
+    }
   }
 
   downloadPDF() {
@@ -455,5 +510,15 @@ export class AiAnalyzeComponent implements OnInit {
     this.analysisResult = null;
     this.uploadProgress = 0;
     this.currentStep = 1;
+    this.showSignupCTA = false;
+  }
+
+  // New methods for the conversion flow
+  goToSignup() {
+    this.router.navigate(['/onboarding']);
+  }
+
+  goToPricing() {
+    this.router.navigate(['/pricing']);
   }
 }

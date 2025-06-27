@@ -63,3 +63,32 @@ export interface HSEData {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface AIAnalysisReport {
+  id: string;
+  userId: string;
+  email: string | null;
+  imageUrl: string;
+  analysis: {
+    compliance: {
+      score: number;
+      issues: string[];
+      recommendations: string[];
+    ***REMOVED***
+    risk: {
+      level: 'low' | 'medium' | 'high';
+      factors: string[];
+      mitigation: string[];
+    ***REMOVED***
+    legal: {
+      violations: string[];
+      requirements: string[];
+      penalties: string[];
+    ***REMOVED***
+  ***REMOVED***
+  pdfUrl: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  status: 'completed' | 'processing' | 'failed';
+  type: 'ai_analysis';
+}

@@ -16,7 +16,7 @@ import {
 } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
-import { Organization, UserProfile, HSEReport, HSEData } from '../types/firestore.types';
+import { Organization, UserProfile, HSEReport, HSEData, AIAnalysisReport } from '../types/firestore.types';
 
 @Injectable({
   providedIn: 'root'
@@ -159,5 +159,63 @@ export class FirestoreService {
     
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Organization));
+  }
+
+  // AI Analysis Reports methods
+  async saveAIAnalysisReport(reportData: {
+    imageUrl: string;
+    analysis: AIAnalysisReport['analysis'];
+    pdfUrl?: string;
+    email?: string | null;
+  }): Promise<string> {
+    const user = this.auth.currentUser;
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+
+    const reportRef = doc(collection(this.firestore, 'reports'));
+    const report: AIAnalysisReport = {
+      id: reportRef.id,
+      userId: user.uid,
+      email: reportData.email || null,
+      imageUrl: reportData.imageUrl,
+      analysis: reportData.analysis,
+      pdfUrl: reportData.pdfUrl || null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      status: 'completed',
+      type: 'ai_analysis'
+    ***REMOVED***
+
+    await setDoc(reportRef, report);
+    return reportRef.id;
+  }
+
+  // Get AI analysis reports for a user
+  async getUserAIAnalysisReports(): Promise<AIAnalysisReport[]> {
+    const user = this.auth.currentUser;
+    if (!user) return [];
+
+    const reportsCollection = collection(this.firestore, 'reports');
+    const q = query(
+      reportsCollection, 
+      where('userId', '==', user.uid),
+      where('type', '==', 'ai_analysis'),
+      orderBy('createdAt', 'desc')
+    );
+    
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as AIAnalysisReport));
+  }
+
+  // Get AI analysis report by ID
+  async getAIAnalysisReport(reportId: string): Promise<AIAnalysisReport | null> {
+    const reportRef = doc(this.firestore, 'reports', reportId);
+    const reportSnap = await getDoc(reportRef);
+    
+    if (reportSnap.exists()) {
+      return { id: reportSnap.id, ...reportSnap.data() } as AIAnalysisReport;
+    }
+    return null;
   }
 }
