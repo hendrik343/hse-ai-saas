@@ -9,7 +9,7 @@
 }
 .linear-landing-card {
   background: rgba(36, 37, 46, 0.85);
-  box-shadow: 0 8px 40px #000a, 0 1.5px 8px #2563eb33;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   border-radius: 2rem;
   padding: 3rem 2.5rem;
   max-width: 480px;
@@ -18,10 +18,10 @@
   flex-direction: column;
   align-items: center;
   transform: rotate(-6deg);
+  border: 1.5px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(8px);
-  border: 1.5px solid #23232b;
 }
-.linear-title {
+.linear-landing-title {
   font-size: 2.7rem;
   font-weight: 900;
   color: #fff;
@@ -30,35 +30,36 @@
   letter-spacing: -1px;
   text-shadow: 0 4px 24px #0008;
 }
-.linear-subtitle {
+.linear-landing-subtitle {
   font-size: 1.4rem;
-  color: #a3a3a3;
+  color: #cbd5e1;
   text-align: center;
   margin-bottom: 2rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-.linear-btn {
-  background: linear-gradient(90deg, #5e5ce6 0%, #2563eb 100%);
+.linear-landing-btn {
+  background: linear-gradient(90deg, #5E5CE6 0%, #2563eb 100%);
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  padding: 1.1rem 2.5rem;
+  padding: 1.25rem 2.5rem;
   border: none;
   border-radius: 1.5rem;
-  box-shadow: 0 2px 16px #2563eb44;
+  box-shadow: 0 2px 16px #5E5CE644;
   cursor: pointer;
   margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
   transition: background 0.2s, transform 0.2s;
 }
-.linear-btn:hover {
-  background: linear-gradient(90deg, #2563eb 0%, #5e5ce6 100%);
+.linear-landing-btn:hover {
+  background: linear-gradient(90deg, #2563eb 0%, #5E5CE6 100%);
   transform: scale(1.04);
 }
-.linear-desc {
+.linear-landing-desc {
   font-size: 1.1rem;
-  color: #cbd5e1;
+  color: #a0aec0;
   text-align: center;
   max-width: 400px;
 }
@@ -70,7 +71,7 @@
     padding: 2rem 1rem;
     max-width: 98vw;
   }
-  .linear-title {
+  .linear-landing-title {
     font-size: 2rem;
   }
 }
