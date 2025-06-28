@@ -63,6 +63,26 @@
         </button>
       </div>
     </div>
+
+    <form *ngIf="!country || !industry" (ngSubmit)="startAnalysis()" class="country-industry-form">
+      <label>País:
+        <select [(ngModel)]="country" name="country" required>
+          <option value="" disabled selected>Selecione o país</option>
+          <option value="pt">Portugal</option>
+          <option value="ao">Angola</option>
+          <option value="br">Brasil</option>
+        </select>
+      </label>
+      <label>Indústria:
+        <select [(ngModel)]="industry" name="industry" required>
+          <option value="" disabled selected>Selecione a indústria</option>
+          <option value="construction">Construção</option>
+          <option value="hospital">Hospitalar</option>
+          <option value="petroleum">Petróleo e Gás</option>
+        </select>
+      </label>
+      <button type="submit">Começar análise</button>
+    </form>
   </div>
 
   <!-- Error Display -->
