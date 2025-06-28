@@ -1,0 +1,10 @@
+<div class="report-list">
+  <h2>{{ 'REPORT.TITLE' | translate }}</h2>
+  <div *ngFor="let report of reports" class="report-card">
+    <img [src]="report.imageUrl" alt="Imagem Analisada">
+    <p><strong>{{ 'REPORT.LAW_BROKEN' | translate }}:</strong> {{ report.analysis.lei }}</p>
+    <p><strong>{{ 'REPORT.RISK_LEVEL' | translate }}:</strong> {{ report.analysis.risco }}</p>
+    <p><strong>{{ 'REPORT.REPORT' | translate }}:</strong> {{ report.analysis.relatorio }}</p>
+    <p><strong>{{ 'REPORT.DATE' | translate }}:</strong> {{ report.createdAt | date:'short' }}</p>
+  </div>
+</div>
