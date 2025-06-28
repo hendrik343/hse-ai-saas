@@ -5,13 +5,20 @@ import { Router, RouterOutlet } from '@angular/router';
 import { Auth, user, User } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { FluidCursorComponent } from './components/fluid-cursor/fluid-cursor.component';
+import { AuroraComponent } from './components/aurora/aurora.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet, FluidCursorComponent],
+  imports: [CommonModule, FormsModule, RouterOutlet, FluidCursorComponent, AuroraComponent],
   template: `
     <app-fluid-cursor></app-fluid-cursor>
+    <app-aurora 
+      [colorStops]="['#3A29FF', '#FF94B4', '#FF3232']"
+      [blend]="0.5"
+      [amplitude]="1.0"
+      [speed]="0.5"
+    ></app-aurora>
     <router-outlet></router-outlet>
   `,
   styles: []
