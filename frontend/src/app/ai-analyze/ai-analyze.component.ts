@@ -83,24 +83,34 @@ export class AiAnalyzeComponent implements OnInit {
   }
 
   onFileSelected(event: Event) {
+    console.log('File selected event triggered');
     const target = event.target as HTMLInputElement;
     const file = target.files?.[0];
+    console.log('Selected file:', file);
     if (file && file.type?.startsWith('image/')) {
       this.selectedFile = file;
       this.createImagePreview(file);
       this.error = null; // Clear previous errors
+      console.log('File processed successfully');
+    } else {
+      console.log('Invalid file type or no file selected');
     }
   }
 
   onFileDrop(event: DragEvent) {
+    console.log('File drop event triggered');
     event.preventDefault();
     const files = event.dataTransfer?.files;
+    console.log('Dropped files:', files);
     if (files && files.length > 0) {
       const file = files[0];
       if (file && file.type?.startsWith('image/')) {
         this.selectedFile = file;
         this.createImagePreview(file);
         this.error = null; // Clear previous errors
+        console.log('File dropped successfully');
+      } else {
+        console.log('Invalid file type dropped');
       }
     }
   }
@@ -301,21 +311,29 @@ export class AiAnalyzeComponent implements OnInit {
   }
 
   detectarNaoConformidades() {
+    console.log('Detectar não conformidades clicked');
     this.resultado = this.aiService.detectarNaoConformidades(this.imageData);
     this.relatorio.naoConformidades = this.resultado;
+    console.log('Resultado:', this.resultado);
   }
 
   verificarNormas() {
+    console.log('Verificar normas clicked');
     this.resultado = this.aiService.verificarNormas(this.imageData);
     this.relatorio.normas = this.resultado;
+    console.log('Resultado:', this.resultado);
   }
 
   analisarRisco() {
+    console.log('Analisar risco clicked');
     this.resultado = this.aiService.analisarRisco(this.imageData);
     this.relatorio.risco = this.resultado;
+    console.log('Resultado:', this.resultado);
   }
 
   gerarRelatorioPdf() {
+    console.log('Gerar relatório PDF clicked');
     this.pdfService.gerarRelatorioPdf(this.relatorio);
+    console.log('PDF generation completed');
   }
 }
