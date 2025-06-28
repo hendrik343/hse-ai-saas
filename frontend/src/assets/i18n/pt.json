@@ -14,15 +14,46 @@
   "BACK": "Voltar",
   "LANGUAGE": "Idioma",
   "NO_ACCOUNT_NEEDED": "Sem conta, sem complicações. Testa o nosso AI com 1 imagem grátis.",
+  "COMMON": {
+    "LOADING": "A carregar...",
+    "SAVE": "Guardar",
+    "CANCEL": "Cancelar",
+    "DELETE": "Eliminar",
+    "EDIT": "Editar",
+    "VIEW": "Ver",
+    "CLOSE": "Fechar",
+    "SUCCESS": "Sucesso",
+    "ERROR": "Erro",
+    "WARNING": "Aviso",
+    "INFO": "Informação"
+  },
   "REPORT": {
+    "LIST_TITLE": "Meus Relatórios",
+    "LIST_SUBTITLE": "Visualiza e gere os teus relatórios de análise de segurança",
     "TITLE": "Relatórios Gerados",
     "NO_REPORTS": "Ainda não tens nenhum relatório.",
+    "NO_REPORTS_DESC": "Cria o teu primeiro relatório fazendo upload de uma imagem para análise.",
+    "ID": "ID do Relatório",
+    "DATE": "Data de Criação",
+    "TYPE": "Tipo",
+    "PROMPT": "Pergunta/Descrição",
+    "RESPONSE": "Resposta da IA",
+    "ORGANIZATION": "Organização",
     "EMAIL": "Email do Utilizador",
     "LAW_BROKEN": "Lei Quebrada",
     "RISK_LEVEL": "Nível de Risco",
     "COMPLIANCE": "Conformidade",
     "YES": "Sim",
     "NO": "Não",
-    "CREATED_AT": "Data de Criação"
+    "CREATED_AT": "Data de Criação",
+    "DOWNLOAD_PDF": "Descarregar PDF",
+    "GENERATING_PDF": "A gerar PDF...",
+    "PDF_SUCCESS": "PDF gerado com sucesso!",
+    "PDF_ERROR": "Erro ao gerar PDF"
+  },
+  "THEME": {
+    "TOGGLE_DARK_MODE": "Alternar Modo Escuro",
+    "LIGHT_MODE": "Modo Claro",
+    "DARK_MODE": "Modo Escuro"
   }
 }
