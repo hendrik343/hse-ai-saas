@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
@@ -8,17 +9,33 @@ import { PdfService } from '../../services/pdf.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
+interface Organization {
+  id: string;
+  name: string;
+  nameEn: string;
+  nameFr: string;
+}
+
 @Component({
   selector: 'app-report-list',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './report-list.component.html',
   styleUrls: ['./report-list.component.scss']
 })
 export class ReportListComponent implements OnInit, OnDestroy {
   reports: Report[] = [];
+  filteredReports: Report[] = [];
   loading = true;
+  selectedOrganization: string = '';
   private subscription: Subscription = new Subscription();
+
+  organizations: Organization[] = [
+    { id: '', name: 'Todas as Organizações', nameEn: 'All Organizations', nameFr: 'Toutes les Organisations' },
+    { id: 'luena', name: 'Luena', nameEn: 'Luena', nameFr: 'Luena' },
+    { id: 'cabinda', name: 'Cabinda', nameEn: 'Cabinda', nameFr: 'Cabinda' },
+    { id: 'huambo', name: 'Huambo', nameEn: 'Huambo', nameFr: 'Huambo' }
+  ];
 
   constructor(
     private reportService: ReportService,
@@ -28,11 +45,23 @@ export class ReportListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.loadSelectedOrganization();
     this.loadReports();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  loadSelectedOrganization(): void {
+    const saved = localStorage.getItem('selectedOrganization');
+    if (saved) {
+      this.selectedOrganization = saved;
+    }
+  }
+
+  saveSelectedOrganization(): void {
+    localStorage.setItem('selectedOrganization', this.selectedOrganization);
   }
 
   loadReports(): void {
@@ -42,6 +71,7 @@ export class ReportListComponent implements OnInit, OnDestroy {
         this.reportService.getReportsByUser(user.uid).subscribe({
           next: (reports) => {
             this.reports = reports as Report[];
+            this.filterReports();
             this.loading = false;
           },
           error: (error) => {
@@ -51,6 +81,33 @@ export class ReportListComponent implements OnInit, OnDestroy {
           }
         })
       );
+    }
+  }
+
+  onOrganizationChange(): void {
+    this.saveSelectedOrganization();
+    this.filterReports();
+  }
+
+  filterReports(): void {
+    if (!this.selectedOrganization) {
+      this.filteredReports = this.reports;
+    } else {
+      this.filteredReports = this.reports.filter(report => 
+        report.organizationId === this.selectedOrganization
+      );
+    }
+  }
+
+  getOrganizationName(org: Organization): string {
+    const currentLang = localStorage.getItem('language') || 'pt';
+    switch (currentLang) {
+      case 'en':
+        return org.nameEn;
+      case 'fr':
+        return org.nameFr;
+      default:
+        return org.name;
     }
   }
 
