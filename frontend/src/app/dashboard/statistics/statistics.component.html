@@ -1,0 +1,149 @@
+<div class="statistics-container">
+  <!-- Header -->
+  <div class="statistics-header">
+    <h1 class="statistics-title">{{ 'STATISTICS.DASHBOARD_STATISTICS' | translate }}</h1>
+    <p class="statistics-subtitle">{{ 'STATISTICS.ANALYTICS_OVERVIEW' | translate }}</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>{{ 'STATISTICS.LOADING_STATISTICS' | translate }}</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <div class="error-icon">⚠️</div>
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-btn" (click)="loadReports()">
+      {{ 'STATISTICS.RETRY' | translate }}
+    </button>
+  </div>
+
+  <!-- Statistics Content -->
+  <div *ngIf="!loading && !error" class="statistics-content">
+    <!-- Key Metrics Cards -->
+    <div class="metrics-grid">
+      <div class="metric-card total-reports">
+        <div class="metric-icon">📊</div>
+        <div class="metric-content">
+          <h3 class="metric-value">{{ totalReports }}</h3>
+          <p class="metric-label">{{ 'STATISTICS.TOTAL_REPORTS' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="metric-card high-risk">
+        <div class="metric-icon">🔴</div>
+        <div class="metric-content">
+          <h3 class="metric-value">{{ highRiskReports }}</h3>
+          <p class="metric-label">{{ 'STATISTICS.HIGH_RISK_REPORTS' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="metric-card medium-risk">
+        <div class="metric-icon">🟡</div>
+        <div class="metric-content">
+          <h3 class="metric-value">{{ mediumRiskReports }}</h3>
+          <p class="metric-label">{{ 'STATISTICS.MEDIUM_RISK_REPORTS' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="metric-card low-risk">
+        <div class="metric-icon">🟢</div>
+        <div class="metric-content">
+          <h3 class="metric-value">{{ lowRiskReports }}</h3>
+          <p class="metric-label">{{ 'STATISTICS.LOW_RISK_REPORTS' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="metric-card avg-risk">
+        <div class="metric-icon">📈</div>
+        <div class="metric-content">
+          <h3 class="metric-value">{{ averageRiskScore }}/10</h3>
+          <p class="metric-label">{{ 'STATISTICS.AVERAGE_RISK_SCORE' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="metric-card compliance">
+        <div class="metric-icon">✅</div>
+        <div class="metric-content">
+          <h3 class="metric-value">{{ totalReports > 0 ? ((lowRiskReports / totalReports) * 100).toFixed(1) : 0 }}%</h3>
+          <p class="metric-label">{{ 'STATISTICS.COMPLIANCE_RATE' | translate }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+      <div class="charts-grid">
+        <!-- Reports by Organization Chart -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3>{{ 'STATISTICS.REPORTS_BY_ORGANIZATION' | translate }}</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas #reportsChart></canvas>
+          </div>
+        </div>
+
+        <!-- Risk Distribution Chart -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3>{{ 'STATISTICS.RISK_DISTRIBUTION' | translate }}</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas #riskChart></canvas>
+          </div>
+        </div>
+
+        <!-- Trend Chart -->
+        <div class="chart-container full-width">
+          <div class="chart-header">
+            <h3>{{ 'STATISTICS.REPORTS_TREND_LAST_7_DAYS' | translate }}</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas #trendChart></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insights Section -->
+    <div class="insights-section">
+      <h2>{{ 'STATISTICS.KEY_INSIGHTS' | translate }}</h2>
+      <div class="insights-grid">
+        <div class="insight-card" *ngIf="highRiskReports > 0">
+          <div class="insight-icon">⚠️</div>
+          <div class="insight-content">
+            <h4>{{ 'STATISTICS.HIGH_RISK_ALERT' | translate }}</h4>
+            <p>{{ 'STATISTICS.HIGH_RISK_INSIGHT' | translate: { count: highRiskReports } }}</p>
+          </div>
+        </div>
+
+        <div class="insight-card" *ngIf="averageRiskScore > 7">
+          <div class="insight-icon">📊</div>
+          <div class="insight-content">
+            <h4>{{ 'STATISTICS.RISK_SCORE_ALERT' | translate }}</h4>
+            <p>{{ 'STATISTICS.RISK_SCORE_INSIGHT' | translate: { score: averageRiskScore } }}</p>
+          </div>
+        </div>
+
+        <div class="insight-card" *ngIf="totalReports > 10">
+          <div class="insight-icon">📈</div>
+          <div class="insight-content">
+            <h4>{{ 'STATISTICS.ACTIVITY_INSIGHT' | translate }}</h4>
+            <p>{{ 'STATISTICS.ACTIVITY_INSIGHT_TEXT' | translate: { count: totalReports } }}</p>
+          </div>
+        </div>
+
+        <div class="insight-card" *ngIf="lowRiskReports > highRiskReports">
+          <div class="insight-icon">🎉</div>
+          <div class="insight-content">
+            <h4>{{ 'STATISTICS.POSITIVE_TREND' | translate }}</h4>
+            <p>{{ 'STATISTICS.POSITIVE_TREND_TEXT' | translate }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
