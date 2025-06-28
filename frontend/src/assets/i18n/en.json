@@ -169,7 +169,7 @@
       "MIN_LENGTH": "Text too short"
     }
   },
-  "TITLE": "The First AI Platform for Workplace Safety",
+  "TITLE": "The First AI Workplace Safety Platform",
   "UPLOAD_IMAGE": "Upload Image",
   "TAKE_PHOTO": "Take Photo Now",
   "ANALYZE": "Analyze",
@@ -178,18 +178,36 @@
   "LAW_BROKEN": "Law Broken",
   "DOWNLOAD_PDF": "Download PDF",
   "CREATE_ACCOUNT": "Create Free Account",
-  "LOGIN": "Login",
+  "LOGIN": "Sign In",
   "LANGUAGE": "Language",
-  "NO_ACCOUNT_NEEDED": "No account, no hassle. Try our AI with 1 image for free.",
+  "NO_ACCOUNT_NEEDED": "No account, no complications. Test our AI with 1 free image.",
   "REPORT": {
+    "LIST_TITLE": "My Reports",
+    "LIST_SUBTITLE": "View and manage your safety analysis reports",
     "TITLE": "Generated Reports",
     "NO_REPORTS": "You don't have any reports yet.",
+    "NO_REPORTS_DESC": "Create your first report by uploading an image for analysis.",
+    "ID": "Report ID",
+    "DATE": "Creation Date",
+    "TYPE": "Type",
+    "PROMPT": "Question/Description",
+    "RESPONSE": "AI Response",
+    "ORGANIZATION": "Organization",
     "EMAIL": "User Email",
     "LAW_BROKEN": "Law Broken",
     "RISK_LEVEL": "Risk Level",
     "COMPLIANCE": "Compliance",
     "YES": "Yes",
     "NO": "No",
-    "CREATED_AT": "Created At"
+    "CREATED_AT": "Created At",
+    "DOWNLOAD_PDF": "Download PDF",
+    "GENERATING_PDF": "Generating PDF...",
+    "PDF_SUCCESS": "PDF generated successfully!",
+    "PDF_ERROR": "Error generating PDF"
+  },
+  "THEME": {
+    "TOGGLE_DARK_MODE": "Toggle Dark Mode",
+    "LIGHT_MODE": "Light Mode",
+    "DARK_MODE": "Dark Mode"
   }
 }
