@@ -1,6 +1,6 @@
 <div class="ai-analyze-container">
-  <!-- Step 1: File Upload -->
-  <div *ngIf="currentStep === 1" class="upload-section">
+  <!-- File Upload Section -->
+  <div *ngIf="!analysisComplete" class="upload-section">
     <div class="upload-card">
       <div class="upload-header">
         <h2 *ngIf="!isTrialMode">Análise AI de Segurança</h2>
@@ -17,7 +17,7 @@
         
         <div *ngIf="!selectedFile" class="upload-placeholder">
           <div class="upload-icon">📸</div>
-          <h3>{{ 'UPLOAD_IMAGE' | translate }}</h3>
+          <h3>Carregar Imagem</h3>
           <p>O nosso AI vai analisar automaticamente a segurança no trabalho</p>
           <input type="file" 
                  #fileInput 
@@ -36,62 +36,36 @@
             <p class="file-size">{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
           </div>
           <button class="analyze-btn" (click)="startAnalysis()" [disabled]="isAnalyzing">
-            <span *ngIf="!isAnalyzing">{{ 'ANALYZE' | translate }}</span>
+            <span *ngIf="!isAnalyzing">Analisar</span>
             <span *ngIf="isAnalyzing">⏳ A analisar...</span>
           </button>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Step 2: Analysis Progress -->
-  <div *ngIf="currentStep === 2" class="analysis-section">
-    <div class="analysis-card">
-      <div class="analysis-header">
-        <h2>🤖 Análise AI em Progresso</h2>
-        <p>O nosso AI está a analisar a tua imagem...</p>
-      </div>
-
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div class="progress-fill" [style.width.%]="uploadProgress"></div>
-        </div>
-        <p class="progress-text">{{ uploadProgress }}% completo</p>
-      </div>
-
-      <div class="analysis-steps">
-        <div class="step" [class.active]="uploadProgress >= 25">
-          <span class="step-icon">📤</span>
-          <span class="step-text">Upload da imagem</span>
-        </div>
-        <div class="step" [class.active]="uploadProgress >= 50">
-          <span class="step-icon">🧠</span>
-          <span class="step-text">Análise AI</span>
-        </div>
-        <div class="step" [class.active]="uploadProgress >= 75">
-          <span class="step-icon">📄</span>
-          <span class="step-text">Geração do relatório</span>
-        </div>
-        <div class="step" [class.active]="uploadProgress >= 100">
-          <span class="step-icon">✅</span>
-          <span class="step-text">Concluído</span>
-        </div>
+      <!-- Error Display -->
+      <div *ngIf="error" class="error-message">
+        <p>❌ {{ error }}</p>
       </div>
     </div>
   </div>
 
-  <!-- Step 3: Results -->
-  <div *ngIf="currentStep === 3 && analysisResult" class="results-section">
+  <!-- Analysis Results -->
+  <div *ngIf="analysisComplete && analysisResult" class="results-section">
     <div class="results-card">
       <div class="results-header">
         <h2>🎯 Resultados da Análise AI</h2>
         <p>Análise completa da segurança no trabalho</p>
       </div>
 
+      <!-- Image Preview -->
+      <div *ngIf="imageUrl" class="image-preview">
+        <img [src]="imageUrl" alt="Analyzed image" class="analyzed-image">
+      </div>
+
       <!-- Compliance Score -->
       <div class="score-section">
         <div class="score-circle">
-          <div class="score-number">{{ analysisResult.compliance.score }}%</div>
+          <div class="score-number">{{ analysisResult.complianceScore }}%</div>
           <div class="score-label">Compliance</div>
         </div>
         <div class="score-details">
@@ -100,19 +74,19 @@
         </div>
       </div>
 
-      <!-- Risk Level -->
-      <div class="risk-section">
-        <h3>{{ 'RISK_LEVEL' | translate }}</h3>
-        <div class="risk-indicator" [class]="'risk-' + analysisResult.risk.level">
-          <span class="risk-level">{{ analysisResult.risk.level.toUpperCase() }}</span>
-        </div>
+      <!-- Violations -->
+      <div class="violations-section">
+        <h3>⚠️ Violações Identificadas</h3>
+        <ul class="violations-list">
+          <li *ngFor="let violation of analysisResult.violations">{{ violation }}</li>
+        </ul>
       </div>
 
-      <!-- Issues -->
-      <div class="issues-section">
-        <h3>⚠️ Problemas Identificados</h3>
-        <ul class="issues-list">
-          <li *ngFor="let issue of analysisResult.compliance.issues">{{ issue }}</li>
+      <!-- Risks -->
+      <div class="risks-section">
+        <h3>💣 Riscos Identificados</h3>
+        <ul class="risks-list">
+          <li *ngFor="let risk of analysisResult.risks">{{ risk }}</li>
         </ul>
       </div>
 
@@ -120,29 +94,21 @@
       <div class="recommendations-section">
         <h3>✅ Recomendações</h3>
         <ul class="recommendations-list">
-          <li *ngFor="let rec of analysisResult.compliance.recommendations">{{ rec }}</li>
-        </ul>
-      </div>
-
-      <!-- Legal Violations -->
-      <div class="legal-section">
-        <h3>⚖️ {{ 'LAW_BROKEN' | translate }}</h3>
-        <ul class="legal-list">
-          <li *ngFor="let violation of analysisResult.legal.violations">{{ violation }}</li>
+          <li *ngFor="let rec of analysisResult.recommendations">{{ rec }}</li>
         </ul>
       </div>
 
       <!-- Action Buttons -->
       <div class="action-buttons">
         <button class="download-btn" (click)="downloadPDF()">
-          📄 {{ 'DOWNLOAD_PDF' | translate }}
+          📄 Baixar PDF
         </button>
         
         <button *ngIf="!isTrialMode" class="dashboard-btn" (click)="goToDashboard()">
           📊 Ir para Dashboard
         </button>
         
-        <button *ngIf="!isTrialMode" class="analyze-another-btn" (click)="analyzeAnother()">
+        <button class="analyze-another-btn" (click)="analyzeAnother()">
           🔄 Analisar Outra Foto
         </button>
       </div>
@@ -177,31 +143,42 @@
             <h4>Relatórios Profissionais</h4>
             <p>Exportação PDF e envio automático</p>
           </div>
-          <div class="feature">
-            <span class="feature-icon">💬</span>
-            <h4>Suporte Técnico</h4>
-            <p>Auditorias remotas com IA</p>
-          </div>
-          <div class="feature">
-            <span class="feature-icon">🔒</span>
-            <h4>Segurança Total</h4>
-            <p>Dados protegidos e privados</p>
-          </div>
         </div>
 
         <div class="cta-buttons">
           <button class="signup-btn primary" (click)="goToSignup()">
-            🎯 {{ 'CREATE_ACCOUNT' | translate }}
+            🎯 Criar Conta
           </button>
           <button class="pricing-btn secondary" (click)="goToPricing()">
             💰 Ver Preços
           </button>
         </div>
-
-        <p class="cta-footer">
-          ✨ Não exigimos cartão. Primeira análise profissional é por nossa conta.
-        </p>
       </div>
+    </div>
+  </div>
+
+  <!-- PDF Report Element (hidden) -->
+  <div id="analysis-report" style="display: none;">
+    <h1>Relatório de Análise HSE AI</h1>
+    <p><strong>Data:</strong> {{ currentDate | date:'dd/MM/yyyy HH:mm' }}</p>
+    
+    <div *ngIf="analysisResult">
+      <h2>Pontuação de Compliance: {{ analysisResult.complianceScore }}%</h2>
+      
+      <h3>Violations Identificadas:</h3>
+      <ul>
+        <li *ngFor="let violation of analysisResult.violations">{{ violation }}</li>
+      </ul>
+      
+      <h3>Riscos Identificados:</h3>
+      <ul>
+        <li *ngFor="let risk of analysisResult.risks">{{ risk }}</li>
+      </ul>
+      
+      <h3>Recomendações:</h3>
+      <ul>
+        <li *ngFor="let rec of analysisResult.recommendations">{{ rec }}</li>
+      </ul>
     </div>
   </div>
 </div>
