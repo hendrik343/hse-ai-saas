@@ -163,4 +163,14 @@ export class PdfService {
         return '#6b7280';
     }
   }
+
+  gerarRelatorioPdf(dados: any): void {
+    const texto = `\nAnálise AI:\n- Não conformidades: ${dados.naoConformidades}\n- Normas Violadas: ${dados.normas}\n- Risco: ${dados.risco}\n`;
+    const blob = new Blob([texto], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'relatorio-seguranca.pdf';
+    link.click();
+  }
 } 

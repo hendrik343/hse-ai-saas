@@ -184,4 +184,16 @@
       </div>
     </div>
   </div>
+
+  <div class="botao-lista">
+    <button (click)="detectarNaoConformidades()">🧠 Detecção Automática</button>
+    <button (click)="verificarNormas()">⚖️ Verificar Normas</button>
+    <button (click)="analisarRisco()">🔥 Análise de Risco</button>
+    <button (click)="gerarRelatorioPdf()">📄 Gerar Relatório PDF</button>
+  </div>
+
+  <div *ngIf="resultado" class="resultado">
+    <h3>Resultado:</h3>
+    <p>{{ resultado }}</p>
+  </div>
 </div>
