@@ -11,7 +11,7 @@ import { GridDistortionComponent } from './components/grid-distortion/grid-disto
   standalone: true,
   imports: [CommonModule, FormsModule, RouterOutlet, FluidCursorComponent, StarBorderComponent, GridDistortionComponent],
   template: `
-    <div style="width: 100%; height: 600px; position: relative;">
+    <div style="position: fixed; inset: 0; z-index: 0; width: 100vw; height: 100vh;">
       <app-grid-distortion
         imageSrc="https://picsum.photos/1920/1080?grayscale"
         [grid]="10"
@@ -22,15 +22,17 @@ import { GridDistortionComponent } from './components/grid-distortion/grid-disto
       ></app-grid-distortion>
     </div>
     <app-fluid-cursor></app-fluid-cursor>
-    <app-star-border 
-      color="cyan" 
-      speed="5s"
-      className="custom-class"
-    >
-      <button>Click me!</button>
-    </app-star-border>
     <router-outlet></router-outlet>
-  `
+  `,
+  styles: [`
+    :host {
+      display: block;
+      min-height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+    }
+  `]
 })
 export class AppComponent {
   title = 'frontend';
