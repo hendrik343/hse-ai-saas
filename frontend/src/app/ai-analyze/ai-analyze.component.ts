@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 
 // Services
 import { ImageService } from '../services/image.service';
-import { AiService, AiAnalysisResult } from '../services/ai.service';
+import { AiService, AiAnalysisResult, StreamingAnalysisResult } from '../services/ai.service';
 import { ReportService } from '../services/report.service';
 import { AuthService } from '../services/auth.service';
 
@@ -40,8 +40,14 @@ export class AiAnalyzeComponent implements OnInit {
   isAnalyzing = false;
   analysisComplete = false;
   analysisResult: AiAnalysisResult | null = null;
+  streamingResult: StreamingAnalysisResult | null = null;
   imageUrl: string | null = null;
   error: string | null = null;
+  
+  // Streaming state
+  streamingText = '';
+  isStreaming = false;
+  incidentDescription = '';
   
   // Trial mode
   isTrialMode = false;
@@ -110,6 +116,60 @@ export class AiAnalyzeComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  // New streaming analysis method
+  async startStreamingAnalysis() {
+    if (!this.incidentDescription.trim()) {
+      this.error = this.translate.instant('PLEASE_ENTER_INCIDENT_DESCRIPTION');
+      return;
+    }
+
+    this.isStreaming = true;
+    this.isAnalyzing = true;
+    this.error = null;
+    this.analysisComplete = false;
+    this.streamingText = '';
+    this.streamingResult = null;
+
+    try {
+      // Start streaming analysis
+      this.aiService.streamAnalysis(this.incidentDescription).subscribe({
+        next: (chunk) => {
+          this.streamingText = chunk;
+          console.log('Streaming chunk:', chunk);
+        },
+        complete: () => {
+          // Parse the final result
+          this.streamingResult = this.aiService.parseStreamingResult(this.streamingText);
+          if (this.streamingResult) {
+            // Convert to legacy format for compatibility
+            this.analysisResult = {
+              violations: this.streamingResult.violations,
+              risks: this.streamingResult.risks,
+              recommendations: this.streamingResult.recommendations,
+              complianceScore: this.streamingResult.complianceScore
+            ***REMOVED***
+          }
+          this.analysisComplete = true;
+          this.isStreaming = false;
+          this.isAnalyzing = false;
+          this.showSignupCTA = this.isTrialMode;
+        },
+        error: (err) => {
+          console.error('Streaming analysis failed:', err);
+          this.error = this.translate.instant('STREAMING_ANALYSIS_ERROR') + ': ' + err.message;
+          this.isStreaming = false;
+          this.isAnalyzing = false;
+        }
+      });
+    } catch (err: any) {
+      console.error('Analysis failed:', err);
+      this.error = this.translate.instant('ERROR_OCCURRED') + ': ' + err.message;
+      this.isStreaming = false;
+      this.isAnalyzing = false;
+    }
+  }
+
+  // Legacy image analysis method (kept for compatibility)
   async startAnalysis() {
     if (!this.selectedFile) return;
 
@@ -144,7 +204,7 @@ export class AiAnalyzeComponent implements OnInit {
   }
 
   async downloadPDF() {
-    if (!this.analysisResult) return;
+    if (!this.analysisResult && !this.streamingResult) return;
 
     try {
       const element = document.getElementById('analysis-report');
@@ -190,18 +250,43 @@ export class AiAnalyzeComponent implements OnInit {
     this.selectedFile = null;
     this.imagePreview = null;
     this.analysisResult = null;
+    this.streamingResult = null;
     this.analysisComplete = false;
     this.showSignupCTA = false;
     this.error = null;
     this.imageUrl = null;
     this.reportId = null;
+    this.streamingText = '';
+    this.incidentDescription = '';
+    this.isStreaming = false;
   }
 
   goToSignup() {
-    this.router.navigate(['/signup']);
+    this.router.navigate(['/']);
   }
 
   goToPricing() {
     this.router.navigate(['/pricing']);
+  }
+
+  // Helper method to get severity color
+  getSeverityColor(level: string): string {
+    const colors = {
+      'low': '#10B981',
+      'medium': '#F59E0B',
+      'high': '#EF4444',
+      'critical': '#DC2626'
+    ***REMOVED***
+    return colors[level as keyof typeof colors] || '#6B7280';
+  }
+
+  get hasRootCauses(): boolean {
+    return Array.isArray(this.streamingResult?.rootCauses) && this.streamingResult.rootCauses.length > 0;
+  }
+  get hasPreventiveActions(): boolean {
+    return Array.isArray(this.streamingResult?.preventiveActions) && this.streamingResult.preventiveActions.length > 0;
+  }
+  get hasComplianceNotes(): boolean {
+    return Array.isArray(this.streamingResult?.complianceNotes) && this.streamingResult.complianceNotes.length > 0;
   }
 }
