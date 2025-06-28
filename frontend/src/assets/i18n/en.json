@@ -180,5 +180,16 @@
   "CREATE_ACCOUNT": "Create Free Account",
   "LOGIN": "Login",
   "LANGUAGE": "Language",
-  "NO_ACCOUNT_NEEDED": "No account, no hassle. Try our AI with 1 image for free."
+  "NO_ACCOUNT_NEEDED": "No account, no hassle. Try our AI with 1 image for free.",
+  "REPORT": {
+    "TITLE": "Generated Reports",
+    "NO_REPORTS": "You don't have any reports yet.",
+    "EMAIL": "User Email",
+    "LAW_BROKEN": "Law Broken",
+    "RISK_LEVEL": "Risk Level",
+    "COMPLIANCE": "Compliance",
+    "YES": "Yes",
+    "NO": "No",
+    "CREATED_AT": "Created At"
+  }
 }
