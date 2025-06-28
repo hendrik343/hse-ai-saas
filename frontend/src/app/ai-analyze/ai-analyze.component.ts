@@ -67,10 +67,19 @@ export class AiAnalyzeComponent implements OnInit {
     risco: ''
   ***REMOVED***
 
+  intent: string = 'default';
+  country: string | null = null;
+  industry: string | null = null;
+
   ngOnInit() {
     // Check if this is trial mode (no auth required)
     this.route.url.subscribe(segments => {
       this.isTrialMode = segments.some(segment => segment.path === 'try');
+    });
+
+    // Read intent from query params
+    this.route.queryParams.subscribe(params => {
+      this.intent = params['intent'] || 'default';
     });
 
     if (!this.isTrialMode) {
@@ -138,6 +147,8 @@ export class AiAnalyzeComponent implements OnInit {
 
   // New streaming analysis method
   async startStreamingAnalysis() {
+    if (!this.country || !this.industry) return;
+
     if (!this.incidentDescription.trim()) {
       this.error = this.translate.instant('PLEASE_ENTER_INCIDENT_DESCRIPTION');
       return;
@@ -191,6 +202,8 @@ export class AiAnalyzeComponent implements OnInit {
 
   // Legacy image analysis method (kept for compatibility)
   async startAnalysis() {
+    if (!this.country || !this.industry) return;
+
     if (!this.selectedFile) return;
 
     this.isAnalyzing = true;
