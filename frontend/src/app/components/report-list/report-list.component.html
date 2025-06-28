@@ -1,10 +1,23 @@
 <div class="report-list">
   <h2>{{ 'REPORT.TITLE' | translate }}</h2>
-  <div *ngFor="let report of reports" class="report-card">
-    <img [src]="report.imageUrl" alt="Imagem Analisada">
-    <p><strong>{{ 'REPORT.LAW_BROKEN' | translate }}:</strong> {{ report.analysis.lei }}</p>
-    <p><strong>{{ 'REPORT.RISK_LEVEL' | translate }}:</strong> {{ report.analysis.risco }}</p>
-    <p><strong>{{ 'REPORT.REPORT' | translate }}:</strong> {{ report.analysis.relatorio }}</p>
-    <p><strong>{{ 'REPORT.DATE' | translate }}:</strong> {{ report.createdAt | date:'short' }}</p>
+
+  <div *ngIf="reports.length === 0" class="no-reports">
+    {{ 'REPORT.NO_REPORTS' | translate }}
+  </div>
+
+  <div class="report-card" *ngFor="let report of reports">
+    <img [src]="report.imageUrl" alt="Report Image" class="report-image" />
+
+    <div class="report-info">
+      <p><strong>{{ 'REPORT.EMAIL' | translate }}:</strong> {{ report.email }}</p>
+      <p><strong>{{ 'REPORT.LAW_BROKEN' | translate }}:</strong> {{ report.analysis.lei }}</p>
+      <p><strong>{{ 'REPORT.RISK_LEVEL' | translate }}:</strong> {{ report.analysis.risco }}</p>
+      <p><strong>{{ 'REPORT.COMPLIANCE' | translate }}:</strong>
+        <span [ngClass]="report.analysis.conformidade ? 'compliant' : 'non-compliant'">
+          {{ report.analysis.conformidade ? ('REPORT.YES' | translate) : ('REPORT.NO' | translate) }}
+        </span>
+      </p>
+      <p><strong>{{ 'REPORT.CREATED_AT' | translate }}:</strong> {{ report.createdAt | date: 'short' }}</p>
+    </div>
   </div>
 </div>

@@ -140,5 +140,16 @@
   "CREATE_ACCOUNT": "Créer un Compte Gratuit",
   "LOGIN": "Connexion",
   "LANGUAGE": "Langue",
-  "NO_ACCOUNT_NEEDED": "Pas de compte requis. Essayez notre IA avec 1 image gratuitement."
+  "NO_ACCOUNT_NEEDED": "Pas de compte requis. Essayez notre IA avec 1 image gratuitement.",
+  "REPORT": {
+    "TITLE": "Rapports Générés",
+    "NO_REPORTS": "Vous n'avez pas encore de rapports.",
+    "EMAIL": "Email de l'Utilisateur",
+    "LAW_BROKEN": "Loi Enfreinte",
+    "RISK_LEVEL": "Niveau de Risque",
+    "COMPLIANCE": "Conformité",
+    "YES": "Oui",
+    "NO": "Non",
+    "CREATED_AT": "Date de Création"
+  }
 }

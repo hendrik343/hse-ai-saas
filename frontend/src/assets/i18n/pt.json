@@ -13,5 +13,16 @@
   "NEXT": "Seguinte",
   "BACK": "Voltar",
   "LANGUAGE": "Idioma",
-  "NO_ACCOUNT_NEEDED": "Sem conta, sem complicações. Testa o nosso AI com 1 imagem grátis."
+  "NO_ACCOUNT_NEEDED": "Sem conta, sem complicações. Testa o nosso AI com 1 imagem grátis.",
+  "REPORT": {
+    "TITLE": "Relatórios Gerados",
+    "NO_REPORTS": "Ainda não tens nenhum relatório.",
+    "EMAIL": "Email do Utilizador",
+    "LAW_BROKEN": "Lei Quebrada",
+    "RISK_LEVEL": "Nível de Risco",
+    "COMPLIANCE": "Conformidade",
+    "YES": "Sim",
+    "NO": "Não",
+    "CREATED_AT": "Data de Criação"
+  }
 }
