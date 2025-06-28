@@ -11,6 +11,7 @@ import { ImageService } from '../services/image.service';
 import { AiService, AiAnalysisResult, StreamingAnalysisResult } from '../services/ai.service';
 import { ReportService } from '../services/report.service';
 import { AuthService } from '../services/auth.service';
+import { PdfService } from '../services/pdf.service';
 
 // PDF generation
 import jsPDF from 'jspdf';
@@ -31,6 +32,7 @@ export class AiAnalyzeComponent implements OnInit {
   private reportService = inject(ReportService);
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
+  private pdfService = inject(PdfService);
 
   // File handling
   selectedFile: File | null = null;
@@ -56,6 +58,14 @@ export class AiAnalyzeComponent implements OnInit {
 
   // Current date for PDF generation
   currentDate = new Date();
+
+  imageData: string = '';
+  resultado: string = '';
+  relatorio: any = {
+    naoConformidades: '',
+    normas: '',
+    risco: ''
+  ***REMOVED***
 
   ngOnInit() {
     // Check if this is trial mode (no auth required)
@@ -288,5 +298,24 @@ export class AiAnalyzeComponent implements OnInit {
   }
   get hasComplianceNotes(): boolean {
     return Array.isArray(this.streamingResult?.complianceNotes) && this.streamingResult.complianceNotes.length > 0;
+  }
+
+  detectarNaoConformidades() {
+    this.resultado = this.aiService.detectarNaoConformidades(this.imageData);
+    this.relatorio.naoConformidades = this.resultado;
+  }
+
+  verificarNormas() {
+    this.resultado = this.aiService.verificarNormas(this.imageData);
+    this.relatorio.normas = this.resultado;
+  }
+
+  analisarRisco() {
+    this.resultado = this.aiService.analisarRisco(this.imageData);
+    this.relatorio.risco = this.resultado;
+  }
+
+  gerarRelatorioPdf() {
+    this.pdfService.gerarRelatorioPdf(this.relatorio);
   }
 }

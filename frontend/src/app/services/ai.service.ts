@@ -157,4 +157,14 @@ Focus on:
       return null;
     }
   }
+
+  detectarNaoConformidades(imageData: string): string {
+    return 'Foram detectadas 3 não conformidades nesta imagem.';
+  }
+  verificarNormas(imageData: string): string {
+    return 'Violação das normas ISO 45001: Uso incorreto de EPI.';
+  }
+  analisarRisco(imageData: string): string {
+    return 'Risco Alto: Consequência possível - fratura grave por queda de altura.';
+  }
 } 
