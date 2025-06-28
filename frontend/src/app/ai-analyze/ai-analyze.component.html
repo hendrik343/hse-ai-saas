@@ -1,184 +1,187 @@
 <div class="ai-analyze-container">
-  <!-- File Upload Section -->
-  <div *ngIf="!analysisComplete" class="upload-section">
-    <div class="upload-card">
-      <div class="upload-header">
-        <h2 *ngIf="!isTrialMode">Análise AI de Segurança</h2>
-        <h2 *ngIf="isTrialMode">Teste Grátis - Análise AI</h2>
-        <p *ngIf="isTrialMode" class="trial-notice">
-          🎉 Teste grátis sem registo! Analisa 1 foto e vê o que o nosso AI detecta.
-        </p>
-      </div>
+  <!-- Header -->
+  <div class="analyze-header">
+    <h1 class="analyze-title">{{ 'AI_ANALYSIS' | translate }}</h1>
+    <p class="analyze-subtitle">{{ 'AI_ANALYSIS_DESCRIPTION' | translate }}</p>
+  </div>
 
-      <div class="upload-area" 
-           (dragover)="$event.preventDefault()" 
-           (drop)="onFileDrop($event)"
-           [class.has-file]="selectedFile">
-        
-        <div *ngIf="!selectedFile" class="upload-placeholder">
+  <!-- Analysis Input Section -->
+  <div class="input-section">
+    <!-- Incident Description Input -->
+    <div class="description-input">
+      <label for="incidentDescription" class="input-label">
+        {{ 'INCIDENT_DESCRIPTION' | translate }}
+      </label>
+      <textarea 
+        id="incidentDescription"
+        [(ngModel)]="incidentDescription" 
+        placeholder="{{ 'INCIDENT_DESCRIPTION_PLACEHOLDER' | translate }}"
+        class="description-textarea"
+        rows="4"
+      ></textarea>
+      <button 
+        (click)="startStreamingAnalysis()" 
+        [disabled]="isStreaming || !incidentDescription.trim()"
+        class="analyze-btn streaming-btn"
+      >
+        <span *ngIf="!isStreaming">🤖 {{ 'ANALYZE_WITH_AI' | translate }}</span>
+        <span *ngIf="isStreaming">⏳ {{ 'ANALYZING' | translate }}...</span>
+      </button>
+    </div>
+
+    <!-- OR Divider -->
+    <div class="divider">
+      <span>{{ 'OR' | translate }}</span>
+    </div>
+
+    <!-- Image Upload Section -->
+    <div class="image-upload-section">
+      <label for="fileInput" class="upload-label">
+        <div class="upload-area" 
+             (dragover)="$event.preventDefault()" 
+             (drop)="onFileDrop($event)"
+             [class.dragover]="false">
           <div class="upload-icon">📸</div>
-          <h3>Carregar Imagem</h3>
-          <p>O nosso AI vai analisar automaticamente a segurança no trabalho</p>
-          <input type="file" 
-                 #fileInput 
-                 (change)="onFileSelected($event)" 
-                 accept="image/*" 
-                 class="file-input">
-          <button class="upload-btn" (click)="fileInput.click()">
-            Escolher Ficheiro
-          </button>
+          <p class="upload-text">{{ 'UPLOAD_IMAGE' | translate }}</p>
+          <p class="upload-hint">{{ 'DRAG_DROP_OR_CLICK' | translate }}</p>
         </div>
-
-        <div *ngIf="selectedFile" class="file-preview">
-          <img [src]="imagePreview" alt="Preview" class="preview-image">
-          <div class="file-info">
-            <p class="file-name">{{ selectedFile.name }}</p>
-            <p class="file-size">{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
-          </div>
-          <button class="analyze-btn" (click)="startAnalysis()" [disabled]="isAnalyzing">
-            <span *ngIf="!isAnalyzing">Analisar</span>
-            <span *ngIf="isAnalyzing">⏳ A analisar...</span>
-          </button>
-        </div>
+      </label>
+      <input 
+        id="fileInput"
+        type="file" 
+        accept="image/*" 
+        (change)="onFileSelected($event)" 
+        class="file-input"
+      >
+      
+      <!-- Image Preview -->
+      <div *ngIf="imagePreview" class="image-preview">
+        <img [src]="imagePreview" alt="Preview" class="preview-image">
+        <button (click)="startAnalysis()" [disabled]="isAnalyzing" class="analyze-btn">
+          <span *ngIf="!isAnalyzing">🔍 {{ 'ANALYZE_IMAGE' | translate }}</span>
+          <span *ngIf="isAnalyzing">⏳ {{ 'ANALYZING' | translate }}...</span>
+        </button>
       </div>
+    </div>
+  </div>
 
-      <!-- Error Display -->
-      <div *ngIf="error" class="error-message">
-        <p>❌ {{ error }}</p>
+  <!-- Error Display -->
+  <div *ngIf="error" class="error-message">
+    <div class="error-icon">⚠️</div>
+    <p>{{ error }}</p>
+  </div>
+
+  <!-- Streaming Analysis Display -->
+  <div *ngIf="isStreaming && streamingText" class="streaming-section">
+    <div class="streaming-header">
+      <div class="streaming-indicator">
+        <div class="pulse-dot"></div>
+        <span>{{ 'ANALYZING_IN_REAL_TIME' | translate }}</span>
       </div>
+    </div>
+    <div class="streaming-content">
+      <pre class="streaming-text">{{ streamingText }}</pre>
     </div>
   </div>
 
   <!-- Analysis Results -->
-  <div *ngIf="analysisComplete && analysisResult" class="results-section">
-    <div class="results-card">
-      <div class="results-header">
-        <h2>🎯 Resultados da Análise AI</h2>
-        <p>Análise completa da segurança no trabalho</p>
-      </div>
+  <div *ngIf="analysisComplete && (analysisResult || streamingResult)" class="results-section" id="analysis-report">
+    <!-- Summary Section -->
+    <div *ngIf="streamingResult" class="result-card summary-card">
+      <h2 class="result-title">📋 {{ 'SUMMARY' | translate }}</h2>
+      <p class="summary-text">{{ streamingResult.summary }}</p>
+    </div>
 
-      <!-- Image Preview -->
-      <div *ngIf="imageUrl" class="image-preview">
-        <img [src]="imageUrl" alt="Analyzed image" class="analyzed-image">
+    <!-- Severity Section -->
+    <div *ngIf="streamingResult" class="result-card severity-card">
+      <h2 class="result-title">⚠️ {{ 'SEVERITY_ASSESSMENT' | translate }}</h2>
+      <div class="severity-info">
+        <span class="severity-level" [style.background-color]="getSeverityColor(streamingResult.severity.level)">
+          {{ streamingResult.severity.level.toUpperCase() }}
+        </span>
+        <p class="severity-justification">{{ streamingResult.severity.justification }}</p>
       </div>
+    </div>
 
-      <!-- Compliance Score -->
-      <div class="score-section">
-        <div class="score-circle">
-          <div class="score-number">{{ analysisResult.complianceScore }}%</div>
-          <div class="score-label">Compliance</div>
-        </div>
-        <div class="score-details">
-          <h3>Pontuação de Segurança</h3>
-          <p>Baseado na análise AI da tua imagem</p>
-        </div>
-      </div>
+    <!-- Root Causes -->
+    <div *ngIf="hasRootCauses" class="result-card">
+      <h2 class="result-title">🔍 {{ 'ROOT_CAUSES' | translate }}</h2>
+      <ul class="result-list">
+        <li *ngFor="let cause of streamingResult?.rootCauses || []" class="result-item">{{ cause }}</li>
+      </ul>
+    </div>
 
+    <!-- Preventive Actions -->
+    <div *ngIf="hasPreventiveActions" class="result-card">
+      <h2 class="result-title">🛡️ {{ 'PREVENTIVE_ACTIONS' | translate }}</h2>
+      <ul class="result-list">
+        <li *ngFor="let action of streamingResult?.preventiveActions || []" class="result-item">{{ action }}</li>
+      </ul>
+    </div>
+
+    <!-- Compliance Notes -->
+    <div *ngIf="hasComplianceNotes" class="result-card">
+      <h2 class="result-title">📋 {{ 'COMPLIANCE_NOTES' | translate }}</h2>
+      <ul class="result-list">
+        <li *ngFor="let note of streamingResult?.complianceNotes || []" class="result-item">{{ note }}</li>
+      </ul>
+    </div>
+
+    <!-- Legacy Results Display (for image analysis) -->
+    <div *ngIf="analysisResult && !streamingResult" class="legacy-results">
       <!-- Violations -->
-      <div class="violations-section">
-        <h3>⚠️ Violações Identificadas</h3>
-        <ul class="violations-list">
-          <li *ngFor="let violation of analysisResult.violations">{{ violation }}</li>
+      <div *ngIf="analysisResult.violations?.length" class="result-card">
+        <h2 class="result-title">🚨 {{ 'VIOLATIONS' | translate }}</h2>
+        <ul class="result-list">
+          <li *ngFor="let violation of analysisResult.violations" class="result-item">{{ violation }}</li>
         </ul>
       </div>
 
       <!-- Risks -->
-      <div class="risks-section">
-        <h3>💣 Riscos Identificados</h3>
-        <ul class="risks-list">
-          <li *ngFor="let risk of analysisResult.risks">{{ risk }}</li>
+      <div *ngIf="analysisResult.risks?.length" class="result-card">
+        <h2 class="result-title">⚠️ {{ 'RISKS' | translate }}</h2>
+        <ul class="result-list">
+          <li *ngFor="let risk of analysisResult.risks" class="result-item">{{ risk }}</li>
         </ul>
       </div>
 
       <!-- Recommendations -->
-      <div class="recommendations-section">
-        <h3>✅ Recomendações</h3>
-        <ul class="recommendations-list">
-          <li *ngFor="let rec of analysisResult.recommendations">{{ rec }}</li>
+      <div *ngIf="analysisResult.recommendations?.length" class="result-card">
+        <h2 class="result-title">💡 {{ 'RECOMMENDATIONS' | translate }}</h2>
+        <ul class="result-list">
+          <li *ngFor="let recommendation of analysisResult.recommendations" class="result-item">{{ recommendation }}</li>
         </ul>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="action-buttons">
-        <button class="download-btn" (click)="downloadPDF()">
-          📄 Baixar PDF
-        </button>
-        
-        <button *ngIf="!isTrialMode" class="dashboard-btn" (click)="goToDashboard()">
-          📊 Ir para Dashboard
-        </button>
-        
-        <button class="analyze-another-btn" (click)="analyzeAnother()">
-          🔄 Analisar Outra Foto
-        </button>
+      <!-- Compliance Score -->
+      <div *ngIf="analysisResult.complianceScore" class="result-card">
+        <h2 class="result-title">📊 {{ 'COMPLIANCE_SCORE' | translate }}</h2>
+        <div class="compliance-score">
+          <span class="score-value">{{ analysisResult.complianceScore }}%</span>
+        </div>
       </div>
     </div>
 
-    <!-- Signup CTA for Trial Mode -->
-    <div *ngIf="isTrialMode && showSignupCTA" class="signup-cta">
-      <div class="cta-card">
-        <div class="cta-header">
-          <h2>🚀 Queres mais análises?</h2>
-          <p>Desbloqueia o poder completo do nosso AI</p>
-        </div>
-
-        <div class="features-grid">
-          <div class="feature">
-            <span class="feature-icon">🧠</span>
-            <h4>+20 Análises com IA</h4>
-            <p>Análises ilimitadas com AI avançado</p>
-          </div>
-          <div class="feature">
-            <span class="feature-icon">📸</span>
-            <h4>Upload em Lote</h4>
-            <p>Analisa múltiplas fotos de uma vez</p>
-          </div>
-          <div class="feature">
-            <span class="feature-icon">📊</span>
-            <h4>Dashboards Personalizados</h4>
-            <p>Estatísticas por projeto e obra</p>
-          </div>
-          <div class="feature">
-            <span class="feature-icon">📤</span>
-            <h4>Relatórios Profissionais</h4>
-            <p>Exportação PDF e envio automático</p>
-          </div>
-        </div>
-
-        <div class="cta-buttons">
-          <button class="signup-btn primary" (click)="goToSignup()">
-            🎯 Criar Conta
-          </button>
-          <button class="pricing-btn secondary" (click)="goToPricing()">
-            💰 Ver Preços
-          </button>
-        </div>
-      </div>
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button (click)="downloadPDF()" class="action-btn download-btn">
+        📄 {{ 'DOWNLOAD_PDF' | translate }}
+      </button>
+      <button (click)="analyzeAnother()" class="action-btn analyze-another-btn">
+        🔄 {{ 'ANALYZE_ANOTHER' | translate }}
+      </button>
     </div>
   </div>
 
-  <!-- PDF Report Element (hidden) -->
-  <div id="analysis-report" style="display: none;">
-    <h1>Relatório de Análise HSE AI</h1>
-    <p><strong>Data:</strong> {{ currentDate | date:'dd/MM/yyyy HH:mm' }}</p>
-    
-    <div *ngIf="analysisResult">
-      <h2>Pontuação de Compliance: {{ analysisResult.complianceScore }}%</h2>
-      
-      <h3>Violations Identificadas:</h3>
-      <ul>
-        <li *ngFor="let violation of analysisResult.violations">{{ violation }}</li>
-      </ul>
-      
-      <h3>Riscos Identificados:</h3>
-      <ul>
-        <li *ngFor="let risk of analysisResult.risks">{{ risk }}</li>
-      </ul>
-      
-      <h3>Recomendações:</h3>
-      <ul>
-        <li *ngFor="let rec of analysisResult.recommendations">{{ rec }}</li>
-      </ul>
+  <!-- Signup CTA for Trial Mode -->
+  <div *ngIf="showSignupCTA" class="signup-cta">
+    <div class="cta-content">
+      <h3>{{ 'TRIAL_COMPLETE' | translate }}</h3>
+      <p>{{ 'TRIAL_COMPLETE_DESCRIPTION' | translate }}</p>
+      <div class="cta-buttons">
+        <button (click)="goToSignup()" class="cta-btn primary">{{ 'CREATE_ACCOUNT' | translate }}</button>
+        <button (click)="goToPricing()" class="cta-btn secondary">{{ 'VIEW_PLANS' | translate }}</button>
+      </div>
     </div>
   </div>
 </div>
