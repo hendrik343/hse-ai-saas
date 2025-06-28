@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { Auth, user, User } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
+import { FluidCursorComponent } from './components/fluid-cursor/fluid-cursor.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet],
+  imports: [CommonModule, FormsModule, RouterOutlet, FluidCursorComponent],
   template: `
+    <app-fluid-cursor></app-fluid-cursor>
     <router-outlet></router-outlet>
   `,
   styles: []
