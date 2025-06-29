@@ -58,6 +58,10 @@ export class AiAnalyzeComponent implements OnInit {
   // Current date for PDF generation
   currentDate = new Date();
 
+  // Progress tracking
+  uploadProgress = 0;
+  currentStep = 1;
+
   imageData: string = '';
   resultado: string = '';
   relatorio: any = {

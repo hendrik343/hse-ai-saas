@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { Report } from '../../models/report.model';
-import { ReportService } from '../../services/report.service';
-import { AuthService } from '../../services/auth.service';
-import { PdfService } from '../../services/pdf.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { Report } from '../../models/report.model';
+import { AuthService } from '../../services/auth.service';
+import { PdfService } from '../../services/pdf.service';
+import { ReportService } from '../../services/report.service';
 
 interface Organization {
   id: string;
@@ -42,7 +42,7 @@ export class ReportListComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private pdfService: PdfService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadSelectedOrganization();
@@ -93,7 +93,7 @@ export class ReportListComponent implements OnInit, OnDestroy {
     if (!this.selectedOrganization) {
       this.filteredReports = this.reports;
     } else {
-      this.filteredReports = this.reports.filter(report => 
+      this.filteredReports = this.reports.filter(report =>
         report.organizationId === this.selectedOrganization
       );
     }
@@ -109,6 +109,14 @@ export class ReportListComponent implements OnInit, OnDestroy {
       default:
         return org.name;
     }
+  }
+
+  getSelectedOrganizationName(): string {
+    if (!this.selectedOrganization) {
+      return '';
+    }
+    const org = this.organizations.find(o => o.id === this.selectedOrganization);
+    return org ? this.getOrganizationName(org) : this.selectedOrganization;
   }
 
   async downloadPDF(report: Report): Promise<void> {

@@ -7,39 +7,42 @@
   <!-- Filtro por Organização -->
   <div class="filter-section">
     <div class="filter-container">
-      <label for="organization-filter" class="filter-label">
+      <label for="organization-filter"
+             class="filter-label">
         {{ 'REPORT.FILTER_BY_ORGANIZATION' | translate }}:
       </label>
-      <select 
-        id="organization-filter"
-        [(ngModel)]="selectedOrganization" 
-        (ngModelChange)="onOrganizationChange()"
-        class="organization-select">
-        <option 
-          *ngFor="let org of organizations" 
-          [value]="org.id"
-          [selected]="org.id === selectedOrganization">
+      <select id="organization-filter"
+              [(ngModel)]="selectedOrganization"
+              (ngModelChange)="onOrganizationChange()"
+              class="organization-select">
+        <option *ngFor="let org of organizations"
+                [value]="org.id"
+                [selected]="org.id === selectedOrganization">
           {{ getOrganizationName(org) }}
         </option>
       </select>
     </div>
-    
-    <div class="filter-info" *ngIf="selectedOrganization">
+
+    <div class="filter-info"
+         *ngIf="selectedOrganization">
       <span class="filter-badge">
-        {{ 'REPORT.FILTERED_BY' | translate }}: 
-        <strong>{{ getOrganizationName(organizations.find(o => o.id === selectedOrganization)!) }}</strong>
+        {{ 'REPORT.FILTERED_BY' | translate }}:
+        <strong>{{ getSelectedOrganizationName() }}</strong>
         <span class="report-count">({{ filteredReports.length }} {{ 'REPORT.REPORTS' | translate }})</span>
       </span>
     </div>
   </div>
 
-  <div class="loading-container" *ngIf="loading">
+  <div class="loading-container"
+       *ngIf="loading">
     <div class="loading-spinner"></div>
     <p>{{ 'COMMON.LOADING' | translate }}</p>
   </div>
 
-  <div class="reports-grid" *ngIf="!loading">
-    <div class="report-card" *ngFor="let report of filteredReports">
+  <div class="reports-grid"
+       *ngIf="!loading">
+    <div class="report-card"
+         *ngFor="let report of filteredReports">
       <div class="report-header">
         <div class="report-id">
           <span class="label">{{ 'REPORT.ID' | translate }}:</span>
@@ -52,11 +55,13 @@
       </div>
 
       <div class="report-content">
-        <div class="report-title" *ngIf="report.title">
+        <div class="report-title"
+             *ngIf="report.title">
           <h3>{{ report.title }}</h3>
         </div>
-        
-        <div class="report-type" *ngIf="report.type">
+
+        <div class="report-type"
+             *ngIf="report.type">
           <span class="label">{{ 'REPORT.TYPE' | translate }}:</span>
           <span class="value">{{ report.type }}</span>
         </div>
@@ -71,33 +76,48 @@
           <p class="value">{{ report.response }}</p>
         </div>
 
-        <div class="report-organization" *ngIf="report.organizationId">
+        <div class="report-organization"
+             *ngIf="report.organizationId">
           <span class="label">{{ 'REPORT.ORGANIZATION' | translate }}:</span>
           <span class="value">{{ report.organizationId }}</span>
         </div>
       </div>
 
       <div class="report-actions">
-        <button 
-          class="btn btn-primary" 
-          (click)="downloadPDF(report)"
-          [title]="'REPORT.DOWNLOAD_PDF' | translate">
-          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        <button class="btn btn-primary"
+                (click)="downloadPDF(report)"
+                [title]="'REPORT.DOWNLOAD_PDF' | translate">
+          <svg class="icon"
+               fill="none"
+               stroke="currentColor"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+            </path>
           </svg>
           {{ 'REPORT.DOWNLOAD_PDF' | translate }}
         </button>
       </div>
     </div>
 
-    <div class="empty-state" *ngIf="filteredReports.length === 0">
+    <div class="empty-state"
+         *ngIf="filteredReports.length === 0">
       <div class="empty-icon">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        <svg fill="none"
+             stroke="currentColor"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+          </path>
         </svg>
       </div>
       <h3>{{ selectedOrganization ? 'REPORT.NO_REPORTS_FOR_ORGANIZATION' : 'REPORT.NO_REPORTS' | translate }}</h3>
-      <p>{{ selectedOrganization ? 'REPORT.NO_REPORTS_FOR_ORGANIZATION_DESC' : 'REPORT.NO_REPORTS_DESC' | translate }}</p>
+      <p>{{ selectedOrganization ? 'REPORT.NO_REPORTS_FOR_ORGANIZATION_DESC' : 'REPORT.NO_REPORTS_DESC' | translate }}
+      </p>
     </div>
   </div>
 </div>

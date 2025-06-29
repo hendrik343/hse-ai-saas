@@ -1,12 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AiAnalyzeComponent } from './ai-analyze.component';
-import { Router } from '@angular/router';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { Storage } from '@angular/fire/storage';
-import { Auth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { AiAnalyzeComponent } from './ai-analyze.component';
 
 describe('AiAnalyzeComponent', () => {
   let component: AiAnalyzeComponent;
@@ -20,8 +20,8 @@ describe('AiAnalyzeComponent', () => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     mockFirestore = jasmine.createSpyObj('Firestore', ['collection']);
     mockStorage = jasmine.createSpyObj('Storage', ['ref']);
-    mockAuth = jasmine.createSpyObj('Auth', [], { 
-      user: of(null) 
+    mockAuth = jasmine.createSpyObj('Auth', [], {
+      user: of(null)
     });
 
     await TestBed.configureTestingModule({
@@ -209,9 +209,9 @@ describe('AiAnalyzeComponent', () => {
     it('should not start analysis without file', () => {
       component.selectedFile = null;
       spyOn(component as any, 'uploadImage');
-      
+
       component.startAnalysis();
-      
+
       expect((component as any).uploadImage).not.toHaveBeenCalled();
     });
 
@@ -239,21 +239,31 @@ describe('AiAnalyzeComponent', () => {
   describe('PDF Generation', () => {
     it('should download PDF when analysis result exists', () => {
       const mockAnalysisResult = {
-        compliance: {
-          score: 85,
-          issues: ['Test issue'],
-          recommendations: ['Test recommendation']
+        summary: 'Test summary',
+        severity: {
+          level: 'Medium' as const,
+          justification: 'Test justification'
         },
-        risk: {
-          level: 'medium' as const,
-          factors: ['Test factor'],
-          mitigation: ['Test mitigation']
+        rootCauses: ['Test root cause'],
+        preventiveActions: ['Test preventive action'],
+        complianceNotes: ['Test compliance note'],
+        legalViolations: ['Test legal violation'],
+        pdfReport: {
+          title: 'AI Safety Analysis Report',
+          date: new Date().toISOString(),
+          sections: [
+            { title: 'Resumo', content: '...' },
+            { title: 'Gravidade e Justificação', content: '...' },
+            { title: 'Violações Legais', content: '...' },
+            { title: 'Causas Raiz', content: '...' },
+            { title: 'Ações Preventivas', content: '...' },
+            { title: 'Normas Aplicáveis', content: '...' }
+          ]
         },
-        legal: {
-          violations: ['Test violation'],
-          requirements: ['Test requirement'],
-          penalties: ['Test penalty']
-        }
+        violations: ['Test violation'],
+        risks: ['Test risk'],
+        recommendations: ['Test recommendation'],
+        complianceScore: 75
       ***REMOVED***
 
       component.analysisResult = mockAnalysisResult;
@@ -273,7 +283,7 @@ describe('AiAnalyzeComponent', () => {
           }
         }
       ***REMOVED***
-      
+
       spyOn(window as any, 'jsPDF').and.returnValue(mockPdf);
 
       component.downloadPDF();

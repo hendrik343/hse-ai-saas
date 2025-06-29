@@ -1,11 +1,9 @@
-import { Component, OnInit, inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Chart, ChartConfiguration, ChartData } from 'chart.js/auto';
-import { ReportService } from '../../services/report.service';
+import { Chart, ChartConfiguration } from 'chart.js/auto';
 import { AuthService } from '../../services/auth.service';
-import { Report } from '../../services/report.service';
-import { Observable } from 'rxjs';
+import { Report, ReportService } from '../../services/report.service';
 
 @Component({
   selector: 'app-statistics',
@@ -79,12 +77,12 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
 
   calculateStatistics() {
     this.totalReports = this.reports.length;
-    
+
     // Calculate risk levels based on analysis results
     this.highRiskReports = this.reports.filter(r => this.getRiskLevel(r) === 'high').length;
     this.mediumRiskReports = this.reports.filter(r => this.getRiskLevel(r) === 'medium').length;
     this.lowRiskReports = this.reports.filter(r => this.getRiskLevel(r) === 'low').length;
-    
+
     if (this.totalReports > 0) {
       const totalRiskScore = this.reports.reduce((sum, report) => sum + this.getRiskScore(report), 0);
       this.averageRiskScore = Math.round(totalRiskScore / this.totalReports);
@@ -95,11 +93,11 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
     // Determine risk level based on analysis results
     const analysis = report.analysis;
     if (!analysis) return 'low';
-    
+
     const violations = analysis.violations?.join(' ').toLowerCase() || '';
     const risks = analysis.risks?.join(' ').toLowerCase() || '';
     const allText = violations + ' ' + risks;
-    
+
     if (allText.includes('high risk') || allText.includes('critical') || allText.includes('immediate')) {
       return 'high';
     } else if (allText.includes('medium risk') || allText.includes('moderate')) {
@@ -113,22 +111,22 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
     // Calculate risk score based on analysis content
     const analysis = report.analysis;
     if (!analysis) return 0;
-    
+
     const violations = analysis.violations?.join(' ').toLowerCase() || '';
     const risks = analysis.risks?.join(' ').toLowerCase() || '';
     const allText = violations + ' ' + risks;
-    
+
     let score = 0;
     if (allText.includes('high risk') || allText.includes('critical')) score += 8;
     if (allText.includes('medium risk') || allText.includes('moderate')) score += 5;
     if (allText.includes('low risk') || allText.includes('minor')) score += 2;
     if (allText.includes('immediate')) score += 3;
     if (allText.includes('urgent')) score += 2;
-    
+
     // Add score based on compliance score
-    if (analysis.complianceScore < 50) score += 3;
-    else if (analysis.complianceScore < 70) score += 1;
-    
+    if (analysis.complianceScore && analysis.complianceScore < 50) score += 3;
+    else if (analysis.complianceScore && analysis.complianceScore < 70) score += 1;
+
     return Math.min(score, 10); // Cap at 10
   }
 
@@ -142,7 +140,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
     if (!this.reportsChartRef?.nativeElement) return;
 
     const orgData = this.getReportsByOrganization();
-    
+
     const config: ChartConfiguration = {
       type: 'doughnut',
       data: {
@@ -242,7 +240,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
     if (!this.trendChartRef?.nativeElement) return;
 
     const trendData = this.getReportsTrend();
-    
+
     const config: ChartConfiguration = {
       type: 'line',
       data: {
@@ -290,7 +288,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
 
   getReportsByOrganization() {
     const orgCounts: { [key: string]: number } = {***REMOVED***
-    
+
     this.reports.forEach(report => {
       const org = report.organizationId || 'Unknown';
       orgCounts[org] = (orgCounts[org] || 0) + 1;
