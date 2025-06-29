@@ -1,21 +1,20 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Auth, user } from '@angular/fire/auth';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 
 // Services
-import { ImageService } from '../services/image.service';
-import { AiService, AiAnalysisResult, StreamingAnalysisResult } from '../services/ai.service';
-import { ReportService } from '../services/report.service';
+import { AiAnalysisResult, AiService, StreamingAnalysisResult } from '../services/ai.service';
 import { AuthService } from '../services/auth.service';
+import { ImageService } from '../services/image.service';
 import { PdfService } from '../services/pdf.service';
+import { ReportService } from '../services/report.service';
 
 // PDF generation
-import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-ai-analyze',
@@ -37,7 +36,7 @@ export class AiAnalyzeComponent implements OnInit {
   // File handling
   selectedFile: File | null = null;
   imagePreview: string | null = null;
-  
+
   // Analysis state
   isAnalyzing = false;
   analysisComplete = false;
@@ -45,12 +44,12 @@ export class AiAnalyzeComponent implements OnInit {
   streamingResult: StreamingAnalysisResult | null = null;
   imageUrl: string | null = null;
   error: string | null = null;
-  
+
   // Streaming state
   streamingText = '';
   isStreaming = false;
   incidentDescription = '';
-  
+
   // Trial mode
   isTrialMode = false;
   showSignupCTA = false;
@@ -174,6 +173,17 @@ export class AiAnalyzeComponent implements OnInit {
           if (this.streamingResult) {
             // Convert to legacy format for compatibility
             this.analysisResult = {
+              summary: this.streamingResult.summary || 'N/A',
+              severity: this.streamingResult.severity || { level: 'Low', justification: 'N/A' },
+              rootCauses: this.streamingResult.rootCauses || [],
+              preventiveActions: this.streamingResult.preventiveActions || [],
+              complianceNotes: this.streamingResult.complianceNotes || [],
+              legalViolations: this.streamingResult.legalViolations || [],
+              pdfReport: this.streamingResult.pdfReport || {
+                title: 'AI Safety Analysis Report',
+                date: new Date().toISOString(),
+                sections: []
+              },
               violations: this.streamingResult.violations,
               risks: this.streamingResult.risks,
               recommendations: this.streamingResult.recommendations,
@@ -248,7 +258,7 @@ export class AiAnalyzeComponent implements OnInit {
 
       const canvas = await html2canvas(element);
       const imgData = canvas.toDataURL('image/png');
-      
+
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 210;
       const pageHeight = 295;
