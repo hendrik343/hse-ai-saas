@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
-body,
-:host {
+:host,
+body {
   font-family: 'Inter', sans-serif;
   background: #000;
   color: #fff;
@@ -10,83 +10,124 @@ body,
   padding: 0;
 }
 
-.hse-hero {
+.landing-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.landing-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.landing-content {
+  width: 100vw;
+  max-width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   text-align: center;
+  pointer-events: auto;
 }
 
-.hse-headline {
-  font-size: 2rem;
-  color: #00ff88;
-  margin-bottom: 0.2em;
+.health-safety-title {
+  font-size: 4rem;
   font-weight: 800;
+  color: #fff;
+  text-shadow: 2px 2px 16px #000, 0 4px 32px #000;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  line-height: 1.05;
 }
 
-.hse-subheadline {
-  font-size: 1.75rem;
+.headline {
+  font-size: 2.1rem;
   font-weight: 800;
-  margin-top: 0;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
 }
 
-.hse-desc {
-  color: #ccc;
-  margin: 0.8em 0;
+.headline .green {
+  color: #16ff7a;
 }
 
-.photo-button {
-  background-color: #00c26e;
-  border: none;
-  border-radius: 50px;
-  padding: 1em 2.5em;
+.subtitle {
   color: #fff;
   font-size: 1.1rem;
-  font-weight: 600;
+  margin-bottom: 1.5em;
+  margin-top: 0.5em;
+  font-weight: 400;
+}
+
+.cta-btn {
+  background: #16ff7a;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 2.5rem;
+  padding: 1.1rem 2.8rem;
+  margin: 1.2rem 0 0.7rem 0;
+  box-shadow: 0 2px 16px #16ff7a44;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  cursor: pointer;
-  margin-top: 1em;
-  box-shadow: 0 0 20px #00c26e66;
+  gap: 0.7em;
   transition: background 0.2s;
+  pointer-events: auto;
 }
 
-.photo-button:hover {
-  background-color: #00a65a;
+.cta-btn:hover {
+  background: #13d96a;
 }
 
-#country-select {
-  background-color: #111;
+.cta-btn .icon {
+  font-size: 1.7rem;
+  margin-right: 0.5rem;
+}
+
+.desc {
+  color: #ccc;
+  font-size: 1rem;
+  margin-bottom: 1.2em;
+}
+
+.country-select {
+  background: #111;
   color: #fff;
   border: 1px solid #333;
-  padding: 0.6em 1em;
-  border-radius: 10px;
-  margin-top: 1.2em;
-  font-size: 1rem;
-}
-
-.hse-footer {
-  margin-top: 2em;
-  font-size: 0.9rem;
-  color: #777;
+  padding: 0.7em 1.2em;
+  border-radius: 1.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 2.5em;
+  margin-top: 0.5em;
+  pointer-events: auto;
 }
 
 @media (max-width: 600px) {
-  .hse-headline {
-    font-size: 1.3rem;
+  .health-safety-title {
+    font-size: 2.1rem;
   }
 
-  .hse-subheadline {
+  .headline {
     font-size: 1.1rem;
   }
 
-  .photo-button {
+  .cta-btn {
     font-size: 1rem;
-    padding: 0.8em 1.5em;
+    padding: 0.7rem 1.2rem;
   }
 }
 

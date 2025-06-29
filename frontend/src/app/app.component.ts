@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet, Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { CardComponent, CardSwapComponent } from './components/card-swap/card-swap.component';
 import { FluidCursorComponent } from './components/fluid-cursor/fluid-cursor.component';
-import { CardSwapComponent, CardComponent } from './components/card-swap/card-swap.component';
 
 @Component({
   selector: 'app-root',
@@ -45,7 +45,15 @@ import { CardSwapComponent, CardComponent } from './components/card-swap/card-sw
 })
 export class AppComponent {
   title = 'frontend';
-  constructor(private router: Router) {}
+
+  // Auth properties
+  user$ = null;
+  registerEmail = '';
+  loginEmail = '';
+  loading = false;
+  error = null;
+
+  constructor(private router: Router) { }
   navigateToAnalysis(intent: string) {
     this.router.navigate(['/ai-analyze'], { queryParams: { intent } });
   }
