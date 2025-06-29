@@ -8,3 +8,54 @@
     <button class="hero-button">Get Started</button>
   </div>
 </div>
+
+<main class="hse-hero">
+  <h1 class="hse-headline">A Primeira Plataforma</h1>
+  <h2 class="hse-subheadline">de AI em Segurança no Trabalho.</h2>
+  <p class="hse-desc">⚠️ Tira uma foto. Nós analisamos. Tu resolves.</p>
+  <button class="photo-button"
+          (click)="onPhotoClick()"
+          aria-label="Tirar Foto Agora">
+    📷 Tirar Foto Agora
+  </button>
+  <p class="hse-desc">Sem conta, sem complicações. Testa grátis com 1 foto.</p>
+  <select id="country-select"
+          [(ngModel)]="selectedCountry"
+          aria-label="Selecionar País">
+    <option disabled
+            selected>País</option>
+    <option value="pt">Portugal</option>
+    <option value="ao">Angola</option>
+    <option value="br">Brasil</option>
+    <option value="cv">Cabo Verde</option>
+    <option value="mz">Moçambique</option>
+  </select>
+  <footer class="hse-footer">
+    Powered by Gemini API | &copy; 2025 HSE AI
+  </footer>
+
+  <!-- Photo Preview Modal -->
+  <div *ngIf="showPreview"
+       class="photo-modal-overlay"
+       tabindex="-1"
+       aria-modal="true"
+       role="dialog">
+    <div class="photo-modal">
+      <img [src]="previewImage"
+           alt="Pré-visualização da foto"
+           class="photo-preview" />
+      <div class="photo-modal-actions">
+        <button class="photo-button confirm"
+                (click)="confirmPhoto()"
+                [disabled]="loading">
+          <span *ngIf="!loading">Confirmar</span>
+          <span *ngIf="loading"
+                class="spinner"></span>
+        </button>
+        <button class="photo-button retake"
+                (click)="retakePhoto()"
+                [disabled]="loading">Retirar Foto</button>
+      </div>
+    </div>
+  </div>
+</main>
