@@ -1,6 +1,52 @@
 import { Injectable } from '@angular/core';
 import { GoogleGenAI } from '@google/genai';
+import { Observable, of } from 'rxjs';
 import type { AnalysisResult } from '../models/analysis.model';
+
+// Updated interfaces to match template and code usage
+export interface Severity {
+  level: 'Low' | 'Medium' | 'High' | 'Critical';
+  justification: string;
+}
+
+export interface PdfReportSection {
+  title: string;
+  content: string;
+}
+
+export interface PdfReport {
+  title: string;
+  date: string;
+  sections: PdfReportSection[];
+}
+
+export interface AiAnalysisResult {
+  summary: string;
+  severity: Severity;
+  rootCauses: string[];
+  preventiveActions: string[];
+  complianceNotes: string[];
+  legalViolations: string[];
+  pdfReport: PdfReport;
+  violations?: string[];
+  risks?: string[];
+  recommendations?: string[];
+  complianceScore?: number;
+}
+
+export interface StreamingAnalysisResult {
+  summary: string;
+  severity: Severity;
+  rootCauses: string[];
+  preventiveActions: string[];
+  complianceNotes: string[];
+  legalViolations: string[];
+  pdfReport: PdfReport;
+  violations?: string[];
+  risks?: string[];
+  recommendations?: string[];
+  complianceScore?: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AiService {
@@ -94,5 +140,82 @@ export class AiService {
       console.error('AI returned malformed JSON:', accumulated);
       throw new Error('A resposta da IA não está num formato válido. Reformula o conteúdo.');
     }
+  }
+
+  // Add missing methods that are being called
+  streamAnalysis(description: string): Observable<string> {
+    // Mock implementation - replace with actual streaming logic
+    return of('Mock streaming analysis result');
+  }
+
+  parseStreamingResult(text: string): StreamingAnalysisResult {
+    // Mock implementation - replace with actual parsing logic
+    return {
+      summary: 'Mock summary',
+      severity: { level: 'Medium', justification: 'Mock justification' },
+      rootCauses: ['Mock root cause'],
+      preventiveActions: ['Mock preventive action'],
+      complianceNotes: ['Mock compliance note'],
+      legalViolations: ['Mock legal violation'],
+      pdfReport: {
+        title: 'AI Safety Analysis Report',
+        date: new Date().toISOString(),
+        sections: [
+          { title: 'Resumo', content: '...' },
+          { title: 'Gravidade e Justificação', content: '...' },
+          { title: 'Violações Legais', content: '...' },
+          { title: 'Causas Raiz', content: '...' },
+          { title: 'Ações Preventivas', content: '...' },
+          { title: 'Normas Aplicáveis', content: '...' }
+        ]
+      },
+      violations: ['Mock violation'],
+      risks: ['Mock risk'],
+      recommendations: ['Mock recommendation'],
+      complianceScore: 75
+    ***REMOVED***
+  }
+
+  analyzeImageMock(imageUrl: string): Observable<AiAnalysisResult> {
+    // Mock implementation
+    return of({
+      summary: 'Mock image summary',
+      severity: { level: 'Low', justification: 'Mock image justification' },
+      rootCauses: ['Mock image root cause'],
+      preventiveActions: ['Mock image preventive action'],
+      complianceNotes: ['Mock image compliance note'],
+      legalViolations: ['Mock image legal violation'],
+      pdfReport: {
+        title: 'AI Safety Analysis Report',
+        date: new Date().toISOString(),
+        sections: [
+          { title: 'Resumo', content: '...' },
+          { title: 'Gravidade e Justificação', content: '...' },
+          { title: 'Violações Legais', content: '...' },
+          { title: 'Causas Raiz', content: '...' },
+          { title: 'Ações Preventivas', content: '...' },
+          { title: 'Normas Aplicáveis', content: '...' }
+        ]
+      },
+      violations: ['Mock image violation'],
+      risks: ['Mock image risk'],
+      recommendations: ['Mock image recommendation'],
+      complianceScore: 80
+    });
+  }
+
+  detectarNaoConformidades(imageData: string): string {
+    // Mock implementation
+    return 'Mock non-conformities detection result';
+  }
+
+  verificarNormas(imageData: string): string {
+    // Mock implementation
+    return 'Mock norms verification result';
+  }
+
+  analisarRisco(imageData: string): string {
+    // Mock implementation
+    return 'Mock risk analysis result';
   }
 } 
