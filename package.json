@@ -1,0 +1,91 @@
+{
+    "name": "hse-ai-saas",
+    "version": "1.0.0",
+    "description": "AI-Powered Workplace Safety Analysis Platform",
+    "main": "index.js",
+    "scripts": {
+        "start": "cd frontend && npm start",
+        "build": "cd frontend && npm run build",
+        "build:prod": "cd frontend && npm run build -- --configuration production",
+        "test": "cd frontend && npm run test",
+        "test:watch": "cd frontend && npm run test -- --watch",
+        "test:coverage": "cd frontend && npm run test -- --code-coverage",
+        "lint": "cd frontend && npm run lint",
+        "lint:fix": "cd frontend && npm run lint -- --fix",
+        "e2e": "cd frontend && npm run e2e",
+        "serve": "firebase emulators:start",
+        "deploy": "firebase deploy",
+        "deploy:hosting": "firebase deploy --only hosting",
+        "deploy:functions": "firebase deploy --only functions",
+        "deploy:firestore": "firebase deploy --only firestore:rules,firestore:indexes",
+        "clean": "rm -rf frontend/dist && rm -rf functions/lib && rm -rf functions-hse-ai/lib && rm -rf hendrik/lib",
+        "install:all": "npm install && cd frontend && npm install --legacy-peer-deps && cd ../functions && npm install && cd ../functions-hse-ai && npm install && cd ../hendrik && npm install",
+        "dev": "concurrently \"npm run start\" \"npm run serve\"",
+        "analyze": "cd frontend && npm run build -- --stats-json && npx webpack-bundle-analyzer dist/frontend/stats.json",
+        "security:audit": "npm audit && cd frontend && npm audit && cd ../functions && npm audit",
+        "security:fix": "npm audit fix && cd frontend && npm audit fix && cd ../functions && npm audit fix",
+        "format": "prettier --write \"**/*.{ts,js,json,scss,html,md}\"",
+        "format:check": "prettier --check \"**/*.{ts,js,json,scss,html,md}\"",
+        "prepare": "husky install",
+        "precommit": "lint-staged",
+        "ci:test": "npm run lint && npm run test && npm run build",
+        "ci:deploy": "npm run build:prod && npm run deploy",
+        "docker:build": "docker build -t hse-ai-saas .",
+        "docker:run": "docker run -p 4200:4200 hse-ai-saas",
+        "docs:generate": "compodoc -p frontend/tsconfig.json -d docs",
+        "docs:serve": "compodoc -p frontend/tsconfig.json -s",
+        "performance:budget": "cd frontend && npm run build -- --budgets",
+        "performance:lighthouse": "lighthouse http://localhost:4200 --output=html --output-path=./lighthouse-report.html",
+        "monitoring:setup": "echo 'Setting up monitoring services...'",
+        "monitoring:test": "echo 'Testing monitoring services...'",
+        "backup:firestore": "firebase firestore:export ./backup",
+        "restore:firestore": "firebase firestore:import ./backup",
+        "logs:functions": "firebase functions:log",
+        "logs:hosting": "firebase hosting:log",
+        "config:get": "firebase functions:config:get",
+        "config:set": "firebase functions:config:set",
+        "help": "echo 'Available scripts: start, build, test, lint, deploy, serve, dev, analyze, security:audit, format, docs:generate'"
+    },
+    "keywords": [
+        "hse",
+        "safety",
+        "ai",
+        "angular",
+        "firebase",
+        "workplace-safety",
+        "compliance",
+        "analytics"
+    ],
+    "author": "Hendrik Ribeiro",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hendrik343/hse-ai-saas.git"
+    },
+    "bugs": {
+        "url": "https://github.com/hendrik343/hse-ai-saas/issues"
+    },
+    "homepage": "https://github.com/hendrik343/hse-ai-saas#readme",
+    "devDependencies": {
+        "concurrently": "^8.2.2",
+        "husky": "^8.0.3",
+        "lint-staged": "^15.2.0",
+        "prettier": "^3.1.0",
+        "compodoc": "^1.1.23",
+        "lighthouse": "^11.6.0",
+        "webpack-bundle-analyzer": "^4.10.1"
+    },
+    "engines": {
+        "node": ">=20.0.0",
+        "npm": ">=10.0.0"
+    },
+    "lint-staged": {
+        "*.{ts,js}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.{json,scss,html,md}": [
+            "prettier --write"
+        ]
+    }
+}
