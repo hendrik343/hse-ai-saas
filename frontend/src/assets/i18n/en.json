@@ -381,5 +381,16 @@
   "CONTACT_SALES": "Contact Sales",
   "MOST_POPULAR": "Most Popular",
   "FREE_TRIAL": "Free Trial",
-  "NO_CREDIT_CARD": "No credit card required"
+  "NO_CREDIT_CARD": "No credit card required",
+  "ERRORS": {
+    "NETWORK_ERROR": "Network error. Please check your connection and try again.",
+    "AUTH_ERROR": "Authentication error. Please log in again.",
+    "LIMIT_ERROR": "You have reached your usage limit. Please upgrade your plan.",
+    "GENERIC_ERROR": "Something went wrong. Please try again.",
+    "API_ERROR": "Service temporarily unavailable. Please try again later.",
+    "VALIDATION_ERROR": "Please check your input and try again.",
+    "PERMISSION_ERROR": "You don't have permission to perform this action.",
+    "TIMEOUT_ERROR": "Request timed out. Please try again.",
+    "SERVER_ERROR": "Server error. Please try again later."
+  }
 }

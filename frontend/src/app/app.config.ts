@@ -1,19 +1,18 @@
-import { ApplicationConfig, importProvidersFrom, isDevMode } from '@angular/core';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ApplicationConfig, ErrorHandler, importProvidersFrom, isDevMode } from '@angular/core';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getFunctions, provideFunctions } from '@angular/fire/functions';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideFunctions, getFunctions } from '@angular/fire/functions';
+import { provideServiceWorker } from '@angular/service-worker';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
-import { routes } from './app.routes';
 import { environment } from '../environments/environment';
-import { provideServiceWorker } from '@angular/service-worker';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
+import { routes } from './app.routes';
+import { GlobalErrorHandler } from './services/error-monitoring.service';
 
 // Function factory for translation loader
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -28,6 +27,7 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions()),
+    provideStorage(() => getStorage()),
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
@@ -38,9 +38,13 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }),
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
     provideAnimations(),
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    },
   ]
 ***REMOVED***
