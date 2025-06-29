@@ -1,71 +1,26 @@
-<div class="linear-landing-bg">
-  <!-- Animated background elements -->
-  <div class="floating-elements">
-    <div class="floating-element element-1"></div>
-    <div class="floating-element element-2"></div>
-    <div class="floating-element element-3"></div>
-    <div class="floating-element element-4"></div>
+<div class="landing-hero-bg"></div>
+<div class="landing-hero-overlay"></div>
+<div class="landing-hero-content">
+  <div class="hero-left">
+    <h1 class="hero-title">AI Safety Analysis for Everyone</h1>
+    <p class="hero-subtitle">Instant, expert HSE compliance and risk analysis. No registration. No cost. Just upload and
+      get actionable insights.</p>
+    <form class="hero-cta"
+          (submit)="$event.preventDefault()">
+      <input type="email"
+             placeholder="Your email address"
+             class="hero-input" />
+      <button type="submit"
+              class="hero-button">Request Early Access</button>
+    </form>
   </div>
-
-  <div class="linear-landing-card">
-    <!-- Hero Section -->
-    <div class="hero-section">
-      <div class="logo-container">
-        <div class="ai-logo">🤖</div>
-      </div>
-      
-      <h1 class="linear-landing-title">
-        A Primeira Plataforma de AI em Segurança no Trabalho
-      </h1>
-      
-      <p class="linear-landing-subtitle">
-        <span class="emoji">🚧</span> Tira uma foto. Nós analisamos. Tu resolves.
-      </p>
-      
-      <button class="linear-landing-btn primary-btn" routerLink="/try">
-        <span class="btn-icon">📸</span>
-        Tirar Foto Agora
-      </button>
-      
-      <p class="linear-landing-desc">
-        Sem conta, sem complicações. Testa grátis com 1 foto e vê o que o nosso AI detecta.
-      </p>
-    </div>
-
-    <!-- Features Preview -->
-    <div class="features-preview">
-      <div class="feature-item">
-        <span class="feature-icon">✅</span>
-        <span class="feature-text">Detecção automática de não conformidades</span>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon">⚠️</span>
-        <span class="feature-text">Identificação de violações legais (ISO 45001, OSHA)</span>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon">💣</span>
-        <span class="feature-text">Análise de risco e consequências</span>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon">📄</span>
-        <span class="feature-text">Relatórios PDF gerados por AI</span>
-      </div>
-    </div>
-
-    <!-- Trust indicators -->
-    <div class="trust-indicators">
-      <div class="trust-item">
-        <span class="trust-number">100%</span>
-        <span class="trust-label">Gratuito</span>
-      </div>
-      <div class="trust-item">
-        <span class="trust-number">30s</span>
-        <span class="trust-label">Análise</span>
-      </div>
-      <div class="trust-item">
-        <span class="trust-number">0</span>
-        <span class="trust-label">Registo</span>
-      </div>
-    </div>
+  <div class="hero-right">
+    <img src="assets/mockup-phone.png"
+         alt="App Mockup"
+         class="hero-mockup" />
   </div>
 </div>
+<!-- Optionally, move Card Swap below the fold -->
+<!-- <section class="card-swap-section">
+  <app-card-swap></app-card-swap>
+</section> -->
