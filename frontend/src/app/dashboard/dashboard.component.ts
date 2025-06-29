@@ -1,30 +1,29 @@
 // src/app/dashboard/dashboard.component.ts
-import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { 
-  Firestore, 
-  collection, 
-  query, 
-  where, 
-  orderBy, 
-  addDoc, 
-  Timestamp, 
-  collectionData,
-  limit
-} from '@angular/fire/firestore';
 import { Auth, signOut } from '@angular/fire/auth';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { map, switchMap, of, catchError } from 'rxjs';
-import { firstValueFrom } from 'rxjs';
+import {
+  Firestore,
+  Timestamp,
+  addDoc,
+  collection,
+  collectionData,
+  limit,
+  orderBy,
+  query,
+  where
+} from '@angular/fire/firestore';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { catchError, firstValueFrom, map, of, switchMap } from 'rxjs';
 
 // Models and Services
 import { Report, ReportFormData, UserStats } from '../models/report.model';
 import { AuthService } from '../services/auth.service';
 import { CloudFunctionsService } from '../services/cloud-functions.service';
-import { ToastService } from '../services/toast.service';
 import { FirestoreService } from '../services/firestore.service';
+import { ToastService } from '../services/toast.service';
 import { AIAnalysisReport } from '../types/firestore.types';
 
 // Component imports
@@ -52,7 +51,7 @@ export class DashboardComponent implements OnInit {
   private firestoreService = inject(FirestoreService);
 
   // --- State Management with Signals ---
-  
+
   // Loading states
   loading = signal<boolean>(false);
   error = signal<string | null>(null);
@@ -104,7 +103,7 @@ export class DashboardComponent implements OnInit {
   );
 
   // Computed signals for UI state
-  isGenerateButtonDisabled = computed(() => 
+  isGenerateButtonDisabled = computed(() =>
     this.loading() || this.reportForm.invalid || this.hasReachedLimit()
   );
 
@@ -171,7 +170,7 @@ export class DashboardComponent implements OnInit {
         // Calculate monthly reports count
         const now = new Date();
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-        
+
         const reportsCollection = collection(this.firestore, 'ai-reports');
         const monthlyQuery = query(
           reportsCollection,
@@ -204,7 +203,7 @@ export class DashboardComponent implements OnInit {
     return this.authService.userProfile$Observable.pipe(
       map(profile => {
         if (!profile) return [];
-        
+
         // For now, return current organization
         // In future, could support multiple organizations
         return [{
@@ -274,11 +273,11 @@ export class DashboardComponent implements OnInit {
 
     this.loading.set(true);
     this.error.set(null);
-    
+
     try {
       const formData = this.reportForm.value as ReportFormData;
       const userProfile = this.userProfile$();
-      
+
       if (!userProfile) {
         throw new Error('User not authenticated');
       }
@@ -293,7 +292,7 @@ export class DashboardComponent implements OnInit {
       const currentLang = this.translate.currentLang || 'pt';
       const basePromptKey = 'DASHBOARD.AI_BASE_PROMPT';
       const translatedBase = await firstValueFrom(this.translate.get(basePromptKey));
-      
+
       const finalPrompt = `${translatedBase}\n\nTipo de relatório: ${formData.reportType}\nTítulo: ${formData.title || 'Relatório HSE'}\n\nDescrição da situação:\n${formData.prompt}`;
 
       // Use CloudFunctionsService instead of direct fetch
@@ -362,6 +361,15 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/']);
     } catch (error) {
       console.error('Error signing out:', error);
+    }
+  }
+
+  onPhotoSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      // Optionally, you can store the file in a service or state for use in the AI Analyze page
+      // For now, just navigate to the AI Analyze page
+      this.router.navigate(['/ai-analyze']);
     }
   }
 }
