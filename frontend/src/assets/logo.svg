@@ -1,0 +1,33 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shield background -->
+  <path d="M40 8L12 20V36C12 52.5 24.5 66.5 40 72C55.5 66.5 68 52.5 68 36V20L40 8Z" 
+        fill="url(#shieldGradient)" 
+        stroke="url(#borderGradient)" 
+        stroke-width="2"/>
+  
+  <!-- AI brain pattern -->
+  <circle cx="32" cy="32" r="2" fill="#22c55e" opacity="0.8"/>
+  <circle cx="48" cy="32" r="2" fill="#22c55e" opacity="0.8"/>
+  <circle cx="40" cy="40" r="2" fill="#22c55e" opacity="0.8"/>
+  <circle cx="32" cy="48" r="2" fill="#22c55e" opacity="0.8"/>
+  <circle cx="48" cy="48" r="2" fill="#22c55e" opacity="0.8"/>
+  
+  <!-- Connection lines -->
+  <path d="M32 32L48 32" stroke="#22c55e" stroke-width="1" opacity="0.6"/>
+  <path d="M32 32L40 40" stroke="#22c55e" stroke-width="1" opacity="0.6"/>
+  <path d="M48 32L40 40" stroke="#22c55e" stroke-width="1" opacity="0.6"/>
+  <path d="M40 40L32 48" stroke="#22c55e" stroke-width="1" opacity="0.6"/>
+  <path d="M40 40L48 48" stroke="#22c55e" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:0.2"/>
+    </linearGradient>
+    <linearGradient id="borderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e"/>
+      <stop offset="100%" style="stop-color:#4ade80"/>
+    </linearGradient>
+  </defs>
+</svg> 

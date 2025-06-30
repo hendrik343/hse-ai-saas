@@ -1,49 +1,112 @@
-<div class="hero-container"
-     tabindex="0"
-     (drop)="onDrop($event)"
-     (dragover)="onDragOver($event)">
-  <div class="hero-content">
-    <img src="assets/logo.svg"
-         alt="HSE-AI Logo"
-         class="logo" />
-    <h1>
-      <span class="highlight">{{ 'APP_NAME' | translate }}</span>: {{ 'LANDING_TITLE' | translate }}
-    </h1>
-    <p>{{ 'LANDING_SUBTITLE' | translate }}</p>
-    <input #fileInput
-           type="file"
-           id="fileInput"
-           (change)="onFileSelected($event)"
-           accept="image/*"
-           hidden
-           aria-label="Upload image" />
-    <button (click)="abrirUpload()"
-            aria-label="{{ 'TAKE_PHOTO' | translate }}"
-            [class.uploading]="uploading">
-      <span *ngIf="!uploading">{{ 'TAKE_PHOTO' | translate }}</span>
-      <span *ngIf="uploading"
-            class="spinner"></span>
-    </button>
-    <div *ngIf="previewUrl"
-         class="image-preview">
-      <img [src]="previewUrl"
-           alt="Preview" />
-    </div>
-    <div class="subtext">{{ 'NO_ACCOUNT_NEEDED' | translate }}</div>
-    <div class="subtext"
-         style="margin-top:2rem;">
-      <app-language-switcher></app-language-switcher>
-    </div>
+<div class="landing-container">
+  <!-- Animated background elements -->
+  <div class="bg-elements">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+    <div class="grid-overlay"></div>
   </div>
+
+  <main class="hero-section">
+    <!-- Logo with enhanced animation -->
+    <div class="logo-container">
+      <div class="logo-glow"></div>
+      <img src="assets/logo.svg"
+           alt="HSILVA Logo"
+           class="logo animate-logo" />
+    </div>
+
+    <!-- Main headline with sophisticated typography -->
+    <div class="headline-container">
+      <h1 class="main-title">
+        <span class="app-name gradient-text">{{ 'APP_NAME' | translate }}</span>
+        <span class="title-separator">:</span>
+        <span class="title-subtitle fade-in-delay">AI Security Analysis</span>
+      </h1>
+
+      <!-- Enhanced subtitle with better visual impact -->
+      <div class="subtitle-container">
+        <p class="subtitle fade-in-delay-2">{{ 'LANDING_SUBTITLE' | translate }}</p>
+        <div class="subtitle-underline"></div>
+      </div>
+    </div>
+
+    <!-- Enhanced CTA section -->
+    <div class="cta-section fade-in-delay-3">
+      <button class="cta-button"
+              (click)="tirarFotoAgora()"
+              aria-label="Take photo now">
+        <span class="cta-icon">📷</span>
+        <span class="cta-text">{{ 'TAKE_PHOTO' | translate }}</span>
+        <div class="cta-glow"></div>
+      </button>
+
+      <p class="cta-note">{{ 'NO_ACCOUNT_NEEDED' | translate }}</p>
+    </div>
+
+    <!-- Enhanced language selector -->
+    <div class="language-section fade-in-delay-4">
+      <div class="lang-selector"
+           aria-label="Language selector">
+        <button class="lang-btn"
+                (click)="switchLang('en')"
+                aria-label="Switch to English">
+          <span class="flag">🇬🇧</span>
+          <span class="lang-name">EN</span>
+        </button>
+        <button class="lang-btn active"
+                (click)="switchLang('pt')"
+                aria-label="Mudar para Português">
+          <span class="flag">🇵🇹</span>
+          <span class="lang-name">PT</span>
+        </button>
+        <button class="lang-btn"
+                (click)="switchLang('fr')"
+                aria-label="Passer en Français">
+          <span class="flag">🇫🇷</span>
+          <span class="lang-name">FR</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Trust indicators -->
+    <div class="trust-section fade-in-delay-5">
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <span class="badge-icon">🔒</span>
+          <span class="badge-text">Secure</span>
+        </div>
+        <div class="trust-badge">
+          <span class="badge-icon">⚡</span>
+          <span class="badge-text">Instant</span>
+        </div>
+        <div class="trust-badge">
+          <span class="badge-icon">🎯</span>
+          <span class="badge-text">Accurate</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Enhanced footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="/privacy"
+           target="_blank"
+           class="footer-link">Privacy Policy</a>
+        <span class="footer-separator">·</span>
+        <a href="/terms"
+           target="_blank"
+           class="footer-link">Terms</a>
+        <span class="footer-separator">·</span>
+        <a href="mailto:contact@hsilva.com"
+           class="footer-link">Contact</a>
+      </div>
+      <div class="footer-powered">
+        <span class="powered-text">Powered by</span>
+        <span class="firebase-logo">Firebase</span>
+      </div>
+    </div>
+  </footer>
 </div>
-<footer>
-  &copy; 2025 HSE-AI. {{ 'ALL_RIGHTS_RESERVED' | translate }}
-  <span class="footer-links">
-    <a href="/privacy"
-       tabindex="0">{{ 'PRIVACY_POLICY' | translate }}</a> ·
-    <a href="/terms"
-       tabindex="0">{{ 'TERMS' | translate }}</a> ·
-    <a href="mailto:contact@hse-ai.com"
-       tabindex="0">Contact</a>
-  </span>
-</footer>

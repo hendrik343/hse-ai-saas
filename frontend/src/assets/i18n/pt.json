@@ -1,4 +1,5 @@
 {
+  "APP_NAME": "HSILVA",
   "TITLE": "A Primeira Plataforma de IA em Segurança no Trabalho",
   "UPLOAD_IMAGE": "Carregar Imagem",
   "TAKE_PHOTO": "Tirar Foto Agora",
@@ -193,7 +194,7 @@
   "SETTINGS_SAVED": "Configurações guardadas com sucesso",
   "SETTINGS_ERROR": "Erro ao guardar configurações",
   "LANDING_TITLE": "Análise de Segurança com AI",
-  "LANDING_SUBTITLE": "Transforma a segurança no trabalho com análise inteligente de AI",
+  "LANDING_SUBTITLE": "📷 Tira uma foto. Nós analisamos. Tu resolves.",
   "GET_STARTED": "Começar",
   "TRY_FREE": "Testar Grátis",
   "FEATURES_TITLE": "Por que escolher HSE AI?",

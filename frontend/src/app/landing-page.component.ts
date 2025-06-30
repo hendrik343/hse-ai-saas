@@ -1,23 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuroraComponent } from './aurora/aurora.component';
-import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, AuroraComponent, LanguageSwitcherComponent],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
   previewUrl: string | null = null;
   uploading = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private translate: TranslateService) { }
+
+  ngOnInit() {
+    // Detect browser language and persist user choice
+    const savedLang = localStorage.getItem('lang');
+    const browserLang = navigator.language.split('-')[0];
+    const supported = ['en', 'pt', 'fr'];
+    const lang = savedLang || (supported.includes(browserLang) ? browserLang : 'en');
+    this.translate.use(lang);
+  }
 
   tirarFoto(): void {
     const input = document.createElement('input');
@@ -47,10 +56,6 @@ export class LandingPageComponent {
   retakePhoto(): void {
     this.previewUrl = null;
     this.tirarFoto();
-  }
-
-  selecionarPais(): void {
-    console.log('País selecionado:', this.paisSelecionado);
   }
 
   comecar() {
@@ -94,5 +99,15 @@ export class LandingPageComponent {
         // Exemplo: this.router.navigate(['/upload'], { state: { file } });
       }, 1200);
     }
+  }
+
+  tirarFotoAgora() {
+    // TODO: Redirecionar para rota de upload ou autenticação
+    console.log('Tirar foto agora clicado!');
+  }
+
+  switchLang(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('lang', lang);
   }
 }
