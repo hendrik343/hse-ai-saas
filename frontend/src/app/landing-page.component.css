@@ -1,89 +1,165 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:host {
+    display: block;
 }
 
 body,
 html {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
     font-family: 'Inter', sans-serif;
-    background-color: #0f172a;
-    color: white;
     height: 100%;
+    -webkit-font-smoothing: antialiased;
 }
 
-.page-wrapper {
+.hero-container {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.hero {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     text-align: center;
-    padding: 5rem 2rem 2rem 2rem;
-    background: radial-gradient(ellipse at center, #1e293b 0%, #0f172a 100%);
+    background: radial-gradient(ellipse at 50% 30%, #1e293b 0%, #000 100%);
+    padding: 2rem;
+    transition: background 0.5s;
 }
 
-.hero h1 {
-    font-size: 2.5rem;
+.hero-content {
+    max-width: 600px;
+    margin: auto;
+}
+
+.logo {
+    width: 64px;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 2px 8px #22c55e33);
+}
+
+h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
+    line-height: 1.2;
     margin-bottom: 1rem;
 }
 
-.hero p {
+.highlight {
+    color: #22c55e;
+}
+
+p {
     font-size: 1.2rem;
-    font-weight: 400;
     margin-bottom: 2rem;
-    color: #94a3b8;
-}
-
-.hero button {
-    background-color: #38bdf8;
-    color: #0f172a;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.hero button:hover {
-    background-color: #0ea5e9;
-}
-
-.features {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 2rem;
-    padding: 3rem 2rem;
-    background-color: #1e293b;
-}
-
-.feature {
-    max-width: 300px;
-    text-align: center;
-}
-
-.feature h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.feature p {
-    font-size: 1rem;
     color: #cbd5e1;
 }
 
-.footer {
-    margin-top: auto;
-    text-align: center;
-    padding: 2rem;
-    background-color: #0f172a;
+button {
+    background-color: #22c55e;
+    color: #000;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 2px 16px #22c55e22;
+    outline: none;
+    position: relative;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+button.uploading {
+    background: #16a34a;
+    color: #fff;
+}
+
+.spinner {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    border: 3px solid #fff;
+    border-top: 3px solid #22c55e;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.image-preview {
+    margin-top: 1.5rem;
+}
+
+.image-preview img {
+    max-width: 220px;
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px #22c55e22;
+    border: 2px solid #22c55e;
+}
+
+.subtext {
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    color: #94a3b8;
+}
+
+footer {
     font-size: 0.9rem;
-    color: #64748b;
+    margin-top: 2rem;
+    color: #475569;
+    text-align: center;
+    padding: 2rem 1rem 1rem 1rem;
+}
+
+.footer-links {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.footer-links a {
+    color: #22c55e;
+    text-decoration: none;
+    margin: 0 0.3rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: #16a34a;
+}
+
+/* Drag & Drop highlight */
+.hero-container.dragover {
+    background: radial-gradient(ellipse at 50% 30%, #22c55e33 0%, #000 100%);
+}
+
+@media (max-width: 600px) {
+    .hero-content {
+        max-width: 95vw;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .logo {
+        width: 48px;
+    }
+
+    .image-preview img {
+        max-width: 90vw;
+    }
 }

@@ -1,26 +1,49 @@
-<div class="page-wrapper">
-  <header class="hero">
-    <h1>🚀 HSE-AI: Inteligência Artificial para Segurança no Trabalho</h1>
-    <p>Carrega uma imagem e obtém um relatório com normas OSHA, ISO e locais.</p>
-    <button (click)="comecar()">Começar Agora</button>
-  </header>
-
-  <section class="features">
-    <div class="feature">
-      <h2>📷 Upload Inteligente</h2>
-      <p>Analisa qualquer foto tirada no campo em segundos.</p>
+<div class="hero-container"
+     tabindex="0"
+     (drop)="onDrop($event)"
+     (dragover)="onDragOver($event)">
+  <div class="hero-content">
+    <img src="assets/logo.svg"
+         alt="HSE-AI Logo"
+         class="logo" />
+    <h1>
+      <span class="highlight">{{ 'APP_NAME' | translate }}</span>: {{ 'LANDING_TITLE' | translate }}
+    </h1>
+    <p>{{ 'LANDING_SUBTITLE' | translate }}</p>
+    <input #fileInput
+           type="file"
+           id="fileInput"
+           (change)="onFileSelected($event)"
+           accept="image/*"
+           hidden
+           aria-label="Upload image" />
+    <button (click)="abrirUpload()"
+            aria-label="{{ 'TAKE_PHOTO' | translate }}"
+            [class.uploading]="uploading">
+      <span *ngIf="!uploading">{{ 'TAKE_PHOTO' | translate }}</span>
+      <span *ngIf="uploading"
+            class="spinner"></span>
+    </button>
+    <div *ngIf="previewUrl"
+         class="image-preview">
+      <img [src]="previewUrl"
+           alt="Preview" />
     </div>
-    <div class="feature">
-      <h2>📄 Relatórios Automáticos</h2>
-      <p>Geração instantânea de relatórios PDF com base legal.</p>
+    <div class="subtext">{{ 'NO_ACCOUNT_NEEDED' | translate }}</div>
+    <div class="subtext"
+         style="margin-top:2rem;">
+      <app-language-switcher></app-language-switcher>
     </div>
-    <div class="feature">
-      <h2>🌐 Multilíngue</h2>
-      <p>Adapta-se ao país e à legislação local automaticamente.</p>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <p>&copy; 2025 HSE-AI. Todos os direitos reservados.</p>
-  </footer>
+  </div>
 </div>
+<footer>
+  &copy; 2025 HSE-AI. {{ 'ALL_RIGHTS_RESERVED' | translate }}
+  <span class="footer-links">
+    <a href="/privacy"
+       tabindex="0">{{ 'PRIVACY_POLICY' | translate }}</a> ·
+    <a href="/terms"
+       tabindex="0">{{ 'TERMS' | translate }}</a> ·
+    <a href="mailto:contact@hse-ai.com"
+       tabindex="0">Contact</a>
+  </span>
+</footer>

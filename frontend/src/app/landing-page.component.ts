@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuroraComponent } from './aurora/aurora.component';
@@ -10,13 +10,12 @@ import { LanguageSwitcherComponent } from './components/language-switcher/langua
   standalone: true,
   imports: [CommonModule, FormsModule, AuroraComponent, LanguageSwitcherComponent],
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss']
+  styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent {
-  paisSelecionado: string = '';
-  previewImage: string | null = null;
-  showPreview: boolean = false;
-  loading: boolean = false;
+  @ViewChild('fileInput', { static: false }) fileInput!: ElementRef<HTMLInputElement>;
+  previewUrl: string | null = null;
+  uploading = false;
 
   constructor(private router: Router) { }
 
@@ -29,8 +28,7 @@ export class LandingPageComponent {
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
-          this.previewImage = reader.result as string;
-          this.showPreview = true;
+          this.previewUrl = reader.result as string;
         ***REMOVED***
         reader.readAsDataURL(file);
       }
@@ -39,17 +37,15 @@ export class LandingPageComponent {
   }
 
   confirmPhoto(): void {
-    this.loading = true;
+    this.uploading = true;
     setTimeout(() => {
-      this.loading = false;
-      this.showPreview = false;
+      this.uploading = false;
       alert('Foto enviada com sucesso!');
     }, 2000);
   }
 
   retakePhoto(): void {
-    this.previewImage = null;
-    this.showPreview = false;
+    this.previewUrl = null;
     this.tirarFoto();
   }
 
@@ -59,5 +55,44 @@ export class LandingPageComponent {
 
   comecar() {
     this.router.navigate(['/upload']);
+  }
+
+  abrirUpload() {
+    const input = document.getElementById('fileInput') as HTMLInputElement;
+    if (input) input.click();
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      this.previewUrl = URL.createObjectURL(file);
+      this.uploading = true;
+      setTimeout(() => {
+        this.uploading = false;
+        // Exemplo: this.router.navigate(['/upload'], { state: { file } });
+      }, 1200);
+    }
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    const container = event.currentTarget as HTMLElement;
+    container.classList.add('dragover');
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    const container = event.currentTarget as HTMLElement;
+    container.classList.remove('dragover');
+    if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+      const file = event.dataTransfer.files[0];
+      this.previewUrl = URL.createObjectURL(file);
+      this.uploading = true;
+      setTimeout(() => {
+        this.uploading = false;
+        // Exemplo: this.router.navigate(['/upload'], { state: { file } });
+      }, 1200);
+    }
   }
 }
