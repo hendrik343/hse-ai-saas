@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    font-family: 'Inter', sans-serif;
+    background-color: #0f172a;
+    color: white;
+    height: 100%;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.hero {
+    text-align: center;
+    padding: 5rem 2rem 2rem 2rem;
+    background: radial-gradient(ellipse at center, #1e293b 0%, #0f172a 100%);
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    color: #94a3b8;
+}
+
+.hero button {
+    background-color: #38bdf8;
+    color: #0f172a;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.hero button:hover {
+    background-color: #0ea5e9;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 2rem;
+    padding: 3rem 2rem;
+    background-color: #1e293b;
+}
+
+.feature {
+    max-width: 300px;
+    text-align: center;
+}
+
+.feature h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature p {
+    font-size: 1rem;
+    color: #cbd5e1;
+}
+
+.footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 2rem;
+    background-color: #0f172a;
+    font-size: 0.9rem;
+    color: #64748b;
+}
