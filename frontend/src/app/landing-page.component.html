@@ -1,112 +1,34 @@
-<div class="landing-container">
-  <!-- Animated background elements -->
-  <div class="bg-elements">
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    <div class="floating-shape shape-3"></div>
-    <div class="grid-overlay"></div>
+<div class="container">
+  <img src="assets/logo-hse.png"
+       alt="HSE Logo"
+       class="logo" />
+
+  <h1 class="title">HSE</h1>
+  <h2 class="subtitle">AI Security Analysis</h2>
+
+  <p class="slogan">📸 Tira uma foto. Nós analisamos. Tu resolves.</p>
+
+  <button class="cta-button">
+    📷 Take Photo Now
+  </button>
+
+  <p class="support-text">
+    NO ACCOUNT, NO HASSLE. TEST OUR AI WITH 1 FREE IMAGE
+  </p>
+
+  <div class="flags">
+    <img src="assets/flags/uk.png"
+         alt="EN" />
+    <img src="assets/flags/pt.png"
+         alt="PT" />
+    <img src="assets/flags/fr.png"
+         alt="FR" />
   </div>
 
-  <main class="hero-section">
-    <!-- Logo with enhanced animation -->
-    <div class="logo-container">
-      <div class="logo-glow"></div>
-      <img src="assets/logo.svg"
-           alt="HSILVA Logo"
-           class="logo animate-logo" />
-    </div>
-
-    <!-- Main headline with sophisticated typography -->
-    <div class="headline-container">
-      <h1 class="main-title">
-        <span class="app-name gradient-text">{{ 'APP_NAME' | translate }}</span>
-        <span class="title-separator">:</span>
-        <span class="title-subtitle fade-in-delay">AI Security Analysis</span>
-      </h1>
-
-      <!-- Enhanced subtitle with better visual impact -->
-      <div class="subtitle-container">
-        <p class="subtitle fade-in-delay-2">{{ 'LANDING_SUBTITLE' | translate }}</p>
-        <div class="subtitle-underline"></div>
-      </div>
-    </div>
-
-    <!-- Enhanced CTA section -->
-    <div class="cta-section fade-in-delay-3">
-      <button class="cta-button"
-              (click)="tirarFotoAgora()"
-              aria-label="Take photo now">
-        <span class="cta-icon">📷</span>
-        <span class="cta-text">{{ 'TAKE_PHOTO' | translate }}</span>
-        <div class="cta-glow"></div>
-      </button>
-
-      <p class="cta-note">{{ 'NO_ACCOUNT_NEEDED' | translate }}</p>
-    </div>
-
-    <!-- Enhanced language selector -->
-    <div class="language-section fade-in-delay-4">
-      <div class="lang-selector"
-           aria-label="Language selector">
-        <button class="lang-btn"
-                (click)="switchLang('en')"
-                aria-label="Switch to English">
-          <span class="flag">🇬🇧</span>
-          <span class="lang-name">EN</span>
-        </button>
-        <button class="lang-btn active"
-                (click)="switchLang('pt')"
-                aria-label="Mudar para Português">
-          <span class="flag">🇵🇹</span>
-          <span class="lang-name">PT</span>
-        </button>
-        <button class="lang-btn"
-                (click)="switchLang('fr')"
-                aria-label="Passer en Français">
-          <span class="flag">🇫🇷</span>
-          <span class="lang-name">FR</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Trust indicators -->
-    <div class="trust-section fade-in-delay-5">
-      <div class="trust-badges">
-        <div class="trust-badge">
-          <span class="badge-icon">🔒</span>
-          <span class="badge-text">Secure</span>
-        </div>
-        <div class="trust-badge">
-          <span class="badge-icon">⚡</span>
-          <span class="badge-text">Instant</span>
-        </div>
-        <div class="trust-badge">
-          <span class="badge-icon">🎯</span>
-          <span class="badge-text">Accurate</span>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Enhanced footer -->
   <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-links">
-        <a href="/privacy"
-           target="_blank"
-           class="footer-link">Privacy Policy</a>
-        <span class="footer-separator">·</span>
-        <a href="/terms"
-           target="_blank"
-           class="footer-link">Terms</a>
-        <span class="footer-separator">·</span>
-        <a href="mailto:contact@hsilva.com"
-           class="footer-link">Contact</a>
-      </div>
-      <div class="footer-powered">
-        <span class="powered-text">Powered by</span>
-        <span class="firebase-logo">Firebase</span>
-      </div>
-    </div>
+    <a href="#">Privacy Policy</a> ·
+    <a href="#">Terms</a> ·
+    <a href="#">Contact</a>
+    <div>Powered by Firebase</div>
   </footer>
 </div>
