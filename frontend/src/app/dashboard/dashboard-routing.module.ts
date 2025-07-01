@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UploadAnalyzeComponent } from './upload-analyze/upload-analyze.component';
 
 const routes: Routes = [
-  // Adicione componentes de dashboard aqui
+    { path: '', redirectTo: 'upload-analyze', pathMatch: 'full' },
+    { path: 'upload-analyze', component: UploadAnalyzeComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class DashboardRoutingModule {}
+export class DashboardRoutingModule { }

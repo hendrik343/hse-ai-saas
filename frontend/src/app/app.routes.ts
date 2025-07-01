@@ -3,12 +3,11 @@ import { AiAnalyzeComponent } from './ai-analyze/ai-analyze.component';
 import { authGuard } from './auth.guard';
 import { SetupPageComponent } from './components/setup-page/setup-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { LandingPageComponent } from './landing-page.component';
 import { OnboardingComponent } from './onboarding.component';
 import { PricingComponent } from './pricing.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingPageComponent, pathMatch: 'full' },
+  { path: '', loadChildren: () => import('./landing-page/landing-page.module').then(m => m.LandingPageModule) },
   { path: 'try', component: AiAnalyzeComponent },
   { path: 'onboarding', component: OnboardingComponent, canActivate: [authGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },

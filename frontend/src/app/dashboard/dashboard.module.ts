@@ -1,9 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { DashboardRoutingModule } from './dashboard-routing.module';
+import { UploadAnalyzeComponent } from './upload-analyze/upload-analyze.component';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, RouterModule]
+    declarations: [
+        UploadAnalyzeComponent,
+    ],
+    imports: [
+        CommonModule,
+        DashboardRoutingModule
+    ]
 })
-export class DashboardModule {}
+export class DashboardModule { }

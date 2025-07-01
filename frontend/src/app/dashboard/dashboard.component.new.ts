@@ -1,9 +1,9 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService, UserProfile } from '../services/auth.service';
-import { ImageService } from '../services/image.service';
-import { AiService } from '../services/ai.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AiService } from '../services/ai.service';
+import { AuthService } from '../services/auth.service';
+import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -84,8 +84,8 @@ export class DashboardComponent implements OnInit {
   userProfile: any;
 
   constructor(
-    private afs: AngularFirestore, 
-    private auth: AuthService,
+    private afs: AngularFirestore,
+    public auth: AuthService,
     private imageService: ImageService,
     private aiService: AiService
   ) {
@@ -106,4 +106,8 @@ export class DashboardComponent implements OnInit {
         this.reports.set(reports);
       });
   }
-} 
+
+  logout() {
+    this.auth.logout();
+  }
+}

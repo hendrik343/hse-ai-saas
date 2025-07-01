@@ -1,9 +1,9 @@
 // src/app/services/auth.service.ts
-import { Injectable, inject, signal, computed } from '@angular/core';
-import { Auth, user, User, signInAnonymously } from '@angular/fire/auth';
-import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { Injectable, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap, of } from 'rxjs';
+import { Auth, signInAnonymously, user } from '@angular/fire/auth';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { of, switchMap } from 'rxjs';
 
 export interface UserProfile {
   uid: string;
@@ -32,7 +32,7 @@ export class AuthService {
     user(this.auth).pipe(
       switchMap(user => {
         if (!user) return of(null);
-        
+
         // Busca o perfil do usuário no Firestore
         const userDocRef = doc(this.firestore, 'users', user.uid);
         return getDoc(userDocRef).then(docSnap => {
@@ -58,7 +58,7 @@ export class AuthService {
   userProfile$Observable = user(this.auth).pipe(
     switchMap(user => {
       if (!user) return of(null);
-      
+
       // Busca o perfil do usuário no Firestore
       const userDocRef = doc(this.firestore, 'users', user.uid);
       return getDoc(userDocRef).then(docSnap => {
@@ -121,5 +121,10 @@ export class AuthService {
         throw error;
       }
     }
+  }
+
+  async logout() {
+    // Se quiser, pode adicionar lógica extra (ex: limpar cache)
+    await this.auth.signOut();
   }
 }

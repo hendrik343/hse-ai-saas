@@ -1,9 +1,12 @@
+import { CommonModule, JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AnalysisService } from './analysis.service';
 
 @Component({
     selector: 'app-upload-analyze',
+    standalone: true,
+    imports: [CommonModule, JsonPipe],
     templateUrl: './upload-analyze.component.html',
     styleUrls: ['./upload-analyze.component.scss']
 })

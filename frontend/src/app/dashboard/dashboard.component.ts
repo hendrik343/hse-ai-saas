@@ -30,11 +30,12 @@ import { AIAnalysisReport } from '../types/firestore.types';
 import { CommonModule } from '@angular/common';
 import { LanguageSwitcherComponent } from '../components/language-switcher/language-switcher.component';
 import { ToastComponent } from '../components/toast/toast.component';
+import { UploadAnalyzeComponent } from './upload-analyze/upload-analyze.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule, LanguageSwitcherComponent, ToastComponent],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule, LanguageSwitcherComponent, ToastComponent, UploadAnalyzeComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
