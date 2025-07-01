@@ -1,0 +1,16 @@
+<div class="report-history">
+    <h2>📄 Histórico de Relatórios</h2>
+    <div *ngIf="reports$ | async as reports; else loading">
+        <div *ngIf="reports.length === 0">Nenhum relatório encontrado.</div>
+        <ul>
+            <li *ngFor="let report of reports">
+                <strong>{{ report.filename }}</strong>
+                <br />
+                <a [href]="report.downloadURL"
+                   target="_blank">📥 Baixar</a>
+                <span class="date">{{ report.createdAt?.toDate() | date: 'short' }}</span>
+            </li>
+        </ul>
+    </div>
+    <ng-template #loading>⏳ A carregar relatórios...</ng-template>
+</div>

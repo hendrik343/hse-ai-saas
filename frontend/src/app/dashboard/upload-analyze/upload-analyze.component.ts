@@ -1,6 +1,8 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+import { AuthService } from '../../auth.service';
+import { ReportService } from '../../shared/services/report.service';
 import { AnalysisService } from './analysis.service';
 
 @Component({
@@ -15,7 +17,11 @@ export class UploadAnalyzeComponent {
     uploading = false;
     result: any = null;
 
-    constructor(private analysisService: AnalysisService) { }
+    constructor(
+        private analysisService: AnalysisService,
+        private reportService: ReportService,
+        private authService: AuthService
+    ) { }
 
     onFileSelected(event: any) {
         this.selectedFile = event.target.files[0] || null;
@@ -29,5 +35,19 @@ export class UploadAnalyzeComponent {
             .subscribe(res => {
                 this.result = res;
             });
+    }
+
+    async exportarRelatorio() {
+        const user = await this.authService.user$.pipe().toPromise();
+        const userId = user?.uid;
+        if (!userId || !this.result) {
+            alert('Erro: sem dados ou utilizador');
+            return;
+        }
+        const url = await this.reportService.exportReport(userId, {
+            result: this.result,
+            originalFileName: this.selectedFile?.name,
+        });
+        window.open(url, '_blank');
     }
 }

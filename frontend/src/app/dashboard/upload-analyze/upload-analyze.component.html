@@ -13,5 +13,9 @@
          class="result-box">
         <h3>✅ Resultado da Análise</h3>
         <pre>{{ result | json }}</pre>
+        <button (click)="exportarRelatorio()"
+                [disabled]="!result">
+            Exportar Relatório PDF
+        </button>
     </div>
 </div>
