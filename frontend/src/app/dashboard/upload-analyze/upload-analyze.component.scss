@@ -1,0 +1,29 @@
+.upload-container {
+    background-color: #0f172a;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    color: #f8fafc;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+button {
+    margin-top: 1rem;
+    padding: 0.6rem 1.5rem;
+    background-color: #2563eb;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.result-box {
+    background: #1e293b;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+    text-align: left;
+}

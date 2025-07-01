@@ -1,0 +1,22 @@
+<div class="upload-wrapper">
+    <h2>Upload e Análise de Imagem</h2>
+
+    <input type="file"
+           accept="image/*"
+           (change)="onFileSelected($event)" />
+
+    <button (click)="uploadAndAnalyze()"
+            [disabled]="!selectedImage || loading">
+        {{ loading ? 'A Analisar...' : 'Analisar Imagem' }}
+    </button>
+
+    <progress *ngIf="loading"
+              [value]="uploadProgress"
+              max="100"></progress>
+
+    <div class="resultado"
+         *ngIf="analysisResult">
+        <h3>Resultado:</h3>
+        <p>{{ analysisResult }}</p>
+    </div>
+</div>

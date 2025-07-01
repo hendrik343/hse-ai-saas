@@ -1,0 +1,17 @@
+<div class="upload-container">
+    <h2>📷 Tira uma foto ou faz upload</h2>
+
+    <input type="file"
+           (change)="onFileSelected($event)">
+
+    <button (click)="uploadAndAnalyze()"
+            [disabled]="!selectedFile || uploading">
+        {{ uploading ? 'A processar...' : 'Analisar com IA' }}
+    </button>
+
+    <div *ngIf="result"
+         class="result-box">
+        <h3>✅ Resultado da Análise</h3>
+        <pre>{{ result | json }}</pre>
+    </div>
+</div>
