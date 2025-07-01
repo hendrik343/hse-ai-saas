@@ -17,3 +17,5 @@ export const routes: Routes = [
   { path: 'analyze', component: AiAnalyzeComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
+
+export const routerConfig = { useHash: true ***REMOVED***

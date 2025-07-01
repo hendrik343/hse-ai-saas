@@ -1,6 +1,14 @@
-/* Import Inter font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import '@fontsource/inter/index.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    /* fundo escuro puro */
+    color: #f3f4f6;
+    font-family: 'Inter', sans-serif;
+}
