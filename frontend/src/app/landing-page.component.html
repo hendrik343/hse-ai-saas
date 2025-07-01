@@ -1,32 +1,80 @@
-<div class="landing-container">
-  <h1 class="landing-title">
-    <span class="highlight">A Primeira Plataforma</span><br />
-    de AI em <strong>Segurança no Trabalho.</strong>
-  </h1>
-
-  <p class="landing-slogan">
-    📸 Tira uma foto. Nós analisamos. Tu resolves.
-  </p>
-
-  <button class="cta-button"
-          (click)="tirarFoto()">
-    📷 Tirar Foto Agora
-  </button>
-
-  <p class="support-text">
-    Sem conta, sem complicações. Testa grátis com 1 foto.
-  </p>
-
-  <select #countrySelect
-          class="country-selector">
-    <option selected
-            disabled>País</option>
-    <option value="pt">🇵🇹 Portugal</option>
-    <option value="ao">🇦🇴 Angola</option>
-    <option value="br">🇧🇷 Brasil</option>
-  </select>
-
-  <footer class="landing-footer">
+<div class="hero-bg">
+  <main class="hero-center">
+    <h1 class="hero-title">
+      <span class="hero-green">A Primeira Plataforma de AI</span><br />
+      em <span class="hero-white">Segurança no Trabalho.</span>
+    </h1>
+    <p class="hero-slogan">✨ Tira uma foto. Nós analisamos. Tu resolves.</p>
+    <button class="hero-cta"
+            (click)="abrirUpload()">
+      <span class="cta-icon">📷</span>
+      Tirar Foto Agora
+    </button>
+    <p class="hero-sub">Sem conta, sem complicações. Testa grátis com 1 foto.</p>
+  </main>
+  <footer class="hero-footer">
     Powered by Gemini API | © 2025 HSE AI
   </footer>
 </div>
+
+<div class="aurora"></div>
+<header>
+  <div class="logo">HSE-AI</div>
+  <h1>{{ 'landing.slogan' | translate }}</h1>
+  <p class="sub">{{ 'landing.cta_sub' | translate }}</p>
+  <button class="cta-button"
+          (click)="abrirUpload()">{{ 'landing.cta_upload' | translate }}</button>
+  <input #fileInput
+         type="file"
+         id="fileInput"
+         accept="image/*"
+         style="display:none"
+         (change)="onFileSelected($event)">
+  <img *ngIf="previewUrl"
+       [src]="previewUrl"
+       id="preview" />
+  <div *ngIf="uploading && uploadProgress !== null">
+    <p>Uploading: {{ uploadProgress }}%</p>
+  </div>
+  <div *ngIf="analysisResult"
+       id="analysisResult">
+    <strong>Resultado da Análise:</strong><br>
+    <span style="white-space: pre-line">{{ analysisResult }}</span>
+  </div>
+</header>
+
+<section class="steps">
+  <div class="step">
+    <h2>1. {{ 'landing.step1_title' | translate }}</h2>
+    <p>{{ 'landing.step1_desc' | translate }}</p>
+  </div>
+  <div class="step">
+    <h2>2. {{ 'landing.step2_title' | translate }}</h2>
+    <p>{{ 'landing.step2_desc' | translate }}</p>
+  </div>
+  <div class="step">
+    <h2>3. {{ 'landing.step3_title' | translate }}</h2>
+    <p>{{ 'landing.step3_desc' | translate }}</p>
+  </div>
+</section>
+
+<section class="features">
+  <ul>
+    <li>✅ {{ 'landing.feature1' | translate }}</li>
+    <li>📷 {{ 'landing.feature2' | translate }}</li>
+    <li>📄 {{ 'landing.feature3' | translate }}</li>
+    <li>🌍 {{ 'landing.feature4' | translate }}</li>
+    <li>🔒 {{ 'landing.feature5' | translate }}</li>
+  </ul>
+</section>
+
+<section class="cta-section">
+  <h2>{{ 'landing.cta_final' | translate }}</h2>
+  <button class="cta-button"
+          (click)="comecar()">{{ 'landing.cta_start' | translate }}</button>
+</section>
+
+<footer>
+  © 2025 HSE-AI. {{ 'landing.rights' | translate }} | <a href="#">{{ 'landing.terms' | translate }}</a> | <a href="#">{{
+    'landing.privacy' | translate }}</a>
+</footer>

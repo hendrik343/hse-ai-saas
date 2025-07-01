@@ -219,5 +219,26 @@
   "CONTACT_SALES": "Contactar Vendas",
   "MOST_POPULAR": "Mais Popular",
   "FREE_TRIAL": "Teste Grátis",
-  "NO_CREDIT_CARD": "Sem cartão de crédito necessário"
+  "NO_CREDIT_CARD": "Sem cartão de crédito necessário",
+  "landing": {
+    "slogan": "Tira uma foto. Nós analisamos. Tu resolves.",
+    "cta_sub": "Usa inteligência artificial para detetar inconformidades de segurança no local de trabalho em segundos.",
+    "cta_upload": "Fazer Upload da Imagem",
+    "step1_title": "Faz upload da imagem",
+    "step1_desc": "Capta o local com o teu telemóvel ou câmera",
+    "step2_title": "A IA analisa",
+    "step2_desc": "Deteta riscos e falhas com base em normas internacionais",
+    "step3_title": "Recebes o relatório",
+    "step3_desc": "Vê imediatamente o que está errado e como resolver",
+    "feature1": "IA treinada com normas como OSHA e ISO 45001",
+    "feature2": "Funciona com imagens reais do terreno",
+    "feature3": "Geração automática de relatório em PDF",
+    "feature4": "Cobertura de múltiplos países e setores",
+    "feature5": "Testa sem conta — só crias login se quiseres mais",
+    "cta_final": "Experimenta já gratuitamente. Faz upload da tua primeira imagem sem precisar de criar conta.",
+    "cta_start": "Começar Agora",
+    "rights": "Todos os direitos reservados.",
+    "terms": "Termos",
+    "privacy": "Privacidade"
+  }
 }
