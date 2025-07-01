@@ -1,34 +1,32 @@
-<div class="container">
-  <img src="assets/logo-hse.png"
-       alt="HSE Logo"
-       class="logo" />
+<div class="landing-container">
+  <h1 class="landing-title">
+    <span class="highlight">A Primeira Plataforma</span><br />
+    de AI em <strong>Segurança no Trabalho.</strong>
+  </h1>
 
-  <h1 class="title">HSE</h1>
-  <h2 class="subtitle">AI Security Analysis</h2>
+  <p class="landing-slogan">
+    📸 Tira uma foto. Nós analisamos. Tu resolves.
+  </p>
 
-  <p class="slogan">📸 Tira uma foto. Nós analisamos. Tu resolves.</p>
-
-  <button class="cta-button">
-    📷 Take Photo Now
+  <button class="cta-button"
+          (click)="tirarFoto()">
+    📷 Tirar Foto Agora
   </button>
 
   <p class="support-text">
-    NO ACCOUNT, NO HASSLE. TEST OUR AI WITH 1 FREE IMAGE
+    Sem conta, sem complicações. Testa grátis com 1 foto.
   </p>
 
-  <div class="flags">
-    <img src="assets/flags/uk.png"
-         alt="EN" />
-    <img src="assets/flags/pt.png"
-         alt="PT" />
-    <img src="assets/flags/fr.png"
-         alt="FR" />
-  </div>
+  <select #countrySelect
+          class="country-selector">
+    <option selected
+            disabled>País</option>
+    <option value="pt">🇵🇹 Portugal</option>
+    <option value="ao">🇦🇴 Angola</option>
+    <option value="br">🇧🇷 Brasil</option>
+  </select>
 
-  <footer class="footer">
-    <a href="#">Privacy Policy</a> ·
-    <a href="#">Terms</a> ·
-    <a href="#">Contact</a>
-    <div>Powered by Firebase</div>
+  <footer class="landing-footer">
+    Powered by Gemini API | © 2025 HSE AI
   </footer>
 </div>
