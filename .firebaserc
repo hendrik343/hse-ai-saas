@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "hse-ai-saas"
-  }
+    "default": "hse-ai-saas",
+    "prod": "hse-ai-saas"
+  },
+  "targets": {},
+  "etags": {}
 }
