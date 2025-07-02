@@ -5,9 +5,10 @@ import { LucideAngularModule } from 'lucide-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CameraCaptureComponent } from './camera-capture/camera-capture.component';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, CameraCaptureComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,

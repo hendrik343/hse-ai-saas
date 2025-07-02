@@ -1,0 +1,25 @@
+<div class="camera-container">
+    <video #video
+           autoplay
+           playsinline></video>
+
+    <div class="buttons">
+        <button (click)="startCamera()">📷 Ligar Câmara</button>
+        <button (click)="capturePhoto()">📸 Tirar Foto</button>
+    </div>
+
+    <canvas #canvas
+            hidden></canvas>
+
+    <div *ngIf="errorMessage"
+         class="error">
+        ⚠️ {{ errorMessage }}
+    </div>
+
+    <div *ngIf="photoDataUrl"
+         class="photo-preview">
+        <h4>Pré-visualização:</h4>
+        <img [src]="photoDataUrl"
+             alt="Foto capturada">
+    </div>
+</div>
