@@ -9,21 +9,18 @@
   <div class="input-section">
     <!-- Incident Description Input -->
     <div class="description-input">
-      <label for="incidentDescription" class="input-label">
+      <label for="incidentDescription"
+             class="input-label">
         {{ 'INCIDENT_DESCRIPTION' | translate }}
       </label>
-      <textarea 
-        id="incidentDescription"
-        [(ngModel)]="incidentDescription" 
-        placeholder="{{ 'INCIDENT_DESCRIPTION_PLACEHOLDER' | translate }}"
-        class="description-textarea"
-        rows="4"
-      ></textarea>
-      <button 
-        (click)="startStreamingAnalysis()" 
-        [disabled]="isStreaming || !incidentDescription.trim()"
-        class="analyze-btn streaming-btn"
-      >
+      <textarea id="incidentDescription"
+                [(ngModel)]="incidentDescription"
+                placeholder="{{ 'INCIDENT_DESCRIPTION_PLACEHOLDER' | translate }}"
+                class="description-textarea"
+                rows="4"></textarea>
+      <button (click)="startStreamingAnalysis()"
+              [disabled]="isStreaming || !incidentDescription.trim()"
+              class="analyze-btn streaming-btn">
         <span *ngIf="!isStreaming">🤖 {{ 'ANALYZE_WITH_AI' | translate }}</span>
         <span *ngIf="isStreaming">⏳ {{ 'ANALYZING' | translate }}...</span>
       </button>
@@ -36,9 +33,10 @@
 
     <!-- Image Upload Section -->
     <div class="image-upload-section">
-      <label for="fileInput" class="upload-label">
-        <div class="upload-area" 
-             (dragover)="$event.preventDefault()" 
+      <label for="fileInput"
+             class="upload-label">
+        <div class="upload-area"
+             (dragover)="$event.preventDefault()"
              (drop)="onFileDrop($event)"
              [class.dragover]="false">
           <div class="upload-icon">📸</div>
@@ -46,36 +44,57 @@
           <p class="upload-hint">{{ 'DRAG_DROP_OR_CLICK' | translate }}</p>
         </div>
       </label>
-      <input 
-        id="fileInput"
-        type="file" 
-        accept="image/*" 
-        (change)="onFileSelected($event)" 
-        class="file-input"
-      >
-      
+      <input id="fileInput"
+             type="file"
+             accept="image/*"
+             (change)="onFileSelected($event)"
+             class="file-input">
+
       <!-- Image Preview -->
-      <div *ngIf="imagePreview" class="image-preview">
-        <img [src]="imagePreview" alt="Preview" class="preview-image">
-        <button (click)="startAnalysis()" [disabled]="isAnalyzing" class="analyze-btn">
+      <div *ngIf="imagePreview"
+           class="image-preview">
+        <img [src]="imagePreview"
+             alt="Preview"
+             class="preview-image"
+             id="previewImage">
+
+        <div class="bounding-box"
+             *ngFor="let item of results"
+             [ngStyle]="getBoxStyle(item.box)">
+          <span>{{ item.label }} ({{ (item.score * 100) | number:'1.0-1' }}%)</span>
+        </div>
+
+        <button (click)="startAnalysis()"
+                [disabled]="isAnalyzing"
+                class="analyze-btn">
           <span *ngIf="!isAnalyzing">🔍 {{ 'ANALYZE_IMAGE' | translate }}</span>
           <span *ngIf="isAnalyzing">⏳ {{ 'ANALYZING' | translate }}...</span>
         </button>
       </div>
     </div>
 
-    <form *ngIf="!country || !industry" (ngSubmit)="startAnalysis()" class="country-industry-form">
+    <form *ngIf="!country || !industry"
+          (ngSubmit)="startAnalysis()"
+          class="country-industry-form">
       <label>País:
-        <select [(ngModel)]="country" name="country" required>
-          <option value="" disabled selected>Selecione o país</option>
+        <select [(ngModel)]="country"
+                name="country"
+                required>
+          <option value=""
+                  disabled
+                  selected>Selecione o país</option>
           <option value="pt">Portugal</option>
           <option value="ao">Angola</option>
           <option value="br">Brasil</option>
         </select>
       </label>
       <label>Indústria:
-        <select [(ngModel)]="industry" name="industry" required>
-          <option value="" disabled selected>Selecione a indústria</option>
+        <select [(ngModel)]="industry"
+                name="industry"
+                required>
+          <option value=""
+                  disabled
+                  selected>Selecione a indústria</option>
           <option value="construction">Construção</option>
           <option value="hospital">Hospitalar</option>
           <option value="petroleum">Petróleo e Gás</option>
@@ -86,13 +105,15 @@
   </div>
 
   <!-- Error Display -->
-  <div *ngIf="error" class="error-message">
+  <div *ngIf="error"
+       class="error-message">
     <div class="error-icon">⚠️</div>
     <p>{{ error }}</p>
   </div>
 
   <!-- Streaming Analysis Display -->
-  <div *ngIf="isStreaming && streamingText" class="streaming-section">
+  <div *ngIf="isStreaming && streamingText"
+       class="streaming-section">
     <div class="streaming-header">
       <div class="streaming-indicator">
         <div class="pulse-dot"></div>
@@ -105,18 +126,23 @@
   </div>
 
   <!-- Analysis Results -->
-  <div *ngIf="analysisComplete && (analysisResult || streamingResult)" class="results-section" id="analysis-report">
+  <div *ngIf="analysisComplete && (analysisResult || streamingResult)"
+       class="results-section"
+       id="analysis-report">
     <!-- Summary Section -->
-    <div *ngIf="streamingResult" class="result-card summary-card">
+    <div *ngIf="streamingResult"
+         class="result-card summary-card">
       <h2 class="result-title">📋 {{ 'SUMMARY' | translate }}</h2>
       <p class="summary-text">{{ streamingResult.summary }}</p>
     </div>
 
     <!-- Severity Section -->
-    <div *ngIf="streamingResult" class="result-card severity-card">
+    <div *ngIf="streamingResult"
+         class="result-card severity-card">
       <h2 class="result-title">⚠️ {{ 'SEVERITY_ASSESSMENT' | translate }}</h2>
       <div class="severity-info">
-        <span class="severity-level" [style.background-color]="getSeverityColor(streamingResult.severity.level)">
+        <span class="severity-level"
+              [style.background-color]="getSeverityColor(streamingResult.severity.level)">
           {{ streamingResult.severity.level.toUpperCase() }}
         </span>
         <p class="severity-justification">{{ streamingResult.severity.justification }}</p>
@@ -124,57 +150,71 @@
     </div>
 
     <!-- Root Causes -->
-    <div *ngIf="hasRootCauses" class="result-card">
+    <div *ngIf="hasRootCauses"
+         class="result-card">
       <h2 class="result-title">🔍 {{ 'ROOT_CAUSES' | translate }}</h2>
       <ul class="result-list">
-        <li *ngFor="let cause of streamingResult?.rootCauses || []" class="result-item">{{ cause }}</li>
+        <li *ngFor="let cause of streamingResult?.rootCauses || []"
+            class="result-item">{{ cause }}</li>
       </ul>
     </div>
 
     <!-- Preventive Actions -->
-    <div *ngIf="hasPreventiveActions" class="result-card">
+    <div *ngIf="hasPreventiveActions"
+         class="result-card">
       <h2 class="result-title">🛡️ {{ 'PREVENTIVE_ACTIONS' | translate }}</h2>
       <ul class="result-list">
-        <li *ngFor="let action of streamingResult?.preventiveActions || []" class="result-item">{{ action }}</li>
+        <li *ngFor="let action of streamingResult?.preventiveActions || []"
+            class="result-item">{{ action }}</li>
       </ul>
     </div>
 
     <!-- Compliance Notes -->
-    <div *ngIf="hasComplianceNotes" class="result-card">
+    <div *ngIf="hasComplianceNotes"
+         class="result-card">
       <h2 class="result-title">📋 {{ 'COMPLIANCE_NOTES' | translate }}</h2>
       <ul class="result-list">
-        <li *ngFor="let note of streamingResult?.complianceNotes || []" class="result-item">{{ note }}</li>
+        <li *ngFor="let note of streamingResult?.complianceNotes || []"
+            class="result-item">{{ note }}</li>
       </ul>
     </div>
 
     <!-- Legacy Results Display (for image analysis) -->
-    <div *ngIf="analysisResult && !streamingResult" class="legacy-results">
+    <div *ngIf="analysisResult && !streamingResult"
+         class="legacy-results">
       <!-- Violations -->
-      <div *ngIf="analysisResult.violations?.length" class="result-card">
+      <div *ngIf="analysisResult.violations?.length"
+           class="result-card">
         <h2 class="result-title">🚨 {{ 'VIOLATIONS' | translate }}</h2>
         <ul class="result-list">
-          <li *ngFor="let violation of analysisResult.violations" class="result-item">{{ violation }}</li>
+          <li *ngFor="let violation of analysisResult.violations"
+              class="result-item">{{ violation }}</li>
         </ul>
       </div>
 
       <!-- Risks -->
-      <div *ngIf="analysisResult.risks?.length" class="result-card">
+      <div *ngIf="analysisResult.risks?.length"
+           class="result-card">
         <h2 class="result-title">⚠️ {{ 'RISKS' | translate }}</h2>
         <ul class="result-list">
-          <li *ngFor="let risk of analysisResult.risks" class="result-item">{{ risk }}</li>
+          <li *ngFor="let risk of analysisResult.risks"
+              class="result-item">{{ risk }}</li>
         </ul>
       </div>
 
       <!-- Recommendations -->
-      <div *ngIf="analysisResult.recommendations?.length" class="result-card">
+      <div *ngIf="analysisResult.recommendations?.length"
+           class="result-card">
         <h2 class="result-title">💡 {{ 'RECOMMENDATIONS' | translate }}</h2>
         <ul class="result-list">
-          <li *ngFor="let recommendation of analysisResult.recommendations" class="result-item">{{ recommendation }}</li>
+          <li *ngFor="let recommendation of analysisResult.recommendations"
+              class="result-item">{{ recommendation }}</li>
         </ul>
       </div>
 
       <!-- Compliance Score -->
-      <div *ngIf="analysisResult.complianceScore" class="result-card">
+      <div *ngIf="analysisResult.complianceScore"
+           class="result-card">
         <h2 class="result-title">📊 {{ 'COMPLIANCE_SCORE' | translate }}</h2>
         <div class="compliance-score">
           <span class="score-value">{{ analysisResult.complianceScore }}%</span>
@@ -184,23 +224,28 @@
 
     <!-- Action Buttons -->
     <div class="action-buttons">
-      <button (click)="downloadPDF()" class="action-btn download-btn">
+      <button (click)="downloadPDF()"
+              class="action-btn download-btn">
         📄 {{ 'DOWNLOAD_PDF' | translate }}
       </button>
-      <button (click)="analyzeAnother()" class="action-btn analyze-another-btn">
+      <button (click)="analyzeAnother()"
+              class="action-btn analyze-another-btn">
         🔄 {{ 'ANALYZE_ANOTHER' | translate }}
       </button>
     </div>
   </div>
 
   <!-- Signup CTA for Trial Mode -->
-  <div *ngIf="showSignupCTA" class="signup-cta">
+  <div *ngIf="showSignupCTA"
+       class="signup-cta">
     <div class="cta-content">
       <h3>{{ 'TRIAL_COMPLETE' | translate }}</h3>
       <p>{{ 'TRIAL_COMPLETE_DESCRIPTION' | translate }}</p>
       <div class="cta-buttons">
-        <button (click)="goToSignup()" class="cta-btn primary">{{ 'CREATE_ACCOUNT' | translate }}</button>
-        <button (click)="goToPricing()" class="cta-btn secondary">{{ 'VIEW_PLANS' | translate }}</button>
+        <button (click)="goToSignup()"
+                class="cta-btn primary">{{ 'CREATE_ACCOUNT' | translate }}</button>
+        <button (click)="goToPricing()"
+                class="cta-btn secondary">{{ 'VIEW_PLANS' | translate }}</button>
       </div>
     </div>
   </div>
@@ -212,8 +257,33 @@
     <button (click)="gerarRelatorioPdf()">📄 Gerar Relatório PDF</button>
   </div>
 
-  <div *ngIf="resultado" class="resultado">
+  <div *ngIf="resultado"
+       class="resultado">
     <h3>Resultado:</h3>
     <p>{{ resultado }}</p>
+  </div>
+
+  <div class="upload-container">
+    <input type="file"
+           accept="image/*"
+           (change)="onImageSelected($event)" />
+  </div>
+
+  <div class="image-container"
+       *ngIf="imagePreview">
+    <img [src]="imagePreview"
+         alt="Preview"
+         id="previewImage" />
+
+    <div class="bounding-box"
+         *ngFor="let item of results"
+         [ngStyle]="getBoxStyle(item.box)">
+      <span>{{ item.label }} ({{ (item.score * 100) | number:'1.0-1' }}%)</span>
+    </div>
+  </div>
+
+  <div *ngIf="loading"
+       class="loading">
+    A analisar imagem com IA...
   </div>
 </div>

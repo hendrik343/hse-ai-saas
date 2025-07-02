@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 import { ImageService } from '../services/image.service';
 import { PdfService } from '../services/pdf.service';
 import { ReportService } from '../services/report.service';
+import { HuggingfaceService } from '../shared/services/huggingface.service';
 
 // PDF generation
 import html2canvas from 'html2canvas';
@@ -32,6 +33,7 @@ export class AiAnalyzeComponent implements OnInit {
   private authService = inject(AuthService);
   private translate = inject(TranslateService);
   private pdfService = inject(PdfService);
+  private hfService = inject(HuggingfaceService);
 
   // File handling
   selectedFile: File | null = null;
@@ -73,6 +75,12 @@ export class AiAnalyzeComponent implements OnInit {
   intent: string = 'default';
   country: string | null = null;
   industry: string | null = null;
+
+  // Object detection results
+  results: any[] = [];
+  loading = false;
+  imageWidth = 0;
+  imageHeight = 0;
 
   ngOnInit() {
     // Check if this is trial mode (no auth required)
@@ -362,5 +370,53 @@ export class AiAnalyzeComponent implements OnInit {
     console.log('Gerar relatório PDF clicked');
     this.pdfService.gerarRelatorioPdf(this.relatorio);
     console.log('PDF generation completed');
+  }
+
+  // New object detection method
+  detectObjects(): void {
+    if (!this.imagePreview) return;
+    this.loading = true;
+
+    this.hfService.detectObjects(this.imagePreview).subscribe({
+      next: (response) => {
+        this.results = response;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Erro na API Hugging Face:', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  onImageSelected(event: any): void {
+    const file: File = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+
+      const img = new Image();
+      img.onload = () => {
+        this.imageWidth = img.width;
+        this.imageHeight = img.height;
+        this.detectObjects();
+      ***REMOVED***
+      img.src = this.imagePreview!;
+    ***REMOVED***
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+  getBoxStyle(box: number[]): any {
+    const [x, y, width, height] = box;
+    return {
+      left: `${x}px`,
+      top: `${y}px`,
+      width: `${width}px`,
+      height: `${height}px`,
+    ***REMOVED***
   }
 }

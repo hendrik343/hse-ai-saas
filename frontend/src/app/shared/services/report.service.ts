@@ -6,7 +6,8 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 // Suporte robusto para diferentes formatos de export do pdfmake em produção
-(pdfMake as any).vfs = (pdfFonts as any).vfs || (pdfFonts as any).pdfMake?.vfs;
+// Compatível com pdfmake moderno: vfs está em pdfFonts.pdfMake.vfs
+(pdfMake as any).vfs = (pdfFonts as any).pdfMake.vfs;
 
 @Injectable({ providedIn: 'root' })
 export class ReportService {
