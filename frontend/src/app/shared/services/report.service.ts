@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collection, doc, updateDoc } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp, getDocs, orderBy, query, where } from 'firebase/firestore';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -37,7 +37,7 @@ export class ReportService {
                 header: { fontSize: 22, bold: true },
                 subheader: { fontSize: 16, margin: [0, 10, 0, 5] },
             },
-        ***REMOVED***
+        };
 
         const pdfBlob = await pdfMake.createPdf(pdfDefinition).getBlob();
 
@@ -54,12 +54,11 @@ export class ReportService {
         return downloadUrl;
     }
 
-    getUserReports(userId: string) {
-        return this.firestore
-            .collection('reports', ref =>
-                ref.where('userId', '==', userId).orderBy('createdAt', 'desc')
-            )
-            .valueChanges({ idField: 'id' });
+    async getUserReports(userId: string) {
+        const reportsRef = collection(this.firestore, 'reports');
+        const q = query(reportsRef, where('userId', '==', userId), orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
 }
 

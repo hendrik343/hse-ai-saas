@@ -38,7 +38,7 @@ export interface AIReportResult {
   usage?: {
     monthlyReports: number;
     limit: number;
-  ***REMOVED***
+  };
 }
 
 @Injectable({

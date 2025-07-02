@@ -43,7 +43,7 @@ export class FirestoreService {
         features: ['basic_reports', 'incident_tracking']
       },
       ...orgData
-    ***REMOVED***
+    };
     
     await setDoc(orgRef, organization);
     return orgRef.id;
@@ -64,7 +64,7 @@ export class FirestoreService {
       updatedAt: new Date(),
       permissions: ['all'],
       ...userProfile
-    ***REMOVED***
+    };
 
     await setDoc(userRef, profile);
   }
@@ -95,7 +95,7 @@ export class FirestoreService {
       createdAt: new Date(),
       updatedAt: new Date(),
       ...hseData
-    ***REMOVED***
+    };
 
     await setDoc(dataRef, data);
     return dataRef.id;
@@ -128,7 +128,7 @@ export class FirestoreService {
       updatedAt: new Date(),
       metadata: {},
       ...report
-    ***REMOVED***
+    };
 
     await setDoc(reportRef, hseReport);
     return reportRef.id;
@@ -185,7 +185,7 @@ export class FirestoreService {
       updatedAt: new Date(),
       status: 'completed',
       type: 'ai_analysis'
-    ***REMOVED***
+    };
 
     await setDoc(reportRef, report);
     return reportRef.id;

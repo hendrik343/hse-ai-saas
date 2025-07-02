@@ -17,4 +17,4 @@ export const routes: Routes = [
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
-export const routerConfig = { useHash: true ***REMOVED***
+export const routerConfig = { useHash: true };

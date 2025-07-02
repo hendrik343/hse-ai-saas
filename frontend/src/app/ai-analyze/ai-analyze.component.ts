@@ -74,7 +74,7 @@ export class AiAnalyzeComponent implements OnInit {
     naoConformidades: '',
     normas: '',
     risco: ''
-  ***REMOVED***
+  };
 
   intent: string = 'default';
   country: string | null = null;
@@ -153,10 +153,10 @@ export class AiAnalyzeComponent implements OnInit {
       } else {
         console.error('Invalid image data');
       }
-    ***REMOVED***
+    };
     reader.onerror = () => {
       console.error('Error reading file');
-    ***REMOVED***
+    };
     reader.readAsDataURL(file);
   }
 
@@ -204,7 +204,7 @@ export class AiAnalyzeComponent implements OnInit {
               risks: this.streamingResult.risks,
               recommendations: this.streamingResult.recommendations,
               complianceScore: this.streamingResult.complianceScore
-            ***REMOVED***
+            };
           }
           this.analysisComplete = true;
           this.isStreaming = false;
@@ -238,7 +238,7 @@ export class AiAnalyzeComponent implements OnInit {
 
     try {
       // Step 1: Upload image
-      const uploadResult = await this.imageService.uploadImage(this.selectedFile) as { downloadURL: string; docRef: any ***REMOVED***
+      const uploadResult = await this.imageService.uploadImage(this.selectedFile) as { downloadURL: string; docRef: any };
       this.imageUrl = uploadResult.downloadURL;
 
       // Step 2: Perform AI analysis
@@ -335,7 +335,7 @@ export class AiAnalyzeComponent implements OnInit {
       'medium': '#F59E0B',
       'high': '#EF4444',
       'critical': '#DC2626'
-    ***REMOVED***
+    };
     return colors[level as keyof typeof colors] || '#6B7280';
   }
 
@@ -350,30 +350,16 @@ export class AiAnalyzeComponent implements OnInit {
   }
 
   detectarNaoConformidades() {
-    console.log('Detectar não conformidades clicked');
-    this.resultado = this.aiService.detectarNaoConformidades(this.imageData);
-    this.relatorio.naoConformidades = this.resultado;
-    console.log('Resultado:', this.resultado);
+    console.log('detectarNaoConformidades clicado!');
   }
-
   verificarNormas() {
-    console.log('Verificar normas clicked');
-    this.resultado = this.aiService.verificarNormas(this.imageData);
-    this.relatorio.normas = this.resultado;
-    console.log('Resultado:', this.resultado);
+    console.log('verificarNormas clicado!');
   }
-
   analisarRisco() {
-    console.log('Analisar risco clicked');
-    this.resultado = this.aiService.analisarRisco(this.imageData);
-    this.relatorio.risco = this.resultado;
-    console.log('Resultado:', this.resultado);
+    console.log('analisarRisco clicado!');
   }
-
   gerarRelatorioPdf() {
-    console.log('Gerar relatório PDF clicked');
-    this.pdfService.gerarRelatorioPdf(this.relatorio);
-    console.log('PDF generation completed');
+    console.log('gerarRelatorioPdf clicado!');
   }
 
   // New object detection method
@@ -405,9 +391,9 @@ export class AiAnalyzeComponent implements OnInit {
         this.imageWidth = img.width;
         this.imageHeight = img.height;
         this.detectObjects();
-      ***REMOVED***
+      };
       img.src = this.imagePreview!;
-    ***REMOVED***
+    };
 
     if (file) {
       reader.readAsDataURL(file);
@@ -421,7 +407,7 @@ export class AiAnalyzeComponent implements OnInit {
       top: `${y}px`,
       width: `${width}px`,
       height: `${height}px`,
-    ***REMOVED***
+    };
   }
 
   async generatePdf() {

@@ -67,7 +67,7 @@ export class PerformanceService {
                     navigationStart: navigation.navigationStart || 0,
                     domContentLoaded: (navigation.domContentLoadedEventEnd || 0) - (navigation.navigationStart || 0),
                     loadComplete: (navigation.loadEventEnd || 0) - (navigation.navigationStart || 0)
-                ***REMOVED***
+                };
 
                 // Track Core Web Vitals if available
                 this.trackCoreWebVitals(metrics);
@@ -187,7 +187,7 @@ export class PerformanceService {
             timestamp: new Date(),
             url: window.location.href,
             metadata
-        ***REMOVED***
+        };
 
         // Send to error monitoring service for analytics
         this.errorMonitoring.trackPerformance(name, value, {

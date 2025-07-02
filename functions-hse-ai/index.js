@@ -101,7 +101,7 @@ exports.generateAiReport = functions.https.onCall(async (data, context) => {
     const statsDoc = await db.collection("organizations")
         .doc(orgId).collection("stats").doc("current").get();
     const currentStats = statsDoc.exists ?
-      statsDoc.data() : {monthlyReports: 0***REMOVED***
+      statsDoc.data() : {monthlyReports: 0};
 
     // Para planos gratuitos, aplicar limite mais restritivo
     const monthlyLimit = currentPlan === "free" ? 5 : ((orgData.settings && orgData.settings.aiReportsLimit) || 50);
@@ -157,7 +157,7 @@ exports.generateAiReport = functions.https.onCall(async (data, context) => {
         tokens: (geminiResponse.data.usageMetadata &&
           geminiResponse.data.usageMetadata.totalTokenCount) || 0,
       },
-    ***REMOVED***
+    };
 
     // Batch write para salvar relatório e atualizar estatísticas
     const batch = db.batch();
@@ -190,7 +190,7 @@ exports.generateAiReport = functions.https.onCall(async (data, context) => {
         monthlyReports: (currentStats.monthlyReports || 0) + 1,
         limit: orgData.settings.aiReportsLimit,
       },
-    ***REMOVED***
+    };
   } catch (error) {
     console.error("Error generating AI report:", error);
     if (error instanceof functions.https.HttpsError) {
@@ -312,7 +312,7 @@ exports.createUserOnboarding = functions.https.onCall(async (data, context) => {
       success: true,
       organizationId: organizationId,
       message: "Onboarding completed successfully",
-    ***REMOVED***
+    };
   } catch (error) {
     console.error("Error in createUserOnboarding:", error);
     if (error instanceof functions.https.HttpsError) {
@@ -351,7 +351,7 @@ exports.getUserData = functions.https.onCall(async (data, context) => {
         },
         organization: null,
         needsOnboarding: true,
-      ***REMOVED***
+      };
     }
 
     const userData = userDoc.data();
@@ -364,7 +364,7 @@ exports.getUserData = functions.https.onCall(async (data, context) => {
         user: userData,
         organization: null,
         needsOnboarding: true,
-      ***REMOVED***
+      };
     }
 
     // Busca dados da organização
@@ -377,7 +377,7 @@ exports.getUserData = functions.https.onCall(async (data, context) => {
       user: userData,
       organization: organizationData,
       needsOnboarding: false,
-    ***REMOVED***
+    };
   } catch (error) {
     console.error("Error in getUserData:", error);
     if (error instanceof functions.https.HttpsError) {
@@ -445,7 +445,7 @@ exports.getOrganizationReports = functions.https.onCall(async (data, context) =>
       success: true,
       reports: reports,
       hasMore: reportsSnapshot.size === limit,
-    ***REMOVED***
+    };
   } catch (error) {
     console.error("Error in getOrganizationReports:", error);
     if (error instanceof functions.https.HttpsError) {

@@ -126,7 +126,7 @@ export class OnboardingComponent {
       const onboardingData: OnboardingData = {
         organizationName: this.organizationName.trim(),
         organizationType: this.organizationType
-      ***REMOVED***
+      };
 
       const result = await this.cloudFunctions.createUserOnboarding(onboardingData);
       

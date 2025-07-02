@@ -28,7 +28,7 @@ export class PdfReportService {
                 header: { fontSize: 18, bold: true },
                 subheader: { fontSize: 12, italics: true },
             },
-        ***REMOVED***
+        };
 
         pdfMake.createPdf(docDefinition).download(`relatorio-${Date.now()}.pdf`);
     }

@@ -147,7 +147,7 @@ export class FluidCursorComponent implements OnInit, OnDestroy {
     const animate = () => {
       this.updateFrame();
       this.animationFrameId = requestAnimationFrame(animate);
-    ***REMOVED***
+    };
     animate();
   }
 

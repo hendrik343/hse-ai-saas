@@ -22,7 +22,7 @@ export class AnalysisService {
                     risco: 'Capacete ausente',
                     severidade: 'Alta',
                     timestamp: new Date().toISOString()
-                ***REMOVED***
+                };
                 return from(this.firestore.collection('analises').add(fakeAnalysis).then(() => fakeAnalysis));
             })
         );

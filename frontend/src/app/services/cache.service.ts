@@ -65,7 +65,7 @@ export class CacheService {
             timestamp: Date.now(),
             ttl,
             key
-        ***REMOVED***
+        };
 
         this.cache.set(key, item);
     }
@@ -121,7 +121,7 @@ export class CacheService {
             maxSize: this.MAX_SIZE,
             hitRate,
             missRate
-        ***REMOVED***
+        };
     }
 
     /**

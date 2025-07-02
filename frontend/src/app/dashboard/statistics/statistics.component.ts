@@ -176,7 +176,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
           }
         }
       }
-    ***REMOVED***
+    };
 
     this.reportsChart = new Chart(this.reportsChartRef.nativeElement, config);
   }
@@ -231,7 +231,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
           }
         }
       }
-    ***REMOVED***
+    };
 
     this.riskChart = new Chart(this.riskChartRef.nativeElement, config);
   }
@@ -281,13 +281,13 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
           }
         }
       }
-    ***REMOVED***
+    };
 
     this.trendChart = new Chart(this.trendChartRef.nativeElement, config);
   }
 
   getReportsByOrganization() {
-    const orgCounts: { [key: string]: number } = {***REMOVED***
+    const orgCounts: { [key: string]: number } = {};
 
     this.reports.forEach(report => {
       const org = report.organizationId || 'Unknown';
@@ -297,7 +297,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
     return {
       labels: Object.keys(orgCounts).map(org => this.getOrganizationName(org)),
       data: Object.values(orgCounts)
-    ***REMOVED***
+    };
   }
 
   getReportsTrend() {
@@ -317,7 +317,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
     return {
       labels: last7Days.map(date => new Date(date).toLocaleDateString()),
       data: dailyCounts
-    ***REMOVED***
+    };
   }
 
   getOrganizationName(orgId: string): string {
@@ -326,7 +326,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
       'cabinda': this.translate.instant('STATISTICS.CABINDA'),
       'huambo': this.translate.instant('STATISTICS.HUAMBO'),
       'Unknown': this.translate.instant('STATISTICS.UNKNOWN')
-    ***REMOVED***
+    };
     return orgNames[orgId] || orgId;
   }
 
@@ -335,7 +335,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit {
       'low': '#10B981',
       'medium': '#F59E0B',
       'high': '#EF4444'
-    ***REMOVED***
+    };
     return colors[level as keyof typeof colors] || '#6B7280';
   }
 

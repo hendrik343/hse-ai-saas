@@ -175,7 +175,7 @@ describe('AiAnalyzeComponent', () => {
         onload: null as any,
         onerror: null as any,
         readAsDataURL: jasmine.createSpy('readAsDataURL')
-      ***REMOVED***
+      };
 
       spyOn(window, 'FileReader').and.returnValue(mockReader as any);
       component.createImagePreview(mockFile);
@@ -264,7 +264,7 @@ describe('AiAnalyzeComponent', () => {
         risks: ['Test risk'],
         recommendations: ['Test recommendation'],
         complianceScore: 75
-      ***REMOVED***
+      };
 
       component.analysisResult = mockAnalysisResult;
       const mockPdf = {
@@ -282,7 +282,7 @@ describe('AiAnalyzeComponent', () => {
             getHeight: () => 842
           }
         }
-      ***REMOVED***
+      };
 
       spyOn(window as any, 'jsPDF').and.returnValue(mockPdf);
 

@@ -173,7 +173,7 @@ export class AiService {
       risks: ['Mock risk'],
       recommendations: ['Mock recommendation'],
       complianceScore: 75
-    ***REMOVED***
+    };
   }
 
   analyzeImageMock(imageUrl: string): Observable<AiAnalysisResult> {

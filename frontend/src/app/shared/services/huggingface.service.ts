@@ -29,7 +29,7 @@ export class HuggingfaceService {
 
         const headers: any = {
             Accept: 'application/json',
-        ***REMOVED***
+        };
         if (this.apiToken) {
             headers['Authorization'] = `Bearer ${this.apiToken}`;
         }

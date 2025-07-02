@@ -41,7 +41,7 @@ export class PdfStorageService {
             pdfUrl,
             detections,
             createdAt: Timestamp.now(),
-        ***REMOVED***
+        };
         await this.firestore.collection('reports').doc(reportId).set(data);
     }
 }

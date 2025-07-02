@@ -38,7 +38,7 @@ export class ReportService {
       analysis,
       createdAt: firebase.firestore.FieldValue.serverTimestamp() as unknown as Date,
       organizationId: user.organizationId
-    ***REMOVED***
+    };
 
     try {
       const docRef = await this.firestore.collection('reports').add(report);

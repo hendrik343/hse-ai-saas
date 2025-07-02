@@ -64,7 +64,7 @@ export class ToastService {
    */
   private addToast(type: Toast['type'], message: string, duration: number) {
     const id = this.generateId();
-    const toast: Toast = { id, type, message, duration ***REMOVED***
+    const toast: Toast = { id, type, message, duration };
     
     this.toasts.update(toasts => [...toasts, toast]);
 

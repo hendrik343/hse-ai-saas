@@ -45,7 +45,7 @@ export class ErrorMonitoringService {
             userAgent: navigator.userAgent,
             url: window.location.href,
             stack: error.stack
-        ***REMOVED***
+        };
 
         // Log to console in development
         if (!environment.production) {
@@ -72,7 +72,7 @@ export class ErrorMonitoringService {
             url: window.location.href,
             userAgent: navigator.userAgent,
             ...metadata
-        ***REMOVED***
+        };
 
         // Send to analytics
         this.trackInAnalytics(eventData);
@@ -88,7 +88,7 @@ export class ErrorMonitoringService {
             timestamp: new Date(),
             url: window.location.href,
             ...metadata
-        ***REMOVED***
+        };
 
         // Send to analytics
         this.trackInAnalytics(performanceData);

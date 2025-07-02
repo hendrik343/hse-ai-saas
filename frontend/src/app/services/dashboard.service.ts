@@ -89,7 +89,7 @@ export class DashboardService {
           recentReports,
           userStats,
           hasReachedLimit
-        ***REMOVED***
+        };
 
         this.dashboardStateSubject.next(newState);
         return newState;
@@ -169,7 +169,7 @@ export class DashboardService {
         const updatedStats = {
           ...currentState.userStats,
           activeOrganizations: updatedOrgs.length
-        ***REMOVED***
+        };
         
         this.updateState({
           organizations: updatedOrgs,
@@ -229,7 +229,7 @@ export class DashboardService {
         const updatedStats = {
           ...currentState.userStats,
           activeOrganizations: updatedOrgs.length
-        ***REMOVED***
+        };
 
         this.updateState({
           organizations: updatedOrgs,

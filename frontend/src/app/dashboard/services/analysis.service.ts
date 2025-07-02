@@ -22,7 +22,7 @@ export class AnalysisService {
             issue: 'Capacete ausente',
             severity: 'Alta',
             recommendation: 'Utilizar capacete de proteção.'
-        ***REMOVED***
+        };
 
         await addDoc(collection(this.firestore, 'analises'), {
             imageUrl,
@@ -30,6 +30,6 @@ export class AnalysisService {
             timestamp: Timestamp.now(),
         });
 
-        return { imageUrl, result ***REMOVED***
+        return { imageUrl, result };
     }
 }

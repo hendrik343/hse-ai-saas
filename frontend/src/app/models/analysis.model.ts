@@ -3,7 +3,7 @@ export interface AnalysisResult {
   severity: {
     level: 'Low' | 'Medium' | 'High' | 'Critical';
     justification: string;
-  ***REMOVED***
+  };
   rootCauses: string[];
   preventiveActions: string[];
   complianceNotes: string[];
@@ -12,5 +12,5 @@ export interface AnalysisResult {
     title: string;
     date: string;
     sections: { title: string; content: string }[];
-  ***REMOVED***
+  };
 } 

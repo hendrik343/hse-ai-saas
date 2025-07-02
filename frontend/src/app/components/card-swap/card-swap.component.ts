@@ -89,7 +89,7 @@ export class CardSwapComponent implements AfterViewInit, OnDestroy {
       y: -i * distY,
       z: -i * distX * 1.5,
       zIndex: total - i,
-    ***REMOVED***
+    };
   }
 
   private placeNow(el: HTMLElement, slot: any, skew: number) {
@@ -123,7 +123,7 @@ export class CardSwapComponent implements AfterViewInit, OnDestroy {
           durReturn: 0.8,
           promoteOverlap: 0.45,
           returnDelay: 0.2,
-        ***REMOVED***
+        };
   }
 
   private init() {
@@ -179,7 +179,7 @@ export class CardSwapComponent implements AfterViewInit, OnDestroy {
       tl.call(() => {
         this.order = [...rest, front];
       });
-    ***REMOVED***
+    };
     swap();
     this.intervalId = setInterval(swap, this.delay);
     if (this.pauseOnHover) {
@@ -187,11 +187,11 @@ export class CardSwapComponent implements AfterViewInit, OnDestroy {
       const pause = () => {
         this.tl?.pause();
         clearInterval(this.intervalId);
-      ***REMOVED***
+      };
       const resume = () => {
         this.tl?.play();
         this.intervalId = setInterval(swap, this.delay);
-      ***REMOVED***
+      };
       node.addEventListener('mouseenter', pause);
       node.addEventListener('mouseleave', resume);
     }

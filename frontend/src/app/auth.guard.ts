@@ -6,4 +6,4 @@ import { map } from 'rxjs/operators';
 export const authGuard: CanActivateFn = () => {
   const auth = inject(Auth);
   return user(auth).pipe(map(u => !!u));
-***REMOVED***
+};

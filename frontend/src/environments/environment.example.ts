@@ -3,8 +3,8 @@
  * Copy this file to environment.ts and fill in your actual values
  */
 
-***REMOVED***
-  ***REMOVED***
+export const environment = {
+    production: false,
 
     // Firebase Configuration
     firebase: {
@@ -78,4 +78,4 @@
         maxLoginAttempts: 5,
         sessionTimeout: 30 * 60 * 1000 // 30 minutes
     }
-***REMOVED*** 
+}; 

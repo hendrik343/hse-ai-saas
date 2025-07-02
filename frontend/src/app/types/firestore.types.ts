@@ -11,7 +11,7 @@ export interface Organization {
     timezone?: string;
     language?: string;
     features?: string[];
-  ***REMOVED***
+  };
 }
 
 export interface UserProfile {
@@ -51,7 +51,7 @@ export interface HSEReport {
     promptUsed?: string;
     aiModel?: string;
     tokens?: number;
-  ***REMOVED***
+  };
 }
 
 export interface HSEData {
@@ -74,18 +74,18 @@ export interface AIAnalysisReport {
       score: number;
       issues: string[];
       recommendations: string[];
-    ***REMOVED***
+    };
     risk: {
       level: 'low' | 'medium' | 'high';
       factors: string[];
       mitigation: string[];
-    ***REMOVED***
+    };
     legal: {
       violations: string[];
       requirements: string[];
       penalties: string[];
-    ***REMOVED***
-  ***REMOVED***
+    };
+  };
   pdfUrl: string | null;
   createdAt: Date;
   updatedAt: Date;

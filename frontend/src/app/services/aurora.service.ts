@@ -160,7 +160,7 @@ export class AuroraService {
       this.renderer!.setSize(clientWidth, clientHeight);
       camera.perspective({ aspect: clientWidth / clientHeight });
       program.uniforms['uResolution'].value.set(clientWidth, clientHeight);
-    ***REMOVED***
+    };
 
     // Initial resize
     resize();
@@ -173,7 +173,7 @@ export class AuroraService {
 
       this.renderer!.render({ scene, camera });
       this.animationId = requestAnimationFrame(animate);
-    ***REMOVED***
+    };
 
     animate();
 
@@ -187,7 +187,7 @@ export class AuroraService {
       if (gl.canvas.parentNode) {
         gl.canvas.parentNode.removeChild(gl.canvas);
       }
-    ***REMOVED***
+    };
   }
 
   destroy() {
