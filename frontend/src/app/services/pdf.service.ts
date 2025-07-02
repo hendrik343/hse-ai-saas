@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { Report } from '../models/report.model';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class PdfService {
       // Criar PDF
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
-      
+
       const imgWidth = 210; // A4 width in mm
       const pageHeight = 295; // A4 height in mm
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
@@ -59,6 +59,39 @@ export class PdfService {
       console.error('Erro ao gerar PDF:', error);
       throw new Error('Falha ao gerar PDF do relatório');
     }
+  }
+
+  async exportCatalogPdf(reports: any[]): Promise<void> {
+    const doc = new jsPDF('p', 'mm', 'a4');
+    let y = 10;
+
+    for (const report of reports) {
+      if (y > 270) {
+        doc.addPage();
+        y = 10;
+      }
+
+      doc.setFontSize(12);
+      doc.text(`Usuário: ${report.userId}`, 10, y);
+      doc.text(`Data: ${new Date(report.timestamp).toLocaleString()}`, 10, y + 7);
+      if (report.imageUrl) {
+        const image = await this.loadImageAsDataURL(report.imageUrl);
+        doc.addImage(image, 'JPEG', 10, y + 10, 50, 40);
+      }
+      y += 60;
+    }
+
+    doc.save(`catalogo-relatorios-${new Date().toISOString().slice(0, 10)}.pdf`);
+  }
+
+  private async loadImageAsDataURL(url: string): Promise<string> {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(blob);
+    });
   }
 
   private createReportElement(report: Report): HTMLElement {
@@ -173,4 +206,4 @@ export class PdfService {
     link.download = 'relatorio-seguranca.pdf';
     link.click();
   }
-} 
+}

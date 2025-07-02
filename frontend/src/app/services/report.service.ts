@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService } from './auth.service';
-import { AiService, AiAnalysisResult } from './ai.service';
 import firebase from 'firebase/compat/app';
+import jsPDF from 'jspdf';
 import { ToastrService } from 'ngx-toastr';
+import { AiAnalysisResult } from './ai.service';
+import { AuthService } from './auth.service';
 
 export interface Report {
   id?: string;
@@ -21,7 +22,7 @@ export class ReportService {
     private firestore: AngularFirestore,
     private auth: AuthService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   async saveReport(imageUrl: string, analysis: AiAnalysisResult): Promise<string> {
     const user = this.auth.getCurrentUser();
@@ -64,4 +65,37 @@ export class ReportService {
   async deleteReport(reportId: string): Promise<void> {
     await this.firestore.collection('reports').doc(reportId).delete();
   }
-} 
+
+  async exportCatalogPdf(reports: any[]): Promise<void> {
+    const doc = new jsPDF('p', 'mm', 'a4');
+    let y = 10;
+
+    for (const report of reports) {
+      if (y > 270) {
+        doc.addPage();
+        y = 10;
+      }
+
+      doc.setFontSize(12);
+      doc.text(`Usuário: ${report.userId}`, 10, y);
+      doc.text(`Data: ${new Date(report.timestamp).toLocaleString()}`, 10, y + 7);
+      if (report.imageUrl) {
+        const image = await this.loadImageAsDataURL(report.imageUrl);
+        doc.addImage(image, 'JPEG', 10, y + 10, 50, 40);
+      }
+      y += 60;
+    }
+
+    doc.save(`catalogo-relatorios-${new Date().toISOString().slice(0, 10)}.pdf`);
+  }
+
+  private async loadImageAsDataURL(url: string): Promise<string> {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(blob);
+    });
+  }
+}
