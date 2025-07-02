@@ -12,6 +12,8 @@ import { ImageService } from '../services/image.service';
 import { PdfService } from '../services/pdf.service';
 import { ReportService } from '../services/report.service';
 import { HuggingfaceService } from '../shared/services/huggingface.service';
+import { PdfReportService } from '../shared/services/pdf-report.service';
+import { PdfStorageService } from '../shared/services/pdf-storage.service';
 
 // PDF generation
 import html2canvas from 'html2canvas';
@@ -34,6 +36,8 @@ export class AiAnalyzeComponent implements OnInit {
   private translate = inject(TranslateService);
   private pdfService = inject(PdfService);
   private hfService = inject(HuggingfaceService);
+  private pdfReportService = inject(PdfReportService);
+  private pdfStorageService = inject(PdfStorageService);
 
   // File handling
   selectedFile: File | null = null;
@@ -378,11 +382,11 @@ export class AiAnalyzeComponent implements OnInit {
     this.loading = true;
 
     this.hfService.detectObjects(this.imagePreview).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.results = response;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Erro na API Hugging Face:', err);
         this.loading = false;
       }
@@ -418,5 +422,53 @@ export class AiAnalyzeComponent implements OnInit {
       width: `${width}px`,
       height: `${height}px`,
     ***REMOVED***
+  }
+
+  async generatePdf() {
+    if (!this.imagePreview || !this.results.length) {
+      console.error('No image or detections to generate PDF');
+      return;
+    }
+    await this.pdfReportService.generatePdf(this.imagePreview, this.results);
+  }
+
+  async generateAndUploadPdf() {
+    if (!this.imagePreview || !this.results.length) {
+      console.error('No image or detections to generate PDF');
+      return;
+    }
+    // 1. Generate PDF as Blob
+    const pdfBlob = await new Promise<Blob>(resolve => {
+      (window as any).pdfMake.createPdf({
+        content: [
+          { text: 'Relatório de Análise de Imagem com IA', style: 'header' },
+          { text: `Data: ${new Date().toLocaleString()}`, style: 'subheader' },
+          { text: ' ', margin: [0, 10] },
+          {
+            image: this.imagePreview,
+            width: 400,
+            alignment: 'center',
+          },
+          { text: ' ', margin: [0, 10] },
+          {
+            ul: this.results.map(det => `• ${det.label} com confiança ${Math.round(det.score * 100)}%`),
+          },
+        ],
+        styles: {
+          header: { fontSize: 18, bold: true },
+          subheader: { fontSize: 12, italics: true },
+        },
+      }).getBlob((blob: Blob) => resolve(blob));
+    });
+    // 2. Get user
+    const user = this.authService.user$();
+    if (!user) {
+      alert('Usuário não autenticado.');
+      return;
+    }
+    // 3. Upload PDF and save metadata
+    const url = await this.pdfStorageService.uploadPdf(pdfBlob, user.uid, this.results);
+    console.log('PDF carregado e metadados guardados:', url);
+    alert('Relatório PDF gerado e salvo com sucesso!');
   }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ReportHistoryComponent } from './components/report-history.component';
 
 const routes: Routes = [
     {
@@ -18,6 +19,7 @@ const routes: Routes = [
         path: 'admin',
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
     },
+    { path: 'historico', component: ReportHistoryComponent },
     // { path: '**', redirectTo: '' } // opcional: fallback para landing
 ];
 

@@ -228,6 +228,16 @@
               class="action-btn download-btn">
         📄 {{ 'DOWNLOAD_PDF' | translate }}
       </button>
+      <button (click)="generatePdf()"
+              class="action-btn download-btn"
+              *ngIf="analysisComplete && imagePreview && results.length">
+        📄 Gerar Relatório PDF
+      </button>
+      <button (click)="generateAndUploadPdf()"
+              class="action-btn download-btn"
+              *ngIf="analysisComplete && imagePreview && results.length">
+        ☁️ Salvar Relatório PDF no Firebase
+      </button>
       <button (click)="analyzeAnother()"
               class="action-btn analyze-another-btn">
         🔄 {{ 'ANALYZE_ANOTHER' | translate }}

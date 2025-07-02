@@ -1,0 +1,15 @@
+.report-history-container {
+    padding: 2rem 0;
+}
+
+.grid>div {
+    transition: box-shadow 0.2s;
+}
+
+.grid>div:hover {
+    box-shadow: 0 4px 24px 0 #1e293b44;
+}
+
+img {
+    background: #222;
+}

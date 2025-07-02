@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { LucideAngularModule } from 'lucide-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +11,10 @@ import { AppComponent } from './app.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        LucideAngularModule.pick([
+            'History', 'Calendar', 'User', 'FileDown'
+        ])
     ],
     providers: [],
     bootstrap: [AppComponent]

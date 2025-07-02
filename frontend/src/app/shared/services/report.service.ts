@@ -53,4 +53,21 @@ export class ReportService {
 
         return downloadUrl;
     }
+
+    getUserReports(userId: string) {
+        return this.firestore
+            .collection('reports', ref =>
+                ref.where('userId', '==', userId).orderBy('createdAt', 'desc')
+            )
+            .valueChanges({ idField: 'id' });
+    }
+}
+
+export interface Report {
+    id?: string;
+    userId: string;
+    createdAt: any;
+    detections: any[];
+    imageUrl: string;
+    pdfUrl: string;
 }
