@@ -1,2 +1,10 @@
-<app-camera-capture></app-camera-capture>
+<app-camera-capture (photoCaptured)="capturedImage = $event"></app-camera-capture>
 <router-outlet></router-outlet>
+<div *ngIf="assessmentData && capturedImage"
+     class="mt-8 flex flex-col items-center">
+    <h3 class="text-lg font-semibold mb-2">Generate Report</h3>
+    <button (click)="generatePdfReport()"
+            class="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+        Download PDF Report
+    </button>
+</div>

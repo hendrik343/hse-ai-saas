@@ -5,17 +5,18 @@ import { LucideAngularModule } from 'lucide-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CameraCaptureComponent } from './camera-capture/camera-capture.component';
+import { CameraCaptureModule } from './camera-capture/camera-capture.module';
 
 @NgModule({
-    declarations: [AppComponent, CameraCaptureComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
         LucideAngularModule.pick([
             'History', 'Calendar', 'User', 'FileDown'
-        ])
+        ]),
+        CameraCaptureModule
     ],
     providers: [],
     bootstrap: [AppComponent]

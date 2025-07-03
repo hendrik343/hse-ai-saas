@@ -1,45 +1,99 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-camera-capture',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './camera-capture.component.html',
-  styleUrls: ['./camera-capture.component.css']
 })
-export class CameraCaptureComponent {
-  @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
-  @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
-  photoDataUrl: string | null = null;
-  errorMessage: string | null = null;
+export class CameraCaptureComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('videoElement') videoRef!: ElementRef<HTMLVideoElement>;
+  @Output() photoCaptured = new EventEmitter<string>();
 
-  async startCamera() {
+  error: string | null = null;
+  isCameraInitializing: boolean = true;
+  capturedImage: string | null = null;
+  private stream: MediaStream | null = null;
+
+  ngAfterViewInit() {
+    // Defer camera access until view is ready and we can check for HTTPS
+    if (typeof window !== 'undefined' && window.location.protocol !== 'https:') {
+      this.error = "Camera access requires a secure (HTTPS) connection.";
+      this.isCameraInitializing = false;
+      return;
+    }
+    this.enableCamera();
+  }
+
+  ngOnDestroy() {
+    this.stopStream();
+  }
+
+  private stopStream() {
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => track.stop());
+      this.stream = null;
+    }
+  }
+
+  async enableCamera() {
+    this.isCameraInitializing = true;
+    this.error = null;
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      this.error = "Camera API is not supported by this browser.";
+      this.isCameraInitializing = false;
+      return;
+    }
+
     try {
-      this.errorMessage = null;
-
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-      this.videoRef.nativeElement.srcObject = stream;
-      this.videoRef.nativeElement.play();
-    } catch (err: any) {
-      this.errorMessage = 'Erro ao aceder à câmara. Verifica as permissões do navegador.';
-      console.error('Erro na câmara:', err);
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }
+      });
+      const video = this.videoRef.nativeElement;
+      video.srcObject = this.stream;
+      await video.play(); // Explicit play call is crucial for mobile browsers
+      this.error = null;
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+      let message = 'Could not access the camera. Please ensure you have a camera connected and have granted permission.';
+      if (err instanceof Error) {
+        if (err.name === 'NotAllowedError' || err.name === 'SecurityError') {
+          message = 'Camera access was denied. Please grant permission in your browser settings.';
+        } else if (err.name === 'NotFoundError') {
+          message = 'No camera was found on this device.';
+        }
+      }
+      this.error = message;
+    } finally {
+      this.isCameraInitializing = false;
     }
   }
 
   capturePhoto() {
-    try {
-      const video = this.videoRef.nativeElement;
-      const canvas = this.canvasRef.nativeElement;
-      const context = canvas.getContext('2d');
-      if (!context) throw new Error('Canvas context inválido');
+    if (!this.videoRef || !this.videoRef.nativeElement || !this.stream) return;
 
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+    const video = this.videoRef.nativeElement;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext('2d');
+
+    if (context) {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      this.photoDataUrl = canvas.toDataURL('image/png');
-    } catch (err: any) {
-      this.errorMessage = 'Erro ao capturar imagem.';
-      console.error(err);
+      const dataUrl = canvas.toDataURL('image/jpeg');
+      this.capturedImage = dataUrl;
+      this.photoCaptured.emit(dataUrl);
+      this.stopStream(); // Stop the live camera feed
     }
+  }
+
+  clearPhoto() {
+    this.capturedImage = null;
+    // Use a timeout to ensure the DOM has updated (img removed, video re-added) before starting camera
+    setTimeout(() => {
+      this.enableCamera();
+    });
   }
 }

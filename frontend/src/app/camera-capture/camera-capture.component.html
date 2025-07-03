@@ -1,25 +1,61 @@
-<div class="camera-container">
-    <video #video
-           autoplay
-           playsinline></video>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg mt-8">
+    <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Camera Preview</h2>
+    <div class="relative aspect-video bg-slate-200 dark:bg-slate-700 rounded-lg overflow-hidden">
+        <!-- Show video feed if no image is captured -->
+        <video #videoElement
+               *ngIf="!capturedImage"
+               autoplay
+               playsinline
+               muted
+               class="w-full h-full object-cover"
+               aria-label="Camera feed"></video>
 
-    <div class="buttons">
-        <button (click)="startCamera()">📷 Ligar Câmara</button>
-        <button (click)="capturePhoto()">📸 Tirar Foto</button>
+        <!-- Show captured image if it exists -->
+        <img *ngIf="capturedImage"
+             [src]="capturedImage"
+             alt="Captured photo"
+             class="w-full h-full object-cover" />
+
+        <!-- Error Overlay -->
+        <div *ngIf="error"
+             class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-75 text-white p-4"
+             role="alert">
+            <svg class="w-12 h-12 mb-4 text-red-400"
+                 xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                <path d="M12 9v4" />
+                <path d="M12 17h.01" />
+            </svg>
+            <p class="text-center font-semibold">{{ error }}</p>
+        </div>
+
+        <!-- Initializing Overlay -->
+        <div *ngIf="isCameraInitializing && !error"
+             class="absolute inset-0 flex flex-col justify-center items-center text-slate-500 dark:text-slate-400">
+            <p>Starting camera...</p>
+        </div>
     </div>
 
-    <canvas #canvas
-            hidden></canvas>
-
-    <div *ngIf="errorMessage"
-         class="error">
-        ⚠️ {{ errorMessage }}
-    </div>
-
-    <div *ngIf="photoDataUrl"
-         class="photo-preview">
-        <h4>Pré-visualização:</h4>
-        <img [src]="photoDataUrl"
-             alt="Foto capturada">
+    <!-- Action Button -->
+    <div class="mt-4 flex justify-center">
+        <button *ngIf="!capturedImage"
+                (click)="capturePhoto()"
+                [disabled]="isCameraInitializing || !!error"
+                class="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors">
+            Capture Photo
+        </button>
+        <button *ngIf="capturedImage"
+                (click)="clearPhoto()"
+                class="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors">
+            Retake Photo
+        </button>
     </div>
 </div>
